@@ -6,19 +6,21 @@ import { IRequestValidator } from "../../interface/repository/validateRepository
 
 export const createUser = async (
   userRepository: IUserRepository,
+  bcrypt:IHashpassword,
   name:string,
   email: string,
   password: string
 ): Promise<Response> => {
-  console.log("insede userUsecase 00000")
   try {
-      const createNewUser = await userRepository.createUser({name,email,password});
-      console.log(createNewUser,"^^^^^^^")
-      return {
-        status: 200,
-        success: true,
-        message: "Successfully created",
-      };
+      const userExist = await userRepository.fidUserByEmail(email)
+      if(userExist.userExist){
+        return {status:400,success:false,message:"user with this mail id already exists",}
+      }else{
+        password  = await bcrypt.createHash(password)
+        const createNewUser = await userRepository.createUser({name,email,password});
+        console.log()
+        return createNewUser
+      }
     }
   catch (err) {
     throw err;

@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer'
 require("dotenv").config()
+import { ISendMail } from '../../useCasese/interface/services/sendMail'
 
 
-
-class SendMail{
+export class SendMail implements ISendMail{
 
   private transporter:nodemailer.Transporter
 
@@ -21,8 +21,7 @@ class SendMail{
   
   }
 
-  sendMail(name: string, email: string, verificationCode: number): Promise<{status:number; success: boolean; message: string }> {
-    
+  sendEmailVerification(name: string, email: string, verificationCode: string): Promise<{success: boolean}> {
     return new Promise((resolve, reject) => {
             const mailOptions: nodemailer.SendMailOptions = {
                 from: process.env.SMTP_MAIL,
@@ -35,15 +34,11 @@ class SendMail{
                 if (err) {
                     console.error(err.message);
                     reject({
-                        status:401,
                         success: false,
-                        message: 'Failed to send verification code',
                     });
                 } else {
                     resolve({
-                        status:200,
                         success: true,
-                        message: 'Otp Sent Successfully',
                     });
                 }
             });
@@ -53,4 +48,3 @@ class SendMail{
 
 }
 
-export default SendMail

@@ -1,9 +1,10 @@
 
 export interface IOtp{
+        _id?: string;
         userMail:string;
-        otp: number;
-        expiresAt: Date;
-        createdAt:Date
+        otp: string;
+        expiresAt?: Date;
+        createdAt?:Date
       }
 
 

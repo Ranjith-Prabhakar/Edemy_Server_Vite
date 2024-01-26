@@ -1,20 +1,13 @@
+import { ICreateOtp } from "../../useCasese/interface/services/createOtp";
 
-class GenerateOtp{
-  async generateOtp(length:number):Promise<number>{
+export class GenerateOtp implements ICreateOtp{
+async generateOTP():Promise<string>{
 const numericChars = "0123456789"
 let otp = ""
-
-for(let i = 0 ;i<length ;i++){
+for(let i = 0 ;i<4 ;i++){
   const randomIndex = Math.floor(Math.random() * numericChars.length);
   otp += numericChars[randomIndex]
 }
-
-if(otp.length == 4){
-  return parseInt(otp)
-}else{
-  return this.generateOtp(4)
+return otp
 }
-  }
 }
-
-export default GenerateOtp

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
-import HashPassword from '../../useCasese/interface/services/hashPassword'
+import {IHashpassword} from '../../useCasese/interface/services/hashPassword'
 
-class Encrypt implements HashPassword {
+export class Encrypt implements IHashpassword {
 
   constructor(){}
 
@@ -20,5 +20,3 @@ class Encrypt implements HashPassword {
   }
 
 }
-
-export default Encrypt

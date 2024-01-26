@@ -1,8 +1,8 @@
 import { IUser } from "../../../entities/user";
 
-export interface Response<T = IUser| IUser[]|string> {
+export interface Response{
   status: number;
   success: boolean;
   message?: string;
-  data?: T;
+  user?: IUser;
 }

@@ -21,12 +21,8 @@ export class UserController{
   }
 
   async createUser(req:Req,res:Res,next:Next){
-
-    console.log("inside userController")
-    
     try {
       let {name,email,password,confirmPassword} = req.body
-
       name = name ? name.trim() : null
       email = email ? email.trim() : null
       password = password ? password.trim() : null
@@ -59,10 +55,8 @@ export class UserController{
           message: "password mismatches"
         })
       }
-      const user = {...req.body}
-      delete user.confirmPassword
-      const newUser = await this.userUseCase.createUser(user)
-      console.log("newUser--------------------->",newUser)
+      const newUser = await this.userUseCase.createUser(req.body)
+      res.send(newUser)
 
       // const existResponse = await this.userRepository.findByEmail(email)
 

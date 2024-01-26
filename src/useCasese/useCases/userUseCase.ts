@@ -1,19 +1,41 @@
 import { IUserRepository } from '../interface/repository/userRepository'
-
+import { IHashpassword } from '../interface/services/hashPassword';
+import { ICreateOtp } from '../interface/services/createOtp';
+import { ISendMail } from '../interface/services/sendMail';
 import { createUser } from './user/index';
+import { IOtpRepository } from '../interface/repository/otpRepository';
 
 export class UserUsecase{
 
 private readonly userRepository : IUserRepository
+private readonly bcrypt : IHashpassword
+private readonly otpGenerator :ICreateOtp 
+private readonly sendMail:ISendMail
+private readonly otpRepository:IOtpRepository
+
 constructor(
   userRepository:IUserRepository,
+  bcrypt:IHashpassword,
+  otpGenerator :ICreateOtp, 
+  sendMail:ISendMail,
+  otpRepository:IOtpRepository
   ){
   this.userRepository = userRepository
+  this.bcrypt = bcrypt
+  this.otpGenerator = otpGenerator
+  this.sendMail = sendMail
+  this.otpRepository = otpRepository
 }
 
 async createUser({name,email,password}:{name:string,email:string,password:string}){
-  console.log("userUserCase root")
- return createUser(this.userRepository,name,email,password)
+let NewUser = await createUser(this.userRepository,this.bcrypt,name,email,password)
+if(NewUser.user){
+  const Otp = await this.otpGenerator.generateOTP()
+  await this.otpRepository.createOtpUserCollection({userMail:NewUser.user.email,otp:Otp})
+  await this.sendMail.sendEmailVerification(NewUser.user.name,NewUser.user.email,Otp)
+  return NewUser
+}
+ return NewUser 
 }
 
 }
