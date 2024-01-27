@@ -1,7 +1,7 @@
 export interface IUser{
   name:string,
   email:string,
-  password:string,
+  password:string | Promise<string>,
   avatar?:{
     public_id:string,
     url:string

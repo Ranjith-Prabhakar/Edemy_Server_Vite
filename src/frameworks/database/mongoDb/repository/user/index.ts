@@ -1,7 +1,4 @@
-import { createUser } from "./createUser";
+import { verifyUser } from "./verifyUser";
 import { fidUserByEmail } from "./findUserbyEmail";
 
-export{
-  createUser,
-  fidUserByEmail
-}
+export { verifyUser, fidUserByEmail };

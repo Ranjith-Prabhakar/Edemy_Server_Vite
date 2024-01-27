@@ -1,7 +1,7 @@
 import { IUser } from "../../../../../entities/user";
 import userModel from "../../models/userModel";
 
-export const createUser = async(
+export const verifyUser = async(
   newUser:IUser,
   userModels: typeof userModel
 ): Promise<{ user?:IUser;success: boolean; message: string;status:number }> =>{

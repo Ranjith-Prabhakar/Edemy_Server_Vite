@@ -1,3 +1,7 @@
-import { createUser } from "./createUser";
+import { verifyUser } from "./verifyUser";
+import { registerUser } from "./registerUser";
 
-export {createUser}
+export {
+  verifyUser,
+  registerUser
+}

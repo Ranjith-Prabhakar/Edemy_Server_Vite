@@ -3,7 +3,7 @@ import { IOtp } from '../../../../entities/otp';
 
 const otpSchema = new mongoose.Schema<IOtp>({
 
-userMail:String,
+email:String,
   otp: {
     type: String,
     required: true,

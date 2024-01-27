@@ -2,42 +2,71 @@ import { IUserRepository } from '../interface/repository/userRepository'
 import { IHashpassword } from '../interface/services/hashPassword';
 import { ICreateOtp } from '../interface/services/createOtp';
 import { ISendMail } from '../interface/services/sendMail';
-import { createUser } from './user/index';
-import { IOtpRepository } from '../interface/repository/otpRepository';
+import { IOtpRepository } from "../interface/repository/otpRepository";
+import { IJwt } from "../interface/services/jwt.types";
+import {
+   verifyUser,
+   registerUser,
+  } from './user/index';
 
-export class UserUsecase{
 
-private readonly userRepository : IUserRepository
-private readonly bcrypt : IHashpassword
-private readonly otpGenerator :ICreateOtp 
-private readonly sendMail:ISendMail
-private readonly otpRepository:IOtpRepository
+export class UserUsecase {
+  private readonly userRepository: IUserRepository;
+  private readonly bcrypt: IHashpassword;
+  private readonly otpGenerator: ICreateOtp;
+  private readonly sendMail: ISendMail;
+  private readonly otpRepository: IOtpRepository;
+  private readonly jwtToken: IJwt;
 
-constructor(
-  userRepository:IUserRepository,
-  bcrypt:IHashpassword,
-  otpGenerator :ICreateOtp, 
-  sendMail:ISendMail,
-  otpRepository:IOtpRepository
-  ){
-  this.userRepository = userRepository
-  this.bcrypt = bcrypt
-  this.otpGenerator = otpGenerator
-  this.sendMail = sendMail
-  this.otpRepository = otpRepository
-}
+  constructor(
+    userRepository: IUserRepository,
+    bcrypt: IHashpassword,
+    otpGenerator: ICreateOtp,
+    sendMail: ISendMail,
+    otpRepository: IOtpRepository,
+    jwtToken: IJwt
+  ) {
+    this.userRepository = userRepository;
+    this.bcrypt = bcrypt;
+    this.otpGenerator = otpGenerator;
+    this.sendMail = sendMail;
+    this.otpRepository = otpRepository;
+    this.jwtToken = jwtToken;
+  }
+  // **************************************************************************************
+  async registerUser({
+    name,
+    email,
+    password,
+  }: {
+    name: string;
+    email: string;
+    password: string;
+  }) {
+    let result = await registerUser(
+      this.otpRepository,
+      this.sendMail,
+      this.otpGenerator,
+      this.jwtToken,
+      this.bcrypt,
+      email,
+      name,
+      password
+    );
+    return result;
+  }
+  // **************************************************************************************
+  async verifyUser(verificationCode: string,token:string) {
 
-async createUser({name,email,password}:{name:string,email:string,password:string}){
-let NewUser = await createUser(this.userRepository,this.bcrypt,name,email,password)
-if(NewUser.user){
-  const Otp = await this.otpGenerator.generateOTP()
-  await this.otpRepository.createOtpUserCollection({userMail:NewUser.user.email,otp:Otp})
-  await this.sendMail.sendEmailVerification(NewUser.user.name,NewUser.user.email,Otp)
-  return NewUser
-}
- return NewUser 
-}
-
+    const verification = await verifyUser(
+      this.userRepository,
+      this.otpRepository,
+      this.jwtToken,
+      verificationCode,
+      token
+    );
+    return verification
+  }
 }
 
 

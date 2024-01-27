@@ -1,3 +1,5 @@
-export interface Ijwt {
-  createJWT(userId: number, email: string, role: string, name: string): string;
+import { IUser } from "../../../entities/user";
+export interface IJwt {
+  createVerificationJWT(payLoad:IUser): Promise<string>;
+  verifyJwt(payLoad:string):Promise<IUser>
 }
