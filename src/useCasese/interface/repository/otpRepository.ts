@@ -7,6 +7,5 @@ export interface IOtpRepository {
     email: string,
     verificationCode:string
   ): Promise<boolean>;
-  // SaveOtp(otp:IOtp):Promise<{success:boolean,message:string}>
-  // findUser(email: string): Promise<IOtp | null>;
+  
 }

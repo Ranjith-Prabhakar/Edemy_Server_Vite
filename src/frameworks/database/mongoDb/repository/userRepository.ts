@@ -3,7 +3,7 @@ import userModel from "../models/userModel";
 import { IUserRepository } from "../../../../useCasese/interface/repository/userRepository";
 import { IUser } from "../../../../entities/user";
 
-import { verifyUser, fidUserByEmail } from "./user/index";
+import { verifyUser, fidUserByEmail, findUserForLoin } from "./user/index";
 
 export class UserRepository implements IUserRepository {
   constructor(private userModels: typeof userModel) {}
@@ -20,15 +20,16 @@ export class UserRepository implements IUserRepository {
     message: string;
     status: number;
   }> {
-    return verifyUser(newUser, this.userModels);
+    return await verifyUser(newUser, this.userModels);
   }
 
-  // async verifyUser(user: IUser): Promise<IUser> {
-  //   try {
-  //     const newUser = await this.userModels.create(user);
-  //     return newUser;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+  async findUserForLoin(email: string): Promise<{
+    user?: IUser;
+    success: boolean;
+    message: string;
+    status: number;
+  }> {
+    return await findUserForLoin(email, this.userModels);
+    
+  }
 }

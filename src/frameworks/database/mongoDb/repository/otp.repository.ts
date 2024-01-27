@@ -34,7 +34,6 @@ export class OtpRepository implements IOtpRepository {
         otp: verificationCode,
       });
       if (result) {
-        console.log("result from frame->otp rep", result);
         return true;
       } else {
         return false;
