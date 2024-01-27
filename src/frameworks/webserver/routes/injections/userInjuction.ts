@@ -7,6 +7,7 @@ import { SendMail } from "../../../services/sendMail"
 import { OtpRepository } from "../../../database/mongoDb/repository/otp.repository"
 import { JWTtoken } from '../../../services/jwt'
 import { CloudSession } from "../../../services/cloudSession"
+import { RequestManagement } from "../../../services/requestManagement"
 import {UserController} from '../../../../controllers/userController'
 
 
@@ -18,6 +19,8 @@ const sendMail = new SendMail()
 const  otpRepository = new OtpRepository()
 const jwtToken = new JWTtoken();
 const cloudSession = new CloudSession();
+const requestManagement = new RequestManagement();
+
 const userUseCase = new UserUsecase(
   userRepository,
   bcryptService,
@@ -25,8 +28,10 @@ const userUseCase = new UserUsecase(
   sendMail,
   otpRepository,
   jwtToken,
-  cloudSession
+  cloudSession,
+  requestManagement
 );
+
 const userController = new UserController(userUseCase,userRepository)
 
 export {userController}

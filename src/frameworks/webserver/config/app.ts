@@ -2,7 +2,7 @@ require('dotenv').config()
 import express,{ NextFunction, Request, Response } from 'express'
 import cookieParser from 'cookie-parser'
 import cors from "cors"
-import errorHandler from '../../../useCasese/handler/errorHandler'
+import {errorMiddleware} from '../../../useCasese/handler/errorMiddleware'
 
 //routes
 import {userRoute} from '../routes/userRoute'
@@ -30,4 +30,4 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(error)
 })
 
-app.use(errorHandler)
+app.use(errorMiddleware);
