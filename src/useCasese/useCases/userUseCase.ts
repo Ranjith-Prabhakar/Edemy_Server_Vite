@@ -45,6 +45,7 @@ export class UserUsecase {
   }) {
     let result = await registerUser(
       this.otpRepository,
+      this.userRepository,
       this.sendMail,
       this.otpGenerator,
       this.jwtToken,

@@ -4,9 +4,11 @@ import { IOtpRepository } from "../../interface/repository/otpRepository";
 import { ISendMail } from "../../interface/services/sendMail";
 import { ICreateOtp } from "../../interface/services/createOtp";
 import { IJwt } from "../../interface/services/jwt.types";
+import { IUserRepository } from "../../interface/repository/userRepository";
 
 export const registerUser = async (
   otpRepository: IOtpRepository,
+  userRepository:IUserRepository,
   sendMail: ISendMail,
   otpGenerator: ICreateOtp,
   jwtTokenGenerator:IJwt,
@@ -16,6 +18,17 @@ export const registerUser = async (
   password:string  | Promise<string>
 ): Promise<Response> => {
   try {
+    // checking whether any user exist in the same email
+    let isUserExistOnUserRepo = await userRepository.fidUserByEmail(email)
+    if(isUserExistOnUserRepo){
+       return {
+         status: 400,
+         success: false,
+         message: "user already exist in the same mail id",
+       };
+    }
+
+    // checking wheter user already present in the otp repo 
     let isUserOnOtpRepo = await otpRepository.findUser(email);
     if (isUserOnOtpRepo.exist) {
       await sendMail.sendEmailVerification(
