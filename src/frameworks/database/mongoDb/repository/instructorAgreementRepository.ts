@@ -3,8 +3,10 @@ import ErrorHandler from "../../../../useCasese/handler/errorHandler";
 import { IInstructorAgreementRepository } from "../../../../useCasese/interface/repository/instructorAgreementRepository";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 import instructorAgreementModel from "../models/instructorAgreementModel";
-
-export class InstrctorAgreementRepository implements IInstructorAgreementRepository {
+export class InstrctorAgreementRepository
+  implements IInstructorAgreementRepository
+{
+  // ******************************************************************************************
   async createAgreement(
     agreement: IInstructorAgreement
   ): Promise<IJsonResponse> {
@@ -16,7 +18,7 @@ export class InstrctorAgreementRepository implements IInstructorAgreementReposit
       console.log("InstrctorAgreementRepository", isExist);
 
       if (!isExist) {
-      console.log("InstrctorAgreementRepository inside !isExise");
+        console.log("InstrctorAgreementRepository inside !isExise");
 
         await instructorAgreementModel.create(agreement);
         return {
@@ -32,11 +34,44 @@ export class InstrctorAgreementRepository implements IInstructorAgreementReposit
         };
       }
     } catch (error: any) {
-       return {
-          status: 500,
-          success: false,
-          message: "error while fetching data from db",
+      return {
+        status: 500,
+        success: false,
+        message: "error while fetching data from db",
+      };
+    }
+  }
+  // ******************************************************************************************
+  async updateStatus(userId: string, action: string): Promise<IJsonResponse> {
+    try {
+      console.log("this.updateStatus = frame ",userId , action);
+      const result = await instructorAgreementModel.findByIdAndUpdate(
+        userId,
+        {
+          status: action ,
+        },
+        { new: true }
+      );
+      console.log("this.updateStatus = frame ", result);
+      if (result) {
+        return {
+          status: 200,
+          success: true,
+          message: "status has been updated",
         };
+      } else {
+        return {
+          status: 404,
+          success: true,
+          message: "record not found",
+        };
+      }
+    } catch (error) {
+      return {
+        status: 500,
+        success: false,
+        message: "error while fetching data from db",
+      };
     }
   }
 }

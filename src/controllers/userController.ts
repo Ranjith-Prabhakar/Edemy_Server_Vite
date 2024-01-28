@@ -90,8 +90,8 @@ export class UserController {
       });
       delete newUser.token;
       res.json(newUser);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, "server error"));
+    } catch (error:any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************

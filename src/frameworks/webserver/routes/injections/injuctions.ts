@@ -36,7 +36,10 @@ const userUseCase = new UserUsecase(
   instrctorAgreementRepository
 );
 
-const adminUseCase = new AdminUseCase(userRepository);
+const adminUseCase = new AdminUseCase(
+  userRepository,
+  instrctorAgreementRepository
+);
 
 const userController = new UserController(userUseCase);
 const adminController = new AdminController(adminUseCase);

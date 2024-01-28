@@ -7,6 +7,7 @@ export const findAndUpdate = async (
 ): Promise<IJsonResponse> => {
   const id = data.userId as string;
   delete data.userId;
+  delete data.agreementId;
   const update = await userModels.findByIdAndUpdate(id, data, { new: true });
   if (!update) {
     return { status: 404, success: false, message: "User not found" } as IJsonResponse;

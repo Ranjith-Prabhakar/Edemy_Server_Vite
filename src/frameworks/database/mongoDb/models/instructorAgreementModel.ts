@@ -6,6 +6,10 @@ const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
     type:String,
     unique:true
   },
+  status:{
+    type:String,
+    default:"pending"
+  },
   qualification: String,
   consent: Boolean,
   contract: {
