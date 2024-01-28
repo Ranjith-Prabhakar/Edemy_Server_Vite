@@ -5,6 +5,7 @@ export const errorMiddleware = (err: any, req: Req, res: Res, next: Next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "internal server error";
 
+  console.log("inside middleware ==",err.name)
   console.error(err);
 
  

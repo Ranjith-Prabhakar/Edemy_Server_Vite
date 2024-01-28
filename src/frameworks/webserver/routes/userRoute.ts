@@ -16,9 +16,13 @@ export function userRoute(router: Route) {
     userController.login(req, res, next)
   );
   /////////
-  router.get('/logout',isAuthenticated,(req:Req,res:Res,next:Next)=>{
-    userController.logout(req,res,next)
-  })
+  router.get("/logout", isAuthenticated, (req: Req, res: Res, next: Next) => {
+    userController.logout(req, res, next);
+  });
+  /////////
+  router.get("/refresh", (req: Req, res: Res, next: Next) => {
+    userController.refresh(req,res,next);
+  });
 
   return router;
 }

@@ -7,7 +7,7 @@ import { IOtpRepository } from "../interface/repository/otpRepository";
 import { ICloudSession } from "../interface/services/cloudSession";
 import { IRequestManagement } from "../interface/services/requestManagement";
 import { IJwt } from "../interface/services/jwt.types";
-import { verifyUser, registerUser, login ,logout} from "./user/index";
+import { verifyUser, registerUser, login, logout, refresh } from "./user/index";
 
 export class UserUsecase {
   private readonly userRepository: IUserRepository;
@@ -36,7 +36,7 @@ export class UserUsecase {
     this.otpRepository = otpRepository;
     this.jwtToken = jwtToken;
     this.cloudSession = cloudSession;
-    this.requestManagement = requestManagement
+    this.requestManagement = requestManagement;
   }
   // **************************************************************************************
   async registerUser({
@@ -84,8 +84,18 @@ export class UserUsecase {
     );
   }
   // **************************************************************************************
-  async logout(req:Req,res:Res,next:Next) {
-    const result = await logout(this.cloudSession, this.requestManagement,req,res,next);
-    return result
+  async logout(req: Req, res: Res, next: Next) {
+    const result = await logout(
+      this.cloudSession,
+      this.requestManagement,
+      req,
+      res,
+      next
+    );
+    return result;
+  }
+  // **************************************************************************************
+  async refresh(req: Req, res: Res, next: Next) {
+    return await refresh(this.cloudSession, this.jwtToken, req, next);
   }
 }

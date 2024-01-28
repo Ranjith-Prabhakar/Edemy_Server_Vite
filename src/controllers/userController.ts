@@ -128,9 +128,13 @@ export class UserController {
     res.send(result);
   }
   // *****************************************************************************************************************************
-  async logout(req: Req, res: Res, next: Next){
-    const result = await this.userUseCase.logout(req,res,next);
-    console.log("first",result)
-    res.send(result); 
+  async logout(req: Req, res: Res, next: Next) {
+    const result = await this.userUseCase.logout(req, res, next);
+    console.log("first", result);
+    res.send(result);
   }
+  // *****************************************************************************************************************************
+  async refresh(req: Req, res: Res, next: Next){
+    const result = await this.userUseCase.refresh(req,res,next)
+  };
 }
