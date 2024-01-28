@@ -5,6 +5,7 @@ import {
   accessTokenOptions,
   refreshTokenOptions,
 } from "./middleware/tokenOptions";
+import ErrorHandler from "../useCasese/handler/errorHandler";
 
 export class UserController {
   private userUseCase: UserUsecase;
@@ -20,6 +21,14 @@ export class UserController {
     let emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
+  // Password complexity check
+  isStrongPassword = (password: string): boolean => {
+    // Minimum 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
+    const passwordRegex: RegExp =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   // *****************************************************************************************************************************
   async registerUser(req: Req, res: Res, next: Next) {
     try {
@@ -57,6 +66,17 @@ export class UserController {
         });
       }
 
+      // Validate password length and complexity
+      if (
+        req.body.password.length < 8 ||
+        !this.isStrongPassword(req.body.password)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "Password does not meet complexity requirements",
+        });
+      }
+
       if (req.body.password !== req.body.confirmPassword) {
         return res.status(400).json({
           success: false,
@@ -73,11 +93,7 @@ export class UserController {
       delete newUser.token;
       res.json(newUser);
     } catch (error: any) {
-      console.error(error);
-      res.status(500).json({
-        success: false,
-        message: "server error",
-      });
+      return next(new ErrorHandler(500, "server error"));
     }
   }
   // *****************************************************************************************************************************
@@ -98,43 +114,71 @@ export class UserController {
         req.body.verificationCode,
         token
       );
-      console.log("from userusecase", result);
       if (result.success) {
         res.clearCookie("verificationToken").send(result);
       } else {
         res.send(result);
       }
     } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        success: false,
-        message: "server error",
-      });
+      return next(new ErrorHandler(500, "server error"));
     }
   }
   // *****************************************************************************************************************************
   async login(req: Req, res: Res, next: Next) {
-    req.body.email.trim();
-    req.body.password.trim();
-    const result = await this.userUseCase.login(req.body);
-    if (result.success) {
-      res.cookie("accessToken", result.tokens?.accessToken, accessTokenOptions);
-      res.cookie(
-        "refreshToken",
-        result.tokens?.accessToken,
-        refreshTokenOptions
-      );
+    try {
+      req.body.email.trim();
+      req.body.password.trim();
+      const result = await this.userUseCase.login(req.body);
+      if (result.success) {
+        res.cookie(
+          "accessToken",
+          result.tokens?.accessToken,
+          accessTokenOptions
+        );
+        res.cookie(
+          "refreshToken",
+          result.tokens?.accessToken,
+          refreshTokenOptions
+        );
+      }
+      delete result.tokens;
+      res.send(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, "server error"));
     }
-    res.send(result);
   }
   // *****************************************************************************************************************************
   async logout(req: Req, res: Res, next: Next) {
-    const result = await this.userUseCase.logout(req, res, next);
-    console.log("first", result);
-    res.send(result);
+    try {
+      const result = await this.userUseCase.logout(req, res, next);
+      console.log("first", result);
+      res.send(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, "server error"));
+    }
   }
   // *****************************************************************************************************************************
-  async refresh(req: Req, res: Res, next: Next){
-    const result = await this.userUseCase.refresh(req,res,next)
-  };
+  async refresh(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.userUseCase.refresh(req, res, next);
+      res.cookie("accessToken",result.accessToken)
+      res.cookie("refreshToken",result.refreshToken)
+      res.status(200).json({success:true,message:"tokens are updated"}); 
+    } catch (error) {
+      return next(new ErrorHandler(500, "server error"));
+    }
+  }
+  // *****************************************************************************************************************************
+  async beInstructor(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.userUseCase.beInstructor(req, next);
+      if (result) {
+        res
+          .status(200)
+          .json({ success: true, message: "request has been recorded" });
+      }
+    } catch (error) {
+      return next(new ErrorHandler(500, "server error"));
+    }
+  }
 }

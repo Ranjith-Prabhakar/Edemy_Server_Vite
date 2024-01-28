@@ -19,15 +19,6 @@ export class JWTtoken implements IJwt {
     return verifyToken;
   }
   // ***************************************************************************************
-  async verifyJwt(payLoad: string): Promise<IUser> {
-    const decode = (await jwt.verify(
-      payLoad,
-      this.JWT_VERIFICATION_KEY
-    )) as IUser;
-
-    return decode;
-  }
-  // ***************************************************************************************
   async createAccessAndRefreshToken(_id: string): Promise<IToken> {
     const accessToken = await jwt.sign({ id: _id }, this.JWT_ACCESS_KEY, {
       expiresIn: "5m",
@@ -40,35 +31,36 @@ export class JWTtoken implements IJwt {
     return { accessToken, refreshToken };
   }
   // ***************************************************************************************
-  async hasRefreshToken(req: Req):  Promise<{
-    user?: { id: string; iat: number; exp: number };
-    status: number;
-    success: boolean;
-    message: string;
-  }>{
-    console.log("inside hasRefresh - frame")
+  // async hasRefreshToken(req: Req):  Promise<{
+  //   user?: { id: string; iat: number; exp: number };
+  //   status: number;
+  //   success: boolean;
+  //   message: string;
+  // }>{
     
-    const existRefreshToken : string =await req.cookies.refreshToken
     
-    if(!existRefreshToken){
-      return {status:400,success:false,message:"login to use this fecility"}
-    } 
-    console.log("inside hasRefresh - frame", existRefreshToken);
-    const decode = await jwt.verify(existRefreshToken as string, this.JWT_REFRESH_KEY);
-    console.log("inside hasRefresh - frame", decode);
-    if(!decode){
-      return {
-        status: 400,
-        success: false,
-        message: "token has been expired , login to start",
-      };
-    }
-      return {
-        user: decode as { id: string; iat: number; exp: number },
-        status: 200,
-        success: true,
-        message: "user has been decoded",
-      };
-  }
+  //   const existRefreshToken : string =await req.cookies.refreshToken
+    
+  //   if(!existRefreshToken){
+  //     console.log("inside hasRefresh - frame error");
+  //     return {status:400,success:false,message:"login to use this fecility"}
+  //   } 
+  //   console.log("inside hasRefresh - frame ref token", existRefreshToken);
+  //   const decode = await jwt.verify(existRefreshToken as string, this.JWT_REFRESH_KEY);
+  //   console.log("inside hasRefresh - frame", decode);
+  //   if(!decode){
+  //     return {
+  //       status: 400,
+  //       success: false,
+  //       message: "token has been expired , login to start",
+  //     };
+  //   }
+  //     return {
+  //       user: decode as { id: string; iat: number; exp: number },
+  //       status: 200,
+  //       success: true,
+  //       message: "user has been decoded",
+  //     };
+  // }
 }
 

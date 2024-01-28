@@ -6,8 +6,16 @@ import { ISendMail } from "../interface/services/sendMail";
 import { IOtpRepository } from "../interface/repository/otpRepository";
 import { ICloudSession } from "../interface/services/cloudSession";
 import { IRequestManagement } from "../interface/services/requestManagement";
-import { IJwt } from "../interface/services/jwt.types";
-import { verifyUser, registerUser, login, logout, refresh } from "./user/index";
+import { IJwt, IToken } from "../interface/services/jwt.types";
+import {
+  verifyUser,
+  registerUser,
+  login,
+  logout,
+  refresh,
+  beInstructor,
+} from "./user/index";
+import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 
 export class UserUsecase {
   private readonly userRepository: IUserRepository;
@@ -18,6 +26,7 @@ export class UserUsecase {
   private readonly jwtToken: IJwt;
   private readonly cloudSession: ICloudSession;
   private readonly requestManagement: IRequestManagement;
+  private readonly instructorAgreementRepository: IInstructorAgreementRepository;
 
   constructor(
     userRepository: IUserRepository,
@@ -27,7 +36,8 @@ export class UserUsecase {
     otpRepository: IOtpRepository,
     jwtToken: IJwt,
     cloudSession: ICloudSession,
-    requestManagement: IRequestManagement
+    requestManagement: IRequestManagement,
+    instructorAgreementRepository: IInstructorAgreementRepository,
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -37,6 +47,7 @@ export class UserUsecase {
     this.jwtToken = jwtToken;
     this.cloudSession = cloudSession;
     this.requestManagement = requestManagement;
+    this.instructorAgreementRepository = instructorAgreementRepository;
   }
   // **************************************************************************************
   async registerUser({
@@ -95,7 +106,16 @@ export class UserUsecase {
     return result;
   }
   // **************************************************************************************
-  async refresh(req: Req, res: Res, next: Next) {
-    return await refresh(this.cloudSession, this.jwtToken, req, next);
+  async refresh(req: Req, res: Res, next: Next):Promise<IToken> {
+    return await refresh(this.cloudSession, this.jwtToken, req, next) as IToken;
+  }
+  async beInstructor(req: Req, next: Next) {
+    return await beInstructor(
+      this.userRepository,
+      this.cloudSession,
+      this.instructorAgreementRepository,
+      req,
+      next
+    );
   }
 }

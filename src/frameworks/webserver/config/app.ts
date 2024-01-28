@@ -20,7 +20,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-app.use('/api/v1/user/',userRoute(express.Router()))
+app.use('/api/v1/',userRoute(express.Router()))
+app.use('/api/v1/admin/',userRoute(express.Router()))
 
 //unknown url
 

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ErrorHandler } from "../../../useCasese/handler/errorHandler";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redis } from "../../../index";
+import { IUser } from "../../../entities/user";
 require("dotenv").config()
 
 //authenticated user
@@ -11,19 +12,20 @@ export const isAuthenticated = async (
   next: NextFunction
 ) => {
   const accessToken = req.cookies.accessToken as string;
+  const refreshToken = req.cookies.refreshToken as string
   console.log("secre", process.env.JWT_ACCESS_KEY);
-  if (!accessToken) {
+  if (!accessToken || !refreshToken) {
     return next(new ErrorHandler(400, "please login to  use this resource"));
   }
 
   const decode = jwt.verify(
     accessToken,
     process.env.JWT_ACCESS_KEY as string
-  ) as JwtPayload;
+  ) as IUser;
   if (!decode) {
     return next(new ErrorHandler(400, "Access Token is invalid"));
   }
-  const user = await redis.get(decode.id);
+  const user = await redis.get(decode._id as string);
   if (!user) {
     return next(new ErrorHandler(400, "please login to use this resource"));
   }
