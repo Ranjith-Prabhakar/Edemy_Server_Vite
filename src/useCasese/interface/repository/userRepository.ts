@@ -1,8 +1,9 @@
 import { IUser } from "../../../entities/user";
+import { IJsonResponse } from "../services/jsonResponse";
 
 
 export interface IUserRepository {
-  fidUserByEmail(email: string): Promise<{ userExist: boolean }>;
+  findUserByEmail(email: string): Promise<{ userExist: boolean }>;
   verifyUser(newUser: IUser): Promise<{
     id?: number;
     success: boolean;
@@ -16,4 +17,6 @@ export interface IUserRepository {
     message: string;
     status: number;
   }>;
+
+  findAndUpdate(data:{[key:string]:string | number}):Promise<IJsonResponse>
 }

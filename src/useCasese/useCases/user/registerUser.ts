@@ -19,8 +19,10 @@ export const registerUser = async (
 ): Promise<Response> => {
   try {
     // checking whether any user exist in the same email
-    let isUserExistOnUserRepo = await userRepository.fidUserByEmail(email)
-    if(isUserExistOnUserRepo){
+    console.log("registr user usecase ",email)
+    let isUserExistOnUserRepo = await userRepository.findUserByEmail(email)
+    console.log("registr user usecase ", isUserExistOnUserRepo);
+    if(isUserExistOnUserRepo.userExist){
        return {
          status: 400,
          success: false,

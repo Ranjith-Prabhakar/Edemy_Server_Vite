@@ -1,6 +1,5 @@
 import { Req, Res, Next } from "../frameworks/types/serverPackageTypes";
 import { UserUsecase } from "../useCasese/useCases/userUseCase";
-import { IUserRepository } from "../useCasese/interface/repository/userRepository";
 import {
   accessTokenOptions,
   refreshTokenOptions,
@@ -10,11 +9,9 @@ import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
 
 export class UserController {
   private userUseCase: UserUsecase;
-  private userRepository: IUserRepository;
 
-  constructor(userUseCase: UserUsecase, userRepository: IUserRepository) {
+  constructor(userUseCase: UserUsecase) {
     this.userUseCase = userUseCase;
-    this.userRepository = userRepository;
   }
 
   // validate email
@@ -100,27 +97,40 @@ export class UserController {
   // *****************************************************************************************************************************
   async verifyUser(req: Req, res: Res, next: Next) {
     try {
-      // let { verificationCode } = req.body;
       let token = req.cookies.verificationToken;
+      console.log("usercontroller=>verifyuser====1")
       req.body.verificationCode = req.body.verificationCode
         ? req.body.verificationCode.trim()
         : null;
+
+         console.log("usercontroller=>verifyuser====2");
+
       if (req.body.verificationCode.length !== 4) {
+         console.log("usercontroller=>verifyuser====3");
         return res.status(400).json({
           success: false,
           message: "missing required fields",
         });
       }
+       console.log("usercontroller=>verifyuser====4 token",token);
       const result = await this.userUseCase.verifyUser(
         req.body.verificationCode,
         token
       );
+       console.log("usercontroller=>verifyuser====5");
+
       if (result.success) {
+       console.log("usercontroller=>verifyuser====6");
+
         res.clearCookie("verificationToken").send(result);
       } else {
+       console.log("usercontroller=>verifyuser====7",result);
+
         res.send(result);
       }
     } catch (error) {
+       console.log("usercontroller=>verifyuser====8");
+
       return next(new ErrorHandler(500, "server error"));
     }
   }

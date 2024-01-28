@@ -37,7 +37,7 @@ export class UserUsecase {
     jwtToken: IJwt,
     cloudSession: ICloudSession,
     requestManagement: IRequestManagement,
-    instructorAgreementRepository: IInstructorAgreementRepository,
+    instructorAgreementRepository: IInstructorAgreementRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -74,6 +74,7 @@ export class UserUsecase {
   }
   // **************************************************************************************
   async verifyUser(verificationCode: string, token: string) {
+    console.log("uuc token",token)
     const verification = await verifyUser(
       this.userRepository,
       this.otpRepository,
@@ -106,9 +107,15 @@ export class UserUsecase {
     return result;
   }
   // **************************************************************************************
-  async refresh(req: Req, res: Res, next: Next):Promise<IToken> {
-    return await refresh(this.cloudSession, this.jwtToken, req, next) as IToken;
+  async refresh(req: Req, res: Res, next: Next): Promise<IToken> {
+    return (await refresh(
+      this.cloudSession,
+      this.jwtToken,
+      req,
+      next
+    )) as IToken;
   }
+  // **************************************************************************************
   async beInstructor(req: Req, next: Next) {
     return await beInstructor(
       this.userRepository,
@@ -118,4 +125,6 @@ export class UserUsecase {
       next
     );
   }
+  // **************************************************************************************
+ 
 }

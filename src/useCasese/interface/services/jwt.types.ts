@@ -10,6 +10,6 @@ export interface IToken {
 export interface IJwt {
   createVerificationJWT(payLoad: IUser): Promise<string>;
   createAccessAndRefreshToken(id: string): Promise<IToken>;
- 
+  verifyJwt(token:string):Promise<IUser>
   // verifyJwt(payLoad:string):Promise<IUser>
 }
