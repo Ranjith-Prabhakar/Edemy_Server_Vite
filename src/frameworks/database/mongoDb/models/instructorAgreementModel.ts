@@ -2,7 +2,10 @@ import mongoose,{Schema,Model,ObjectId} from "mongoose";
 import { IInstructorAgreement } from "../../../../entities/instructorAgreement";
 
 const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
-  userId: String,
+  userId: {
+    type:String,
+    unique:true
+  },
   qualification: String,
   consent: Boolean,
   contract: {

@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ErrorHandler } from "../../../useCasese/handler/errorHandler";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import { redis } from "../../../index";
-import { IUser } from "../../../entities/user";
-require("dotenv").config()
+require("dotenv").config();
 
 //authenticated user
 export const isAuthenticated = async (
@@ -12,21 +11,31 @@ export const isAuthenticated = async (
   next: NextFunction
 ) => {
   const accessToken = req.cookies.accessToken as string;
-  const refreshToken = req.cookies.refreshToken as string
-  console.log("secre", process.env.JWT_ACCESS_KEY);
+  const refreshToken = req.cookies.refreshToken as string;
+
   if (!accessToken || !refreshToken) {
+    console.log("inside auth mid,isauth, ---1");
     return next(new ErrorHandler(400, "please login to  use this resource"));
   }
+console.log("auth middleware before jwt verify");
+const decodedPayload = jwt.decode(accessToken);
+console.log("Decoded payload", decodedPayload);
+  const decode = await jwt.verify(
+    accessToken as string,
+    process.env.JWT_ACCESS_KEY as Secret
+  ) as JwtPayload;
 
-  const decode = jwt.verify(
-    accessToken,
-    process.env.JWT_ACCESS_KEY as string
-  ) as IUser;
+  console.log("auth middleware decode",decode)
   if (!decode) {
+    console.log("inside auth mid,isauth, ---2");
     return next(new ErrorHandler(400, "Access Token is invalid"));
   }
-  const user = await redis.get(decode._id as string);
+  console.log(decode.id === "65b4b4ad7a15703d99955aea");
+  console.log("inside auth mid,isauth decoded id", decode.id);
+  const user = await redis.get(decode.id);
+  console.log("inside auth mid,isauth,  decode...", user);
   if (!user) {
+    console.log("inside auth mid,isauth, ---3");
     return next(new ErrorHandler(400, "please login to use this resource"));
   }
 

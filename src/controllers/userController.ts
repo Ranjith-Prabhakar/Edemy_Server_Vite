@@ -6,6 +6,7 @@ import {
   refreshTokenOptions,
 } from "./middleware/tokenOptions";
 import ErrorHandler from "../useCasese/handler/errorHandler";
+import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
 
 export class UserController {
   private userUseCase: UserUsecase;
@@ -161,9 +162,9 @@ export class UserController {
   async refresh(req: Req, res: Res, next: Next) {
     try {
       const result = await this.userUseCase.refresh(req, res, next);
-      res.cookie("accessToken",result.accessToken)
-      res.cookie("refreshToken",result.refreshToken)
-      res.status(200).json({success:true,message:"tokens are updated"}); 
+      res.cookie("accessToken", result.accessToken);
+      res.cookie("refreshToken", result.refreshToken);
+      res.status(200).json({ success: true, message: "tokens are updated" });
     } catch (error) {
       return next(new ErrorHandler(500, "server error"));
     }
@@ -171,12 +172,8 @@ export class UserController {
   // *****************************************************************************************************************************
   async beInstructor(req: Req, res: Res, next: Next) {
     try {
-      const result = await this.userUseCase.beInstructor(req, next);
-      if (result) {
-        res
-          .status(200)
-          .json({ success: true, message: "request has been recorded" });
-      }
+      const result = await this.userUseCase.beInstructor(req, next) as IJsonResponse;
+      res.status(result.status).json(result);
     } catch (error) {
       return next(new ErrorHandler(500, "server error"));
     }
