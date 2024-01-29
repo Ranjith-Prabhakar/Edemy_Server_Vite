@@ -16,7 +16,7 @@ export const forgotPassword = async (
   next: Next
 ) => {
  try {
-
+  
 
    const user = await userRepository.findUserByEmail(req.body.email);
    console.log("forgot pasword --1",user)

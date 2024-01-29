@@ -13,5 +13,16 @@ import { adminController } from "./injections/injuctions";
         adminController.approveInstructor(req, res, next);
       })
     );
+    // 8888888888888888888888888888888888888888888888888888888888888888888888888888
+    router.get(
+      "/users",
+      isAuthenticated,
+      autheriseRoles("admin"),
+      catchAsyncErrors((req: Req, res: Res, next: Next) => {
+        adminController.getUsers(req,res,next);
+      })
+    );
+    // 8888888888888888888888888888888888888888888888888888888888888888888888888888
+
     return router;
   };

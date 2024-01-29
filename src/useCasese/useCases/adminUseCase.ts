@@ -4,7 +4,7 @@ import ErrorHandler from "../handler/errorHandler"
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../interface/repository/userRepository"
 import { IJsonResponse } from "../interface/services/jsonResponse";
-import {approveInstructor} from "./admin/index"
+import {approveInstructor,getUsers} from "./admin/index"
 
 export class AdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -24,5 +24,9 @@ export class AdminUseCase {
     } catch (error) {
       return next(new ErrorHandler(500, "internal server error")) as any;
     }
+  }
+
+  async getUsers(next:Next){
+    return await getUsers(this.userRepository, next);
   }
 }
