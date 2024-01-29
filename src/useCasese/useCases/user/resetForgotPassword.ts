@@ -1,12 +1,14 @@
 import { Req } from "../../../frameworks/types/serverPackageTypes";
 import { IOtpRepository } from "../../interface/repository/otpRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
+import { IHashpassword } from "../../interface/services/hashPassword";
 import { IJwt } from "../../interface/services/jwt.types";
 
 export const resetForgotPassword = async (
   userRepository: IUserRepository,
   otpRepository: IOtpRepository,
   jwtVerifier: IJwt,
+  bcrypt:IHashpassword,
   req: Req,
   token: string
 ) => {
@@ -25,9 +27,10 @@ export const resetForgotPassword = async (
       );
       console.log("resetforgotpassword --1", result);
     }
+    let password = await bcrypt.createHash(req.body.password);
     const user = await userRepository.findByIdAndUpdate(
       decode.userId as string,
-      { password: req.body.password as string }
+      { password:password as string }
     );
       if(user){
         return{

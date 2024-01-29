@@ -25,6 +25,10 @@ role: {
   type:String,
   default:"user"
 },
+status:{
+  type:String,
+  default:"active"
+},
 isVerified:{
   type:Boolean,
   default:false

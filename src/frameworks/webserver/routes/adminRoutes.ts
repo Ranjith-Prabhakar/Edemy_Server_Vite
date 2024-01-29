@@ -31,6 +31,14 @@ export const adminRoute = (router: Route) => {
       adminController.getUser(req, res, next);
     })
   );
-
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888
+  router.patch(
+    "/freezUser/:id",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      adminController.freezUser(req,res,next)
+    })
+  );
   return router;
 };

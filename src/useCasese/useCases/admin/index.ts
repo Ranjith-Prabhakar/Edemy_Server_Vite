@@ -1,4 +1,5 @@
 import { approveInstructor } from "./approveInstructor";
 import { getUsers } from "./getUsers";
 import {getUser} from './getUser'
-export { approveInstructor, getUsers, getUser };
+import { freezUser } from "./freezUser";
+export { approveInstructor, getUsers, getUser,freezUser };

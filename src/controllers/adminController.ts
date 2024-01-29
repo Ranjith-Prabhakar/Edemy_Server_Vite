@@ -46,4 +46,13 @@ export class AdminController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+  // *****************************************************************************************************************************
+  async freezUser(req:Req,res:Res,next:Next){
+    const response = await this.adminUseCase.freezUser(req,next)
+    res
+      .status(200)
+      .json({ success: true, message: "user have been freezed successfully" });
+    console.log("admin controller ",response)
+  }
 }
+

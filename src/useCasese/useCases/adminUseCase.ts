@@ -1,10 +1,9 @@
-
-import { Next, Req, Res } from "../../frameworks/types/serverPackageTypes"
-import ErrorHandler from "../handler/errorHandler"
+import { Next, Req, Res } from "../../frameworks/types/serverPackageTypes";
+import ErrorHandler from "../handler/errorHandler";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
-import { IUserRepository } from "../interface/repository/userRepository"
+import { IUserRepository } from "../interface/repository/userRepository";
 import { IJsonResponse } from "../interface/services/jsonResponse";
-import {approveInstructor,getUsers,getUser} from "./admin/index"
+import { approveInstructor, getUsers, getUser, freezUser } from "./admin/index";
 
 export class AdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -34,7 +33,11 @@ export class AdminUseCase {
     return await getUsers(this.userRepository, next);
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async getUser(req:Req,next:Next){
-    return await getUser(this.userRepository,req,next)
+  async getUser(req: Req, next: Next) {
+    return await getUser(this.userRepository, req, next);
+  }
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async freezUser(req: Req, next: Next) {
+    return freezUser(this.userRepository, req, next);
   }
 }

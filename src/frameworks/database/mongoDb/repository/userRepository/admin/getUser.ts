@@ -1,5 +1,5 @@
-import { IUser } from "../../../../../entities/user";
-import userModel from "../../models/userModel";
+import { IUser } from "../../../../../../entities/user";
+import userModel from "../../../models/userModel";
 
 export const getUser = async (id: string): Promise<IUser> => {
   try {

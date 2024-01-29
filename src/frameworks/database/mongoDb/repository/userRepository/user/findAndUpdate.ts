@@ -1,5 +1,5 @@
-import { IJsonResponse } from "../../../../../useCasese/interface/services/jsonResponse";
-import userModel from "../../models/userModel";
+import { IJsonResponse } from "../../../../../../useCasese/interface/services/jsonResponse";
+import userModel from "../../../models/userModel";
 
 export const findAndUpdate = async (
   data: { [key: string]: string | number },
@@ -10,7 +10,11 @@ export const findAndUpdate = async (
   delete data?.agreementId;
   const update = await userModels.findByIdAndUpdate(id, data, { new: true });
   if (!update) {
-    return { status: 404, success: false, message: "User not found" } as IJsonResponse;
+    return {
+      status: 404,
+      success: false,
+      message: "User not found",
+    } as IJsonResponse;
   } else {
     return {
       status: 200,
