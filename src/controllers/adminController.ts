@@ -47,12 +47,27 @@ export class AdminController {
     }
   }
   // *****************************************************************************************************************************
-  async freezUser(req:Req,res:Res,next:Next){
-    const response = await this.adminUseCase.freezUser(req,next)
-    res
-      .status(200)
-      .json({ success: true, message: "user have been freezed successfully" });
-    console.log("admin controller ",response)
+  async freezUser(req: Req, res: Res, next: Next) {
+    try {
+      const response = await this.adminUseCase.freezUser(req, next);
+      res
+        .status(200)
+        .json({
+          success: true,
+          message: "user have been freezed successfully",
+        });
+    } catch (error:any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
+  async addCategory(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.adminUseCase.addCategory(req, next);
+      res.status(200).json(result);
+      
+    } catch (error:any) {
+      return next(new ErrorHandler(500, error.message));
+    }
   }
 }
-

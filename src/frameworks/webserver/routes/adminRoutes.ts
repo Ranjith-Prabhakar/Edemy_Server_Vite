@@ -37,7 +37,16 @@ export const adminRoute = (router: Route) => {
     isAuthenticated,
     autheriseRoles("admin"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-      adminController.freezUser(req,res,next)
+      adminController.freezUser(req, res, next);
+    })
+  );
+
+  router.post(
+    "/add_category",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      adminController.addCategory(req, res, next);
     })
   );
   return router;

@@ -141,7 +141,6 @@ export class UserUsecase {
   // **************************************************************************************
 
   async resetForgotPassword(req:Req, token: string) {
-    console.log("userUseCase- resetForgotPassword");
     return await resetForgotPassword(
       this.userRepository,
       this.otpRepository,

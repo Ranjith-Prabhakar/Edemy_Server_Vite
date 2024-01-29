@@ -1,6 +1,7 @@
 import userModel from "../../../database/mongoDb/models/userModel";
 import { UserRepository } from "../../../database/mongoDb/repository/userRepository";
 import { OtpRepository } from "../../../database/mongoDb/repository/otp.repository";
+import { CategoryRepository } from "../../../database/mongoDb/repository/categoryRepository";
 import { InstrctorAgreementRepository } from "../../../database/mongoDb/repository/instructorAgreementRepository";
 import { UserUsecase } from "../../../../useCasese/useCases/userUseCase";
 import { Encrypt } from "../../../services/hashPassword";
@@ -23,6 +24,7 @@ const jwtToken = new JWTtoken();
 const cloudSession = new CloudSession();
 const requestManagement = new RequestManagement();
 const instrctorAgreementRepository = new InstrctorAgreementRepository();
+const categoryRepository = new CategoryRepository()
 
 const userUseCase = new UserUsecase(
   userRepository,
@@ -38,7 +40,8 @@ const userUseCase = new UserUsecase(
 
 const adminUseCase = new AdminUseCase(
   userRepository,
-  instrctorAgreementRepository
+  instrctorAgreementRepository,
+  categoryRepository
 );
 
 const userController = new UserController(userUseCase);
