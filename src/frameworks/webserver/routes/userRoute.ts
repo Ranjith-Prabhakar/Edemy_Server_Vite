@@ -48,6 +48,20 @@ export function userRoute(router: Route) {
       userController.beInstructor(req, res, next);
     })
   );
- 
+  /////////
+  router.post(
+    "/forgot_password",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      userController.forgotPassword(req, res, next);
+    })
+  );
+  /////////
+  router.patch(
+    "/reset_forgot_password",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      userController.resetForgotPassword(req,res,next)
+    })
+  );
+
   return router;
 }

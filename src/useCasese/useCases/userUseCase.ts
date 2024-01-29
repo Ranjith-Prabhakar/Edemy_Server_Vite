@@ -1,4 +1,4 @@
-import {Req,Res,Next} from "../../frameworks/types/serverPackageTypes"
+import { Req, Res, Next } from "../../frameworks/types/serverPackageTypes";
 import { IUserRepository } from "../interface/repository/userRepository";
 import { IHashpassword } from "../interface/services/hashPassword";
 import { ICreateOtp } from "../interface/services/createOtp";
@@ -14,6 +14,8 @@ import {
   logout,
   refresh,
   beInstructor,
+  forgotPassword,
+  resetForgotPassword,
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 
@@ -74,7 +76,6 @@ export class UserUsecase {
   }
   // **************************************************************************************
   async verifyUser(verificationCode: string, token: string) {
-    console.log("uuc token",token)
     const verification = await verifyUser(
       this.userRepository,
       this.otpRepository,
@@ -126,5 +127,21 @@ export class UserUsecase {
     );
   }
   // **************************************************************************************
- 
+  async forgotPassword(req: Req, next: Next) {
+    return await forgotPassword(
+      this.otpRepository,
+      this.userRepository,
+      this.sendMail,
+      this.otpGenerator,
+      this.jwtToken,
+      req,
+      next
+    );
+  }
+  // **************************************************************************************
+
+  async resetForgotPassword(req:Req, token: string) {
+    console.log("userUseCase- resetForgotPassword");
+    return await resetForgotPassword(this.userRepository,this.otpRepository,this.jwtToken,req,token);
+  }
 }

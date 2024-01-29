@@ -4,8 +4,7 @@ import ErrorResponse from "./errorHandler";
 export const errorMiddleware = (err: any, req: Req, res: Res, next: Next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "internal server error";
-
-  console.log("inside middleware ==1", err.name);
+console.log("inside error middleware")
   console.error(err);
 
   //wrong mongoDb id
@@ -13,33 +12,28 @@ export const errorMiddleware = (err: any, req: Req, res: Res, next: Next) => {
     const message = `Resource not found, invalid:${err.path}`;
     err = new ErrorResponse(400, message);
   }
-  console.log("inside middleware ==2", err.name);
   //duplicate key error =>for authentication
   if (err.name === 11000) {
     const message = `Duplicate ${Object.keys(err.keyValue)} entered`;
     err = new ErrorResponse(400, message);
   }
-  console.log("inside middleware ==3", err.name);
   //wrong jwt error
   if (err.name === "jsonWebTokenError") {
     const message = `json web token is invalid,try again`;
     err = new ErrorResponse(400, message);
   }
-  console.log("inside middleware ==4", err.name);
   //token expired error
   if (err.name === "TokenExpiredError") {
     const message = `json web token has expired`;
     err = new ErrorResponse(400, message);
   }
-  console.log("inside middleware ==5", err.name);
-  if (err instanceof ErrorResponse) {
-    res.status(err.statusCode).json({
-      success: false,
-      status: err.statusCode,
-      message: err.message,
-    });
-  }
-  console.log("inside middleware ==6", err.name);
+  // if (err instanceof ErrorResponse) {
+  //   res.status(err.statusCode).json({
+  //     success: false,
+  //     status: err.statusCode,
+  //     message: err.message,
+  //   });
+  // }
   res.status(err.statusCode).json({
     success: false,
     message: err.message,

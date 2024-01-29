@@ -90,7 +90,7 @@ export class UserController {
       });
       delete newUser.token;
       res.json(newUser);
-    } catch (error:any) {
+    } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
@@ -98,39 +98,27 @@ export class UserController {
   async verifyUser(req: Req, res: Res, next: Next) {
     try {
       let token = req.cookies.verificationToken;
-      console.log("usercontroller=>verifyuser====1")
       req.body.verificationCode = req.body.verificationCode
         ? req.body.verificationCode.trim()
         : null;
 
-         console.log("usercontroller=>verifyuser====2");
-
       if (req.body.verificationCode.length !== 4) {
-         console.log("usercontroller=>verifyuser====3");
         return res.status(400).json({
           success: false,
           message: "missing required fields",
         });
       }
-       console.log("usercontroller=>verifyuser====4 token",token);
       const result = await this.userUseCase.verifyUser(
         req.body.verificationCode,
         token
       );
-       console.log("usercontroller=>verifyuser====5");
 
       if (result.success) {
-       console.log("usercontroller=>verifyuser====6");
-
         res.clearCookie("verificationToken").send(result);
       } else {
-       console.log("usercontroller=>verifyuser====7",result);
-
         res.send(result);
       }
     } catch (error) {
-       console.log("usercontroller=>verifyuser====8");
-
       return next(new ErrorHandler(500, "server error"));
     }
   }
@@ -162,7 +150,6 @@ export class UserController {
   async logout(req: Req, res: Res, next: Next) {
     try {
       const result = await this.userUseCase.logout(req, res, next);
-      console.log("first", result);
       res.send(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, "server error"));
@@ -182,10 +169,60 @@ export class UserController {
   // *****************************************************************************************************************************
   async beInstructor(req: Req, res: Res, next: Next) {
     try {
-      const result = await this.userUseCase.beInstructor(req, next) as IJsonResponse;
+      const result = (await this.userUseCase.beInstructor(
+        req,
+        next
+      )) as IJsonResponse;
       res.status(result.status).json(result);
     } catch (error) {
       return next(new ErrorHandler(500, "server error"));
+    }
+  }
+  // *****************************************************************************************************************************
+  async forgotPassword(req: Req, res: Res, next: Next) {
+    try {
+      const result = (await this.userUseCase.forgotPassword(req, next)) as {
+        token: string;
+        status: number;
+        succuss: boolean;
+        message: string;
+      };
+
+      res.cookie("verificationToken", result.token);
+      result.token = "";
+      res.status(200).json(result);
+    } catch (error) {
+      return next(new ErrorHandler(500, "server error"));
+    }
+  }
+  // *****************************************************************************************************************************
+  async resetForgotPassword(req: Req, res: Res, next: Next) {
+    try {
+      console.log("inside userController ==resetForgotPassword",req.cookies);
+      let token = req.cookies.verificationToken;
+      console.log("inside userController ==resetForgotPassword token", token);
+      req.body.verificationCode = req.body.verificationCode
+        ? req.body.verificationCode.trim()
+        : null;
+
+      if (req.body.verificationCode.length !== 4) {
+        return res.status(400).json({
+          success: false,
+          message: "missing required fields",
+        });
+      }
+      const result = await this.userUseCase.resetForgotPassword(
+        req,
+        token
+      );
+
+       if (result?.success) {
+         res.clearCookie("verificationToken").send(result);
+       } else {
+         res.send(result);
+       }
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
 }

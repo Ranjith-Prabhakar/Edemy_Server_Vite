@@ -14,28 +14,19 @@ export const isAuthenticated = async (
   const refreshToken = req.cookies.refreshToken as string;
 
   if (!accessToken || !refreshToken) {
-    console.log("inside auth mid,isauth, ---1");
     return next(new ErrorHandler(400, "please login to  use this resource"));
   }
-console.log("auth middleware before jwt verify");
-const decodedPayload = jwt.decode(accessToken);
-console.log("Decoded payload", decodedPayload);
+// const decodedPayload = jwt.decode(accessToken);
   const decode = await jwt.verify(
     accessToken as string,
     process.env.JWT_ACCESS_KEY as Secret
   ) as JwtPayload;
 
-  console.log("auth middleware decode",decode)
   if (!decode) {
-    console.log("inside auth mid,isauth, ---2");
     return next(new ErrorHandler(400, "Access Token is invalid"));
   }
-  console.log(decode.id === "65b4b4ad7a15703d99955aea");
-  console.log("inside auth mid,isauth decoded id", decode.id);
   const user = await redis.get(decode.id);
-  console.log("inside auth mid,isauth,  decode...", user);
   if (!user) {
-    console.log("inside auth mid,isauth, ---3");
     return next(new ErrorHandler(400, "please login to use this resource"));
   }
 

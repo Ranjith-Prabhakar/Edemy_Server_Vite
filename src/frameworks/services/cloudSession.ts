@@ -17,7 +17,6 @@ export class CloudSession implements ICloudSession {
   // **********************************************************************************************
   async getUser(id: string): Promise<string | IJsonResponse> {
     const user = await redis.get(id);
-    console.log("inside cloud = frame",id)
     if (!user) {
       return { status: 400, success: false, message: "session has expired" };
     } else {

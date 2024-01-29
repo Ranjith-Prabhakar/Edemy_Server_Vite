@@ -30,10 +30,15 @@ export class JWTtoken implements IJwt {
   }
   // ***************************************************************************************
   async verifyJwt(token: string): Promise<IUser> {
-    console.log(
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlciIsImVtYWlsIjoibmFjYWZhMjI3OUBldnZnby5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRRMzdsMHNnd3ZBVVBuMnBZNXdUbTlPLktaUWN5NzB2aVZjZ3lrNjVFRGhBWlJJalRjdFhtZSIsImlhdCI6MTcwNjQzODM1OCwiZXhwIjoxNzA2NDM5MjU4fQ.egSKmZqKL3l2wjd-_UVxpqaB2Gfd87pACI7OqQuDIJs" === token
-    );
-    return await jwt.verify(token, this.JWT_VERIFICATION_KEY) as IUser
+    return (await jwt.verify(token, this.JWT_VERIFICATION_KEY)) as IUser;
+  }
+  // ***************************************************************************************
+
+  async forgotPasswordToken(userId:string,email:string): Promise<string> {
+    const token = await jwt.sign({ userId:userId,email:email }, this.JWT_VERIFICATION_KEY, {
+      expiresIn: "10m",
+    });
+    return token;
   }
 }
 

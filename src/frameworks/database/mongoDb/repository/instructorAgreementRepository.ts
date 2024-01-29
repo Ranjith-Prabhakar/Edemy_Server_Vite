@@ -11,14 +11,11 @@ export class InstrctorAgreementRepository
     agreement: IInstructorAgreement
   ): Promise<IJsonResponse> {
     try {
-      // console.log("InstrctorAgreementRepository", agreement.userId);
       const isExist = await instructorAgreementModel.findOne({
         userId: agreement.userId as string,
       });
-      console.log("InstrctorAgreementRepository", isExist);
 
       if (!isExist) {
-        console.log("InstrctorAgreementRepository inside !isExise");
 
         await instructorAgreementModel.create(agreement);
         return {
@@ -44,7 +41,6 @@ export class InstrctorAgreementRepository
   // ******************************************************************************************
   async updateStatus(userId: string, action: string): Promise<IJsonResponse> {
     try {
-      console.log("this.updateStatus = frame ",userId , action);
       const result = await instructorAgreementModel.findByIdAndUpdate(
         userId,
         {
@@ -52,7 +48,6 @@ export class InstrctorAgreementRepository
         },
         { new: true }
       );
-      console.log("this.updateStatus = frame ", result);
       if (result) {
         return {
           status: 200,

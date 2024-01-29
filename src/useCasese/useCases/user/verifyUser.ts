@@ -11,9 +11,7 @@ export const verifyUser = async (
 ) => {
   //Promise<Response>
   try {
-    console.log("verifyUser=>uuc ==1,token",token)
     let decode = await jwtVerifier.verifyJwt(token);
-    console.log("verifyUser=>uuc ==2");
     if (decode) {
       const result = await otpRepository.findAndDeleteUser(
         decode.email,
@@ -21,6 +19,7 @@ export const verifyUser = async (
       );
       if (result) {
         decode.isVerified = true;
+
         const newUser = await userRepository.verifyUser(decode);
         return newUser
       } else {
