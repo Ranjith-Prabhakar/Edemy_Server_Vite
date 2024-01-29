@@ -27,5 +27,7 @@ export interface IUserRepository {
     data: { [key: string]: string | number }
   ): Promise<IJsonResponse>;
   // 8888888888888888888888888888888888888888888888888888888888888888888888
-  getUsers():Promise<IUser[]>
+  getUsers(): Promise<IUser[]>;
+  // 8888888888888888888888888888888888888888888888888888888888888888888888
+  getUser(id:string):Promise<IUser>
 }

@@ -4,29 +4,37 @@ import ErrorHandler from "../handler/errorHandler"
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../interface/repository/userRepository"
 import { IJsonResponse } from "../interface/services/jsonResponse";
-import {approveInstructor,getUsers} from "./admin/index"
+import {approveInstructor,getUsers,getUser} from "./admin/index"
 
 export class AdminUseCase {
   private readonly userRepository: IUserRepository;
-  private readonly instrctorAgreementRepository:IInstructorAgreementRepository
-  constructor(userRepository: IUserRepository,instrctorAgreementRepository:IInstructorAgreementRepository) {
+  private readonly instrctorAgreementRepository: IInstructorAgreementRepository;
+  constructor(
+    userRepository: IUserRepository,
+    instrctorAgreementRepository: IInstructorAgreementRepository
+  ) {
     this.userRepository = userRepository;
     this.instrctorAgreementRepository = instrctorAgreementRepository;
   }
-
-  async approveInstructor(
-    req: Req,
-    res: Res,
-    next: Next
-  ): Promise<IJsonResponse> {
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async approveInstructor(req: Req, next: Next): Promise<IJsonResponse> {
     try {
-      return await approveInstructor(this.userRepository,this.instrctorAgreementRepository, req, next);
+      return await approveInstructor(
+        this.userRepository,
+        this.instrctorAgreementRepository,
+        req,
+        next
+      );
     } catch (error) {
       return next(new ErrorHandler(500, "internal server error")) as any;
     }
   }
-
-  async getUsers(next:Next){
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getUsers(next: Next) {
     return await getUsers(this.userRepository, next);
+  }
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getUser(req:Req,next:Next){
+    return await getUser(this.userRepository,req,next)
   }
 }

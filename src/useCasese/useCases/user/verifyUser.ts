@@ -2,6 +2,7 @@ import { Response } from "express";
 import { IOtpRepository } from "../../interface/repository/otpRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { IJwt } from "../../interface/services/jwt.types";
+import { IUser } from "../../../entities/user";
 export const verifyUser = async (
   userRepository: IUserRepository,
   otpRepository: IOtpRepository,
@@ -11,7 +12,7 @@ export const verifyUser = async (
 ) => {
   //Promise<Response>
   try {
-    let decode = await jwtVerifier.verifyJwt(token);
+    let decode = await jwtVerifier.verifyJwt(token) as IUser;
     if (decode) {
       const result = await otpRepository.findAndDeleteUser(
         decode.email,

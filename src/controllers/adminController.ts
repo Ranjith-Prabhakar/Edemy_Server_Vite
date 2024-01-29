@@ -11,7 +11,7 @@ export class AdminController {
   // *****************************************************************************************************************************
   async approveInstructor(req: Req, res: Res, next: Next) {
     try {
-      const result = await this.adminUseCase.approveInstructor(req, res, next);
+      const result = await this.adminUseCase.approveInstructor(req, next);
 
       res.status(result.status).json(result);
     } catch (error: any) {
@@ -22,12 +22,25 @@ export class AdminController {
   async getUsers(req: Req, res: Res, next: Next) {
     try {
       const result = await this.adminUseCase.getUsers(next);
-      console.log("result",result)
+      console.log("result", result);
       res.status(200).json({
-        status: 200,
-        success: false,
+        success: true,
         message: "users have been fetched successfully ",
         users: result,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
+  async getUser(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.adminUseCase.getUser(req, next);
+      console.log("admin controller getUser", result);
+      res.status(200).json({
+        success: true,
+        message: "user have been fetched successfully",
+        user: result,
       });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

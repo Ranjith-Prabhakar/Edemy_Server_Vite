@@ -4,6 +4,7 @@ import { findUserForLoin } from "./findUserForLoin";
 import { findAndUpdate } from "./findAndUpdate";
 import { findByIdAndUpdate } from "./findByIdAndUpdate";
 import { getUsers } from "./getUsers";
+import {getUser} from "./getUser"
 
 export {
   verifyUser,
@@ -12,4 +13,5 @@ export {
   findAndUpdate,
   findByIdAndUpdate,
   getUsers,
+  getUser,
 };

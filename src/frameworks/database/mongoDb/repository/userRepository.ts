@@ -9,7 +9,8 @@ import {
   findUserForLoin,
   findAndUpdate,
   findByIdAndUpdate,
-  getUsers
+  getUsers,
+  getUser,
 } from "./user/index";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 
@@ -55,7 +56,15 @@ export class UserRepository implements IUserRepository {
     return await findByIdAndUpdate(id, data);
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
- async getUsers(): Promise<IUser[]> {
-    return await getUsers()   
+  async getUsers(): Promise<IUser[]> {
+    return await getUsers();
+  }
+  ///888888888888888888888888888888888888888888888888888888888888888888888
+  async getUser(id: string): Promise<IUser> {
+    try {
+      return await getUser(id);
+    } catch (error) {
+      throw error;
+    }
   }
 }
