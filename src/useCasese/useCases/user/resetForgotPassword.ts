@@ -8,7 +8,7 @@ export const resetForgotPassword = async (
   userRepository: IUserRepository,
   otpRepository: IOtpRepository,
   jwtVerifier: IJwt,
-  bcrypt:IHashpassword,
+  bcrypt: IHashpassword,
   req: Req,
   token: string
 ) => {
@@ -19,26 +19,23 @@ export const resetForgotPassword = async (
       iat: number;
       exp: number;
     };
-    if (decode) {
-      console.log("resetforgotpassword --0", decode);
-      const result = await otpRepository.findAndDeleteUser(
-        decode.email as string,
-        req.body.verificationCode
-      );
-      console.log("resetforgotpassword --1", result);
-    }
+    await otpRepository.findAndDeleteUser(
+      decode.email as string,
+      req.body.verificationCode
+    );
+
     let password = await bcrypt.createHash(req.body.password);
     const user = await userRepository.findByIdAndUpdate(
       decode.userId as string,
-      { password:password as string }
+      { password: password as string }
     );
-      if(user){
-        return{
-          status:200,
-          success:true,
-          message:"user password has been updated"
-        }
-      }
+    if (user) {
+      return {
+        status: 200,
+        success: true,
+        message: "user password has been updated",
+      };
+    }
   } catch (error) {
     throw error;
   }

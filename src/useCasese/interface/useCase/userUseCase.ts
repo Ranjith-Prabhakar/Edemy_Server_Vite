@@ -32,4 +32,5 @@ export interface IUserUseCase {
   refresh(req: Req, res: Res, next: Next): Promise<IToken | void>;
   beInstructor(req: Req, next: Next): Promise<IJsonResponse | void>;
   forgotPassword(req: Req, next: Next): Promise<string | void>;
+  resetForgotPassword(req: Req, token: string): Promise<IJsonResponse | void>;
 }
