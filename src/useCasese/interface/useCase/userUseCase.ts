@@ -26,4 +26,6 @@ export interface IUserUseCase {
     { email, password }: { email: string; password: string },
     next: Next
   ): Promise<{ user: IUser; tokens: IToken } | void>;
+
+  logout(req: Req, res: Res, next: Next): Promise<void>;
 }

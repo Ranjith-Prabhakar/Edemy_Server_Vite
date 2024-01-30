@@ -3,7 +3,11 @@ import { Res } from "../types/serverPackageTypes";
 
 export class RequestManagement implements IRequestManagement {
   async logoutCleanUp(res: Res): Promise<void> {
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    try {
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+    } catch (error) {
+      throw error;
+    }
   }
 }

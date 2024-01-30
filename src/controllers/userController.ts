@@ -85,8 +85,13 @@ export class UserController {
   // *****************************************************************************************************************************
   async logout(req: Req, res: Res, next: Next) {
     try {
-      const result = await this.userUseCase.logout(req, res, next);
-      res.send(result);
+      await this.userUseCase.logout(req, res, next);
+      res
+        .status(200)
+        .json({
+          success: true,
+          message: "user has been loged out successfully",
+        });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

@@ -100,14 +100,17 @@ export class UserUsecase implements IUserUseCase {
         token,
         next
       );
-    } catch (error:any) {
+    } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
   // **************************************************************************************
-  async login({ email, password }: { email: string; password: string },next:Next):Promise<{user:IUser,tokens:IToken} | void> {
+  async login(
+    { email, password }: { email: string; password: string },
+    next: Next
+  ): Promise<{ user: IUser; tokens: IToken } | void> {
     try {
-      console.log("inside use case login")
+      console.log("inside use case login");
       return await login(
         this.userRepository,
         this.bcrypt,
@@ -116,21 +119,24 @@ export class UserUsecase implements IUserUseCase {
         email,
         password,
         next
-      ) 
-    } catch (error:any) {
-      return next(new ErrorHandler(500,error.message))
+      );
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // **************************************************************************************
-  async logout(req: Req, res: Res, next: Next) {
-    const result = await logout(
-      this.cloudSession,
-      this.requestManagement,
-      req,
-      res,
-      next
-    );
-    return result;
+  async logout(req: Req, res: Res, next: Next): Promise<void> {
+    try {
+      return await logout(
+        this.cloudSession,
+        this.requestManagement,
+        req,
+        res,
+        next
+      );
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
   }
   // **************************************************************************************
   async refresh(req: Req, res: Res, next: Next): Promise<IToken> {
