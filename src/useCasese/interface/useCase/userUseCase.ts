@@ -28,4 +28,5 @@ export interface IUserUseCase {
   ): Promise<{ user: IUser; tokens: IToken } | void>;
 
   logout(req: Req, res: Res, next: Next): Promise<void>;
+  refresh(req: Req, res: Res, next: Next): Promise<IToken | void>;
 }

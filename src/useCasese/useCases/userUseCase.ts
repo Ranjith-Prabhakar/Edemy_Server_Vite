@@ -139,13 +139,18 @@ export class UserUsecase implements IUserUseCase {
     }
   }
   // **************************************************************************************
-  async refresh(req: Req, res: Res, next: Next): Promise<IToken> {
-    return (await refresh(
-      this.cloudSession,
-      this.jwtToken,
-      req,
-      next
-    )) as IToken;
+  async refresh(req: Req, res: Res, next: Next): Promise<IToken | void> {
+   try {
+     return (await refresh(
+       this.cloudSession,
+       this.jwtToken,
+       req,
+       next
+     )) as IToken;
+   } catch (error:any) {
+      return next(new ErrorHandler(500, error.message));
+    
+   }
   }
   // **************************************************************************************
   async beInstructor(req: Req, next: Next) {

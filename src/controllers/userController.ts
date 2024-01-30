@@ -8,6 +8,7 @@ import {
 } from "./middleware/tokenOptions";
 import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
+import { IToken } from "../useCasese/interface/services/jwt.types";
 
 export class UserController {
   private userUseCase: UserUsecase;
@@ -99,7 +100,7 @@ export class UserController {
   // *****************************************************************************************************************************
   async refresh(req: Req, res: Res, next: Next) {
     try {
-      const result = await this.userUseCase.refresh(req, res, next);
+      const result = await this.userUseCase.refresh(req, res, next) as IToken
       res.cookie("accessToken", result.accessToken);
       res.cookie("refreshToken", result.refreshToken);
       res.status(200).json({ success: true, message: "tokens are updated" });
