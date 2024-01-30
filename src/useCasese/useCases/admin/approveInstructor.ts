@@ -1,5 +1,5 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../../handler/errorHandler";
+import ErrorHandler from "../../middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { IJsonResponse } from "../../interface/services/jsonResponse";
@@ -28,7 +28,7 @@ export const approveInstructor = async (
           req.body.userId,
           "rejected"
         );
-        return instructorAgreement;
+      return instructorAgreement;
     }
   } catch (error: any) {
     throw next(new ErrorHandler(500, error.message));

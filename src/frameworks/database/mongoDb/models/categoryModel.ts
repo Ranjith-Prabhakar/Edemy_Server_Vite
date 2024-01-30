@@ -8,6 +8,10 @@ const categorySchema: Schema<ICategory> = new Schema({
     required: true,
   },
   totalItems: Number,
+  status: {
+    type: String,
+    default: "active",
+  },
 });
 
 const categoryModel: Model<ICategory> = mongoose.model(
@@ -15,4 +19,4 @@ const categoryModel: Model<ICategory> = mongoose.model(
   categorySchema
 );
 
-export default categoryModel
+export default categoryModel;

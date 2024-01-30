@@ -1,4 +1,6 @@
-import { Res } from "../../frameworks/types/serverPackageTypes";
+import { Next, Req, Res } from "../../frameworks/types/serverPackageTypes";
+import { TInputValidation } from "../../useCasese/interface/inputValidation/inputValidation";
+import ErrorHandler from "../../useCasese/middlewares/errorHandler";
 
 // Mail format
 const mailValidation = (email: string): boolean => {
@@ -14,63 +16,89 @@ const isStrongPassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };
 
-export const inputValidation = (
-  body: Record<string, string>,
+export const inputValidation: TInputValidation = async (
+  req: Req,
   route: string,
-  res: Res
+  next: Next
 ) => {
-   let newBody:{[key:string]:string}={};
   // Trim and validate required fields
-  for (let prop in body) {
-    //trim
-    newBody[prop] = body[prop].trim();
-    //empty space checking
-    if (!newBody[prop]) {
-      return res.status(400).json({
-        success: false,
-        message: "Missing required fields",
-      });
+  for (let prop in req.body) {
+    if (req.body.hasOwnProperty(prop)) {
+      //by this it will avoid the trim application on any prototype chained props
+      // trim and update the value
+      if (typeof req.body[prop] === "string") {
+        req.body[prop] = req.body[prop].trim();
+
+        // empty space checking
+        if (!req.body[prop]) {
+          return next(new ErrorHandler(400, "required fields are missing"));
+        }
+
+        if (prop === "email") {
+          if (!mailValidation(req.body[prop])) {
+            return next(new ErrorHandler(400, "Invalid email format"));
+          }
+        }
+
+        if (prop === "password") {
+          // Validate password length and complexity
+          if (req.body[prop].length < 8 || !isStrongPassword(req.body[prop])) {
+            return next(
+              new ErrorHandler(
+                400,
+                "Password does not meet complexity requirements"
+              )
+            );
+          }
+        }
+      }
     }
   }
+
+  console.log("verification", typeof req.body?.verificationCode);
 
   // Additional validations based on the route
   switch (route) {
     case "registerUser":
-      let { name, email, password, confirmPassword } = newBody;
+      let { name, password, confirmPassword } = req.body;
 
       // Validate name length
       if (name.length < 3) {
-        return res.status(400).json({
-          success: false,
-          message: "Name should have at least 3 characters",
-        });
-      }
-       if (!mailValidation(email)) {
-         return res.status(400).json({
-           success: false,
-           message: "Invalid email format",
-         });
-       }
-
-      // Validate password length and complexity
-      if (password.length < 8 || !isStrongPassword(password)) {
-        return res.status(400).json({
-          success: false,
-          message: "Password does not meet complexity requirements",
-        });
+        return next(new ErrorHandler(400, "give a name with valid width"));
       }
 
       // Confirm password matching
       if (password !== confirmPassword) {
-        return res.status(400).json({
-          success: false,
-          message: "Password mismatches",
-        });
+        return next(new ErrorHandler(400, "Password mismatches"));
       }
       break;
-
+    // ------------------------------------------------------------
+    case "verifyUser":
+      console.log("verification===", req.body.verificationCode);
+      if (req.body.verificationCode.length !== 4) {
+        return next(
+          new ErrorHandler(400, "verification code should be four digits")
+        );
+      }
+      break;
+    // ------------------------------------------------------------
+    case "beInstructor":
+      console.log("beInstructor===");
+      if (req.body.consent !== true) {
+        return next(
+          new ErrorHandler(400, "to proceed you should agree the terms")
+        );
+      }
+      break;
+    //----------------------------------------------------------------------
+    case "resetForgotPassword":
+      if (req.body.verificationCode.length !== 4) {
+        return next(
+          new ErrorHandler(400, "verification code should be four digits")
+        );
+      }
+      break;
     default:
-       return newBody;
+      return true;
   }
-  
 };

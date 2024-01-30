@@ -1,6 +1,6 @@
 import { IUser } from "../../../entities/user";
 import { Req, Next } from "../../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../../handler/errorHandler";
+import ErrorHandler from "../../middlewares/errorHandler";
 import { ICloudSession } from "../../interface/services/cloudSession";
 import { IJwt, IToken } from "../../interface/services/jwt.types";
 

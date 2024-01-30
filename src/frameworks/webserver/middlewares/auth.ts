@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ErrorHandler } from "../../../useCasese/handler/errorHandler";
+import { ErrorHandler } from "../../../useCasese/middlewares/errorHandler";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import { redis } from "../../../index";
 require("dotenv").config();
@@ -16,11 +16,11 @@ export const isAuthenticated = async (
   if (!accessToken || !refreshToken) {
     return next(new ErrorHandler(400, "please login to  use this resource"));
   }
-// const decodedPayload = jwt.decode(accessToken);
-  const decode = await jwt.verify(
+  // const decodedPayload = jwt.decode(accessToken);
+  const decode = (await jwt.verify(
     accessToken as string,
     process.env.JWT_ACCESS_KEY as Secret
-  ) as JwtPayload;
+  )) as JwtPayload;
 
   if (!decode) {
     return next(new ErrorHandler(400, "Access Token is invalid"));

@@ -1,10 +1,12 @@
 import { Req, Res, Next } from "../frameworks/types/serverPackageTypes";
 import { UserUsecase } from "../useCasese/useCases/userUseCase";
+import { inputValidation } from "./middleware/inputValidation";
+
 import {
   accessTokenOptions,
   refreshTokenOptions,
 } from "./middleware/tokenOptions";
-import ErrorHandler from "../useCasese/handler/errorHandler";
+import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
 
 export class UserController {
@@ -14,73 +16,10 @@ export class UserController {
     this.userUseCase = userUseCase;
   }
 
-  // validate email
-  validateEmail(email: string): boolean {
-    let emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-  // Password complexity check
-  isStrongPassword = (password: string): boolean => {
-    // Minimum 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
-    const passwordRegex: RegExp =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-    return passwordRegex.test(password);
-  };
-
   // *****************************************************************************************************************************
   async registerUser(req: Req, res: Res, next: Next) {
     try {
-      // let { name, email, password, confirmPassword } = req.body;
-      req.body.name = req.body.name ? req.body.name.trim() : null;
-      req.body.email = req.body.email ? req.body.email.trim() : null;
-      req.body.password = req.body.password ? req.body.password.trim() : null;
-      req.body.confirmPassword = req.body.confirmPassword
-        ? req.body.confirmPassword.trim()
-        : null;
-
-      if (
-        !req.body.name ||
-        !req.body.email ||
-        !req.body.password ||
-        !req.body.confirmPassword
-      ) {
-        return res.status(400).json({
-          success: false,
-          message: "missing required fields",
-        });
-      }
-
-      if (req.body.name.length < 3) {
-        return res.status(400).json({
-          success: false,
-          message: "name should have atleast 3 characters",
-        });
-      }
-
-      if (!this.validateEmail(req.body.email)) {
-        return res.status(400).json({
-          success: false,
-          message: "invalid email format",
-        });
-      }
-
-      // Validate password length and complexity
-      if (
-        req.body.password.length < 8 ||
-        !this.isStrongPassword(req.body.password)
-      ) {
-        return res.status(400).json({
-          success: false,
-          message: "Password does not meet complexity requirements",
-        });
-      }
-
-      if (req.body.password !== req.body.confirmPassword) {
-        return res.status(400).json({
-          success: false,
-          message: "password mismatches",
-        });
-      }
+      await inputValidation(req, "registerUser", next);
       const newUser = await this.userUseCase.registerUser(req.body);
 
       res.cookie("verificationToken", newUser.token, {
@@ -88,7 +27,9 @@ export class UserController {
         sameSite: "strict",
         expires: new Date(Date.now() + 30 * 60 * 1000),
       });
+
       delete newUser.token;
+
       res.json(newUser);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
@@ -97,17 +38,8 @@ export class UserController {
   // *****************************************************************************************************************************
   async verifyUser(req: Req, res: Res, next: Next) {
     try {
+      await inputValidation(req, "verifyUser", next);
       let token = req.cookies.verificationToken;
-      req.body.verificationCode = req.body.verificationCode
-        ? req.body.verificationCode.trim()
-        : null;
-
-      if (req.body.verificationCode.length !== 4) {
-        return res.status(400).json({
-          success: false,
-          message: "missing required fields",
-        });
-      }
       const result = await this.userUseCase.verifyUser(
         req.body.verificationCode,
         token
@@ -118,15 +50,14 @@ export class UserController {
       } else {
         res.send(result);
       }
-    } catch (error) {
-      return next(new ErrorHandler(500, "server error"));
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async login(req: Req, res: Res, next: Next) {
     try {
-      req.body.email.trim();
-      req.body.password.trim();
+      await inputValidation(req, "login", next);
       const result = await this.userUseCase.login(req.body);
       if (result.success) {
         res.cookie(
@@ -143,7 +74,7 @@ export class UserController {
       delete result.tokens;
       res.send(result);
     } catch (error: any) {
-      return next(new ErrorHandler(500, "server error"));
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -152,7 +83,7 @@ export class UserController {
       const result = await this.userUseCase.logout(req, res, next);
       res.send(result);
     } catch (error: any) {
-      return next(new ErrorHandler(500, "server error"));
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -162,25 +93,27 @@ export class UserController {
       res.cookie("accessToken", result.accessToken);
       res.cookie("refreshToken", result.refreshToken);
       res.status(200).json({ success: true, message: "tokens are updated" });
-    } catch (error) {
-      return next(new ErrorHandler(500, "server error"));
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async beInstructor(req: Req, res: Res, next: Next) {
     try {
+      await inputValidation(req, "beInstructor", next);
       const result = (await this.userUseCase.beInstructor(
         req,
         next
       )) as IJsonResponse;
       res.status(result.status).json(result);
-    } catch (error) {
-      return next(new ErrorHandler(500, "server error"));
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
+      await inputValidation(req, "forgotPassword", next);
       const result = (await this.userUseCase.forgotPassword(req, next)) as {
         token: string;
         status: number;
@@ -191,36 +124,21 @@ export class UserController {
       res.cookie("verificationToken", result.token);
       result.token = "";
       res.status(200).json(result);
-    } catch (error) {
-      return next(new ErrorHandler(500, "server error"));
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async resetForgotPassword(req: Req, res: Res, next: Next) {
     try {
-      console.log("inside userController ==resetForgotPassword",req.cookies);
+      await inputValidation(req, "resetForgotPassword", next);
       let token = req.cookies.verificationToken;
-      console.log("inside userController ==resetForgotPassword token", token);
-      req.body.verificationCode = req.body.verificationCode
-        ? req.body.verificationCode.trim()
-        : null;
-
-      if (req.body.verificationCode.length !== 4) {
-        return res.status(400).json({
-          success: false,
-          message: "missing required fields",
-        });
+      const result = await this.userUseCase.resetForgotPassword(req, token);
+      if (result?.success) {
+        res.clearCookie("verificationToken").send(result);
+      } else {
+        res.send(result);
       }
-      const result = await this.userUseCase.resetForgotPassword(
-        req,
-        token
-      );
-
-       if (result?.success) {
-         res.clearCookie("verificationToken").send(result);
-       } else {
-         res.send(result);
-       }
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

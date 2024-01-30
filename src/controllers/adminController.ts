@@ -1,6 +1,7 @@
 import { AdminUseCase } from "../useCasese/useCases/adminUseCase";
 import { Req, Res, Next } from "../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../useCasese/handler/errorHandler";
+import ErrorHandler from "../useCasese/middlewares/errorHandler";
+import { inputValidation } from "./middleware/inputValidation";
 
 export class AdminController {
   private readonly adminUseCase: AdminUseCase;
@@ -11,8 +12,8 @@ export class AdminController {
   // *****************************************************************************************************************************
   async approveInstructor(req: Req, res: Res, next: Next) {
     try {
+      await inputValidation(req, "approveInstructor", next);
       const result = await this.adminUseCase.approveInstructor(req, next);
-
       res.status(result.status).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
@@ -50,23 +51,21 @@ export class AdminController {
   async freezUser(req: Req, res: Res, next: Next) {
     try {
       const response = await this.adminUseCase.freezUser(req, next);
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "user have been freezed successfully",
-        });
-    } catch (error:any) {
+      res.status(200).json({
+        success: true,
+        message: "user have been freezed successfully",
+      });
+    } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async addCategory(req: Req, res: Res, next: Next) {
     try {
+      await inputValidation(req, "addCategory", next);
       const result = await this.adminUseCase.addCategory(req, next);
       res.status(200).json(result);
-      
-    } catch (error:any) {
+    } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }

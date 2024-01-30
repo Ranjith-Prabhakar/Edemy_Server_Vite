@@ -1,5 +1,5 @@
 import { IInstructorAgreement } from "../../../../entities/instructorAgreement";
-import ErrorHandler from "../../../../useCasese/handler/errorHandler";
+import ErrorHandler from "../../../../useCasese/middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../../../useCasese/interface/repository/instructorAgreementRepository";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 import instructorAgreementModel from "../models/instructorAgreementModel";
@@ -16,7 +16,6 @@ export class InstrctorAgreementRepository
       });
 
       if (!isExist) {
-
         await instructorAgreementModel.create(agreement);
         return {
           status: 200,
@@ -44,7 +43,7 @@ export class InstrctorAgreementRepository
       const result = await instructorAgreementModel.findByIdAndUpdate(
         userId,
         {
-          status: action ,
+          status: action,
         },
         { new: true }
       );

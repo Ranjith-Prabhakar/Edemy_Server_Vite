@@ -1,10 +1,16 @@
 import { Next, Req, Res } from "../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../handler/errorHandler";
+import ErrorHandler from "../middlewares/errorHandler";
 import { ICategoryRepository } from "../interface/repository/categoryRepository";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../interface/repository/userRepository";
 import { IJsonResponse } from "../interface/services/jsonResponse";
-import { approveInstructor, getUsers, getUser, freezUser,addCategory } from "./admin/index";
+import {
+  approveInstructor,
+  getUsers,
+  getUser,
+  freezUser,
+  addCategory,
+} from "./admin/index";
 
 export class AdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -17,7 +23,7 @@ export class AdminUseCase {
   ) {
     this.userRepository = userRepository;
     this.instrctorAgreementRepository = instrctorAgreementRepository;
-    this.categoryRepository = categoryRepository
+    this.categoryRepository = categoryRepository;
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async approveInstructor(req: Req, next: Next): Promise<IJsonResponse> {
