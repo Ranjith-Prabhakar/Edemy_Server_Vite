@@ -161,16 +161,20 @@ export class UserUsecase implements IUserUseCase {
     }
   }
   // **************************************************************************************
-  async forgotPassword(req: Req, next: Next) {
-    return await forgotPassword(
-      this.otpRepository,
-      this.userRepository,
-      this.sendMail,
-      this.otpGenerator,
-      this.jwtToken,
-      req,
-      next
-    );
+  async forgotPassword(req: Req, next: Next):Promise<string | void> {
+   try {
+     return await forgotPassword(
+       this.otpRepository,
+       this.userRepository,
+       this.sendMail,
+       this.otpGenerator,
+       this.jwtToken,
+       req,
+       next
+     );
+   } catch (error:any) {
+      return next(new ErrorHandler(500, error.message));
+   }
   }
   // **************************************************************************************
 

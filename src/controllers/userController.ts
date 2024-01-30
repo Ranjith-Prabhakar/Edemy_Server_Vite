@@ -87,12 +87,10 @@ export class UserController {
   async logout(req: Req, res: Res, next: Next) {
     try {
       await this.userUseCase.logout(req, res, next);
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "user has been loged out successfully",
-        });
+      res.status(200).json({
+        success: true,
+        message: "user has been loged out successfully",
+      });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -100,7 +98,7 @@ export class UserController {
   // *****************************************************************************************************************************
   async refresh(req: Req, res: Res, next: Next) {
     try {
-      const result = await this.userUseCase.refresh(req, res, next) as IToken
+      const result = (await this.userUseCase.refresh(req, res, next)) as IToken;
       res.cookie("accessToken", result.accessToken);
       res.cookie("refreshToken", result.refreshToken);
       res.status(200).json({ success: true, message: "tokens are updated" });
@@ -125,16 +123,13 @@ export class UserController {
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "forgotPassword", next);
-      const result = (await this.userUseCase.forgotPassword(req, next)) as {
-        token: string;
-        status: number;
-        succuss: boolean;
-        message: string;
-      };
+      const result = await this.userUseCase.forgotPassword(req, next);
 
-      res.cookie("verificationToken", result.token);
-      result.token = "";
-      res.status(200).json(result);
+      res.cookie("verificationToken", result);
+      res.status(200).json({
+        succuss: true,
+        message: "verification code has been sent to your account",
+      });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

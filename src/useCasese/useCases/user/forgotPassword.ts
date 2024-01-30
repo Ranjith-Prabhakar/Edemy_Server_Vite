@@ -14,38 +14,30 @@ export const forgotPassword = async (
   jwtToken: IJwt,
   req: Req,
   next: Next
-) => {
+): Promise<string | void> => {
   try {
     const user = await userRepository.findUserByEmail(req.body.email);
-    console.log("forgot pasword --1", user);
     const otp = await otpGenerator.generateOTP();
-    console.log("forgot pasword --2", otp);
-
     await sendMail.sendEmailVerification(
       user?.name as string,
       user?.email as string,
       otp
     );
-    console.log("forgot pasword --3");
-
     const verificationToken = await jwtToken.forgotPasswordToken(
       user?._id as string,
       user?.email as string
     );
-    console.log("forgot pasword --4", verificationToken);
-
     await otpRepository.createOtpUserCollection({
       email: user?.email as string,
       otp,
     });
-    console.log("forgot pasword --5", otpRepository);
-
-    return {
-      token: verificationToken,
-      status: 200,
-      succuss: true,
-      message: "verification code has been sent to your account",
-    };
+    return verificationToken;
+    // {
+    //   token: verificationToken,
+    //   status: 200,
+    //   succuss: true,
+    //   message: "verification code has been sent to your account",
+    // };
   } catch (error: any) {
     return next(new ErrorHandler(500, error.message));
   }
