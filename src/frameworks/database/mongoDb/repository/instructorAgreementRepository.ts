@@ -29,12 +29,8 @@ export class InstrctorAgreementRepository
           message: "request has been made already and is in processs",
         };
       }
-    } catch (error: any) {
-      return {
-        status: 500,
-        success: false,
-        message: "error while fetching data from db",
-      };
+    } catch (error) {
+      throw error;
     }
   }
   // ******************************************************************************************

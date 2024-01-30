@@ -21,6 +21,7 @@ import { IInstructorAgreementRepository } from "../interface/repository/instruct
 import { IUserUseCase } from "../interface/useCase/userUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
 import { IUser } from "../../entities/user";
+import { IJsonResponse } from "../interface/services/jsonResponse";
 
 export class UserUsecase implements IUserUseCase {
   private readonly userRepository: IUserRepository;
@@ -140,27 +141,24 @@ export class UserUsecase implements IUserUseCase {
   }
   // **************************************************************************************
   async refresh(req: Req, res: Res, next: Next): Promise<IToken | void> {
-   try {
-     return (await refresh(
-       this.cloudSession,
-       this.jwtToken,
-       req,
-       next
-     )) as IToken;
-   } catch (error:any) {
+    try {
+      return (await refresh(
+        this.cloudSession,
+        this.jwtToken,
+        req,
+        next
+      )) as IToken;
+    } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
-    
-   }
+    }
   }
   // **************************************************************************************
-  async beInstructor(req: Req, next: Next) {
-    return await beInstructor(
-      this.userRepository,
-      this.cloudSession,
-      this.instructorAgreementRepository,
-      req,
-      next
-    );
+  async beInstructor(req: Req, next: Next): Promise<IJsonResponse | void> {
+    try {
+      return await beInstructor(this.instructorAgreementRepository, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
   }
   // **************************************************************************************
   async forgotPassword(req: Req, next: Next) {
