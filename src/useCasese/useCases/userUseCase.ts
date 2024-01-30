@@ -8,7 +8,7 @@ import { ICloudSession } from "../interface/services/cloudSession";
 import { IRequestManagement } from "../interface/services/requestManagement";
 import { IJwt, IToken } from "../interface/services/jwt.types";
 import {
-  verifyUser,
+  createUser,
   registerUser,
   login,
   logout,
@@ -18,8 +18,11 @@ import {
   resetForgotPassword,
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
+import { IUserUseCase } from "../interface/useCase/userUseCase";
+import ErrorHandler from "../middlewares/errorHandler";
+import { IUser } from "../../entities/user";
 
-export class UserUsecase {
+export class UserUsecase implements IUserUseCase {
   private readonly userRepository: IUserRepository;
   private readonly bcrypt: IHashpassword;
   private readonly otpGenerator: ICreateOtp;
@@ -52,49 +55,71 @@ export class UserUsecase {
     this.instructorAgreementRepository = instructorAgreementRepository;
   }
   // **************************************************************************************
-  async registerUser({
-    name,
-    email,
-    password,
-  }: {
-    name: string;
-    email: string;
-    password: string;
-  }) {
-    let result = await registerUser(
-      this.otpRepository,
-      this.userRepository,
-      this.sendMail,
-      this.otpGenerator,
-      this.jwtToken,
-      this.bcrypt,
-      email,
+  async registerUser(
+    {
       name,
-      password
-    );
-    return result;
-  }
-  // **************************************************************************************
-  async verifyUser(verificationCode: string, token: string) {
-    const verification = await verifyUser(
-      this.userRepository,
-      this.otpRepository,
-      this.jwtToken,
-      verificationCode,
-      token
-    );
-    return verification;
-  }
-  // **************************************************************************************
-  async login({ email, password }: { email: string; password: string }) {
-    return await login(
-      this.userRepository,
-      this.bcrypt,
-      this.jwtToken,
-      this.cloudSession,
       email,
-      password
-    );
+      password,
+    }: {
+      name: string;
+      email: string;
+      password: string;
+    },
+    next: Next
+  ): Promise<string | void> {
+    try {
+      let result = await registerUser(
+        this.otpRepository,
+        this.userRepository,
+        this.sendMail,
+        this.otpGenerator,
+        this.jwtToken,
+        this.bcrypt,
+        email,
+        name,
+        password,
+        next
+      );
+      return result;
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // **************************************************************************************
+  async createUser(
+    verificationCode: string,
+    token: string,
+    next: Next
+  ): Promise<IUser | void> {
+    try {
+      return await createUser(
+        this.userRepository,
+        this.otpRepository,
+        this.jwtToken,
+        verificationCode,
+        token,
+        next
+      );
+    } catch (error:any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // **************************************************************************************
+  async login({ email, password }: { email: string; password: string },next:Next):Promise<{user:IUser,tokens:IToken} | void> {
+    try {
+      console.log("inside use case login")
+      return await login(
+        this.userRepository,
+        this.bcrypt,
+        this.jwtToken,
+        this.cloudSession,
+        email,
+        password,
+        next
+      ) 
+    } catch (error:any) {
+      return next(new ErrorHandler(500,error.message))
+    }
   }
   // **************************************************************************************
   async logout(req: Req, res: Res, next: Next) {
@@ -140,7 +165,7 @@ export class UserUsecase {
   }
   // **************************************************************************************
 
-  async resetForgotPassword(req:Req, token: string) {
+  async resetForgotPassword(req: Req, token: string) {
     return await resetForgotPassword(
       this.userRepository,
       this.otpRepository,

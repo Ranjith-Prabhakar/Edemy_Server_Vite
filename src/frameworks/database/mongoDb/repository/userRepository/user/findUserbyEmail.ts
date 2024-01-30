@@ -4,6 +4,6 @@ export const fidUserByEmail = async (
   email: string,
   userModels: typeof userModel
 ) => {
-  const existingUser = await userModels.findOne({ email });
+  const existingUser = await userModels.findOne({ email }).select("+password")
   return existingUser;
 };

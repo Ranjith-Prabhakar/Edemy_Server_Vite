@@ -20,36 +20,33 @@ export class UserController {
   async registerUser(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "registerUser", next);
-      const newUser = await this.userUseCase.registerUser(req.body);
+      const token = await this.userUseCase.registerUser(req.body, next);
 
-      res.cookie("verificationToken", newUser.token, {
+      res.cookie("verificationToken", token, {
         httpOnly: true,
         sameSite: "strict",
         expires: new Date(Date.now() + 30 * 60 * 1000),
       });
 
-      delete newUser.token;
-
-      res.json(newUser);
+      res.status(200).json({
+        success: true,
+        message: "verification otp has been sent the mail",
+      });
     } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+      return next(new ErrorHandler(error.status, error.message));
     }
   }
   // *****************************************************************************************************************************
-  async verifyUser(req: Req, res: Res, next: Next) {
+  async createUser(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "verifyUser", next);
       let token = req.cookies.verificationToken;
-      const result = await this.userUseCase.verifyUser(
+      const result = await this.userUseCase.createUser(
         req.body.verificationCode,
-        token
+        token,
+        next
       );
-
-      if (result.success) {
-        res.clearCookie("verificationToken").send(result);
-      } else {
-        res.send(result);
-      }
+      res.clearCookie("verificationToken").send(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -58,21 +55,29 @@ export class UserController {
   async login(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "login", next);
-      const result = await this.userUseCase.login(req.body);
-      if (result.success) {
-        res.cookie(
-          "accessToken",
-          result.tokens?.accessToken,
-          accessTokenOptions
-        );
-        res.cookie(
-          "refreshToken",
-          result.tokens?.accessToken,
-          refreshTokenOptions
-        );
-      }
-      delete result.tokens;
-      res.send(result);
+      const result = await this.userUseCase.login(req.body, next);
+      console.log("userController = result", result);
+      res.cookie("accessToken", result?.tokens.accessToken, accessTokenOptions);
+      res.cookie(
+        "refreshToken",
+        result?.tokens.accessToken,
+        refreshTokenOptions
+      );
+      res.status(200).json(result?.user);
+      // if (result.user) {
+      //   res.cookie(
+      //     "accessToken",
+      //     result.tokens?.accessToken,
+      //     accessTokenOptions
+      //   );
+      //   res.cookie(
+      //     "refreshToken",
+      //     result.tokens?.accessToken,
+      //     refreshTokenOptions
+      //   );
+      // }
+      // delete result.tokens;
+      // res.send(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -134,6 +139,7 @@ export class UserController {
       await inputValidation(req, "resetForgotPassword", next);
       let token = req.cookies.verificationToken;
       const result = await this.userUseCase.resetForgotPassword(req, token);
+
       if (result?.success) {
         res.clearCookie("verificationToken").send(result);
       } else {

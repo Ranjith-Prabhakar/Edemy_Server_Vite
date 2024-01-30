@@ -15,7 +15,7 @@ export function userRoute(router: Route) {
   router.post(
     "/verify_user",
     catchAsyncErrors((req: Req, res: Res, next: Next) =>
-      userController.verifyUser(req, res, next)
+      userController.createUser(req, res, next)
     )
   );
   /////////
@@ -59,7 +59,7 @@ export function userRoute(router: Route) {
   router.patch(
     "/reset_forgot_password",
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-      userController.resetForgotPassword(req,res,next)
+      userController.resetForgotPassword(req, res, next);
     })
   );
 

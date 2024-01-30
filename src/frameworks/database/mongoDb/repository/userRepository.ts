@@ -4,13 +4,12 @@ import { IUserRepository } from "../../../../useCasese/interface/repository/user
 import { IUser } from "../../../../entities/user";
 
 import {
-  verifyUser,
+  createUser,
   fidUserByEmail,
-  findUserForLoin,
   findAndUpdate,
   findByIdAndUpdate,
 } from "./userRepository/user/index";
-import { getUsers, getUser,freezUser } from "./userRepository/admin/index";
+import { getUsers, getUser, freezUser } from "./userRepository/admin/index";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 
 export class UserRepository implements IUserRepository {
@@ -21,24 +20,8 @@ export class UserRepository implements IUserRepository {
     return userExist;
   }
   // **************************************************************************************
-  async verifyUser(newUser: IUser): Promise<{
-    user?: IUser;
-    id?: number;
-    success: boolean;
-    message: string;
-    status: number;
-  }> {
-    return await verifyUser(newUser, this.userModels);
-  }
-  // **************************************************************************************
-
-  async findUserForLoin(email: string): Promise<{
-    user?: IUser;
-    success: boolean;
-    message: string;
-    status: number;
-  }> {
-    return await findUserForLoin(email, this.userModels);
+  async createUser(newUser: IUser): Promise<IUser> {
+    return await createUser(newUser, this.userModels);
   }
 
   // **************************************************************************************
@@ -68,6 +51,6 @@ export class UserRepository implements IUserRepository {
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
   async freezUser(id: string): Promise<boolean> {
-    return await freezUser(id)
+    return await freezUser(id);
   }
 }

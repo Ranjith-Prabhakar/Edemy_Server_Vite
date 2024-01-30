@@ -1,6 +1,7 @@
 import otpModel from "../models/otp.model";
 import { IOtp } from "../../../../entities/otp";
 import { IOtpRepository } from "../../../../useCasese/interface/repository/otpRepository";
+import { error } from "console";
 
 export class OtpRepository implements IOtpRepository {
   // **************************************************************************************
@@ -13,12 +14,11 @@ export class OtpRepository implements IOtpRepository {
     }
   }
   // **************************************************************************************
-  async findUser(email: string): Promise<{ exist: boolean; otp?: string }> {
-    const user = await otpModel.findOne({ email });
-    if (user) {
-      return { exist: true, otp: user.otp };
-    } else {
-      return { exist: false };
+  async findUser(email: string): Promise<null> {
+    try {
+      return await otpModel.findOne({ email });
+    } catch (error) {
+      throw error
     }
   }
 

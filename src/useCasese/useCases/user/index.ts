@@ -1,4 +1,4 @@
-import { verifyUser } from "./verifyUser";
+import { createUser } from "./createUser";
 import { registerUser } from "./registerUser";
 import { login } from "./login";
 import { logout } from "./logout";
@@ -8,7 +8,7 @@ import { forgotPassword } from "./forgotPassword";
 import { resetForgotPassword } from "./resetForgotPassword";
 
 export {
-  verifyUser,
+  createUser,
   registerUser,
   login,
   logout,

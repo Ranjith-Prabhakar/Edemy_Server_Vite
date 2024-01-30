@@ -1,15 +1,12 @@
-import { verifyUser } from "./verifyUser";
+import { createUser } from "./createUser";
 import { fidUserByEmail } from "./findUserbyEmail";
-import { findUserForLoin } from "./findUserForLoin";
 import { findAndUpdate } from "./findAndUpdate";
 import { findByIdAndUpdate } from "./findByIdAndUpdate";
 
 
 export {
-  verifyUser,
+  createUser,
   fidUserByEmail,
-  findUserForLoin,
   findAndUpdate,
   findByIdAndUpdate,
-  
 };

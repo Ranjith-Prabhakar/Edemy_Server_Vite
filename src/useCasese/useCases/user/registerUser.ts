@@ -5,46 +5,51 @@ import { ISendMail } from "../../interface/services/sendMail";
 import { ICreateOtp } from "../../interface/services/createOtp";
 import { IJwt } from "../../interface/services/jwt.types";
 import { IUserRepository } from "../../interface/repository/userRepository";
+import ErrorHandler from "../../middlewares/errorHandler";
+import { Next } from "../../../frameworks/types/serverPackageTypes";
 
 export const registerUser = async (
   otpRepository: IOtpRepository,
-  userRepository:IUserRepository,
+  userRepository: IUserRepository,
   sendMail: ISendMail,
   otpGenerator: ICreateOtp,
-  jwtTokenGenerator:IJwt,
-  bcrypt:IHashpassword,
+  jwtTokenGenerator: IJwt,
+  bcrypt: IHashpassword,
   email: string,
   name: string,
-  password:string  | Promise<string>
-): Promise<Response> => {
+  password: string | Promise<string>,
+  next: Next
+): Promise<string | void> => {
   try {
     // checking whether any user exist in the same email
-    let isUserExistOnUserRepo = await userRepository.findUserByEmail(email)
-    if(isUserExistOnUserRepo){
-       return {
-         status: 400,
-         success: false,
-         message: "user already exist in the same mail id",
-       };
-    }
+    const isUserExistOnUserRepo = await userRepository.findUserByEmail(email);
+    if (isUserExistOnUserRepo)
+      return next(
+        new ErrorHandler(400, "user!!! already exist in the same mail id")
+      );
 
-    // checking wheter user already present in the otp repo 
+    // checking wheter user already present in the otp repo
     let isUserOnOtpRepo = await otpRepository.findUser(email);
-    if (isUserOnOtpRepo.exist) {
+    if (isUserOnOtpRepo) {
       await sendMail.sendEmailVerification(
         name,
         email,
         isUserOnOtpRepo.otp as string
       );
-      const hashPassword =await bcrypt.createHash(password as string)
-      password = hashPassword 
-      const jwtToken = await jwtTokenGenerator.createVerificationJWT({name,email,password})
-      return {
-        status: 200,
-        success: true,
-        message: "verification otp has been sent the mail",
-        token:jwtToken
-      };
+      const hashPassword = await bcrypt.createHash(password as string);
+      password = hashPassword;
+      const jwtToken = await jwtTokenGenerator.createVerificationJWT({
+        name,
+        email,
+        password,
+      });
+      return jwtToken;
+      // {
+      //   status: 200,
+      //   success: true,
+      //   message: "verification otp has been sent the mail",
+      //   token: jwtToken,
+      // };
     } else {
       const otp = await otpGenerator.generateOTP();
       await otpRepository.createOtpUserCollection({ email, otp });
@@ -57,14 +62,15 @@ export const registerUser = async (
         email,
         password,
       });
-      return {
-        status: 200,
-        success: true,
-        message: "verification otp has been sent the mail",
-        token: jwtToken,
-      };
+      return jwtToken;
+      //  {
+      //   status: 200,
+      //   success: true,
+      //   message: "verification otp has been sent the mail",
+      //   token: jwtToken,
+      // };
     }
-  } catch (err) {
-    throw err;
+  } catch (err: any) {
+    return next(new ErrorHandler(500, err.message));
   }
 };

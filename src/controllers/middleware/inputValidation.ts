@@ -55,8 +55,6 @@ export const inputValidation: TInputValidation = async (
     }
   }
 
-  console.log("verification", typeof req.body?.verificationCode);
-
   // Additional validations based on the route
   switch (route) {
     case "registerUser":
@@ -74,7 +72,6 @@ export const inputValidation: TInputValidation = async (
       break;
     // ------------------------------------------------------------
     case "verifyUser":
-      console.log("verification===", req.body.verificationCode);
       if (req.body.verificationCode.length !== 4) {
         return next(
           new ErrorHandler(400, "verification code should be four digits")
@@ -83,7 +80,6 @@ export const inputValidation: TInputValidation = async (
       break;
     // ------------------------------------------------------------
     case "beInstructor":
-      console.log("beInstructor===");
       if (req.body.consent !== true) {
         return next(
           new ErrorHandler(400, "to proceed you should agree the terms")
