@@ -14,6 +14,7 @@ export const isAuthenticated = async (
   const refreshToken = req.cookies.refreshToken as string;
 
   if (!accessToken || !refreshToken) {
+    console.log("no accessToken || refreshToken");
     return next(new ErrorHandler(400, "please login to  use this resource"));
   }
   // const decodedPayload = jwt.decode(accessToken);
@@ -27,6 +28,7 @@ export const isAuthenticated = async (
   }
   const user = await redis.get(decode.id);
   if (!user) {
+    console.log("no user session")
     return next(new ErrorHandler(400, "please login to use this resource"));
   }
 

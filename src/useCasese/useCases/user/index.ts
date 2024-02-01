@@ -6,6 +6,7 @@ import { refresh } from "./refresh";
 import { beInstructor } from "./beInstructor";
 import { forgotPassword } from "./forgotPassword";
 import { resetForgotPassword } from "./resetForgotPassword";
+import {userSession} from "./userSession"
 
 export {
   createUser,
@@ -16,4 +17,5 @@ export {
   beInstructor,
   forgotPassword,
   resetForgotPassword,
+  userSession,
 };

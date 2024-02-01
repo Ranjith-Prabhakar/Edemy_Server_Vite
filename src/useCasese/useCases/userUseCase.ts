@@ -16,6 +16,7 @@ import {
   beInstructor,
   forgotPassword,
   resetForgotPassword,
+  userSession,
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserUseCase } from "../interface/useCase/userUseCase";
@@ -178,14 +179,30 @@ export class UserUsecase implements IUserUseCase {
   }
   // **************************************************************************************
 
-  async resetForgotPassword(req: Req, token: string): Promise<IJsonResponse | void> {
-    return await resetForgotPassword(
-      this.userRepository,
-      this.otpRepository,
-      this.jwtToken,
-      this.bcrypt,
-      req,
-      token
-    );
+  async resetForgotPassword(
+    req: Req,
+    token: string,
+    next:Next
+  ): Promise<IJsonResponse | void> {
+    try {
+      return await resetForgotPassword(
+        this.userRepository,
+        this.otpRepository,
+        this.jwtToken,
+        this.bcrypt,
+        req,
+        token
+      );
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // **************************************************************************************
+  async userSession(req:Req,next:Next): Promise<IUser |  void> {
+    try {
+      return await userSession(req,next)
+    } catch (error:any) {
+      return next(new ErrorHandler(500,error.message))
+    }
   }
 }

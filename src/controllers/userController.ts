@@ -57,28 +57,14 @@ export class UserController {
     try {
       await inputValidation(req, "login", next);
       const result = await this.userUseCase.login(req.body, next);
-      console.log("userController = result", result);
-      res.cookie("accessToken", result?.tokens.accessToken, accessTokenOptions);
+      res.cookie("test","heooll")
+      res.cookie("accessToken", result?.tokens.accessToken, accessTokenOptions); //
       res.cookie(
         "refreshToken",
         result?.tokens.accessToken,
         refreshTokenOptions
       );
       res.status(200).json(result?.user);
-      // if (result.user) {
-      //   res.cookie(
-      //     "accessToken",
-      //     result.tokens?.accessToken,
-      //     accessTokenOptions
-      //   );
-      //   res.cookie(
-      //     "refreshToken",
-      //     result.tokens?.accessToken,
-      //     refreshTokenOptions
-      //   );
-      // }
-      // delete result.tokens;
-      // res.send(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -139,13 +125,28 @@ export class UserController {
     try {
       await inputValidation(req, "resetForgotPassword", next);
       let token = req.cookies.verificationToken;
-      const result = await this.userUseCase.resetForgotPassword(req, token);
+      const result = await this.userUseCase.resetForgotPassword(
+        req,
+        token,
+        next
+      );
 
       if (result?.success) {
         res.clearCookie("verificationToken").send(result);
       } else {
         res.send(result);
       }
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
+
+  async userSession(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.userUseCase.userSession(req, next);
+      console.log(result, "userSession");
+      res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

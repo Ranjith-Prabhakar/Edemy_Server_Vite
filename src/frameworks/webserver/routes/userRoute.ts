@@ -13,10 +13,11 @@ export function userRoute(router: Route) {
   );
   /////////
   router.post(
-    "/verify_user",
-    catchAsyncErrors((req: Req, res: Res, next: Next) =>
-      userController.createUser(req, res, next)
-    )
+    "/create_user",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      console.log(req.cookies.verificationToken, "route");
+      userController.createUser(req, res, next);
+    })
   );
   /////////
   router.post(
@@ -60,6 +61,14 @@ export function userRoute(router: Route) {
     "/reset_forgot_password",
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.resetForgotPassword(req, res, next);
+    })
+  );
+  //////////
+  router.get(
+    "/user_session",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      userController.userSession(req, res, next);
     })
   );
 
