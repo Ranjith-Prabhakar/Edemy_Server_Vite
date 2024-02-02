@@ -1,5 +1,5 @@
 export interface ICategory {
   name: string;
-  totalItems?: number;
+  noOfCourses?: number;
   status: "active" | "freez";
 }

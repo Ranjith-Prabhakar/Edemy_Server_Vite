@@ -19,13 +19,14 @@ export const isAuthenticated = async (
   }
   // const decodedPayload = jwt.decode(accessToken);
   const decode = (await jwt.verify(
-    accessToken as string,
+    accessToken ,
     process.env.JWT_ACCESS_KEY as Secret
   )) as JwtPayload;
 
   if (!decode) {
     return next(new ErrorHandler(400, "Access Token is invalid"));
   }
+  console.log(decode,accessToken,"----.")
   const user = await redis.get(decode.id);
   if (!user) {
     console.log("no user session")

@@ -64,7 +64,18 @@ export class AdminController {
     try {
       await inputValidation(req, "addCategory", next);
       const result = await this.adminUseCase.addCategory(req, next);
+      console.log("addCategory controller", result);
       res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
+  async getCategories(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.adminUseCase.getCategories(next);
+      res.status(200).json({success:true,message:"data fetched successfully",data:result})
+      console.log("reachig here inside of controller", result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

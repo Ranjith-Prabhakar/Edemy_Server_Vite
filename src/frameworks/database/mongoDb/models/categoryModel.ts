@@ -7,7 +7,7 @@ const categorySchema: Schema<ICategory> = new Schema({
     minlength: [5, "enter a category with valid length"],
     required: true,
   },
-  totalItems: Number,
+  noOfCourses: Number,
   status: {
     type: String,
     default: "active",

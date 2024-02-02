@@ -57,8 +57,7 @@ export class UserController {
     try {
       await inputValidation(req, "login", next);
       const result = await this.userUseCase.login(req.body, next);
-      res.cookie("test","heooll")
-      res.cookie("accessToken", result?.tokens.accessToken, accessTokenOptions); //
+      res.cookie("accessToken", result?.tokens.accessToken, accessTokenOptions); 
       res.cookie(
         "refreshToken",
         result?.tokens.accessToken,
@@ -85,8 +84,8 @@ export class UserController {
   async refresh(req: Req, res: Res, next: Next) {
     try {
       const result = (await this.userUseCase.refresh(req, res, next)) as IToken;
-      res.cookie("accessToken", result.accessToken);
-      res.cookie("refreshToken", result.refreshToken);
+      res.cookie("accessToken", result.accessToken, accessTokenOptions);
+      res.cookie("refreshToken", result.refreshToken,refreshTokenOptions);
       res.status(200).json({ success: true, message: "tokens are updated" });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
@@ -145,7 +144,6 @@ export class UserController {
   async userSession(req: Req, res: Res, next: Next) {
     try {
       const result = await this.userUseCase.userSession(req, next);
-      console.log(result, "userSession");
       res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

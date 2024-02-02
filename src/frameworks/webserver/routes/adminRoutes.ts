@@ -49,5 +49,16 @@ export const adminRoute = (router: Route) => {
       adminController.addCategory(req, res, next);
     })
   );
+
+  router.get(
+    "/get_categories",
+    isAuthenticated,
+    
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      adminController.getCategories(req, res, next);
+    })
+  );
+
   return router;
 };

@@ -5,6 +5,7 @@ export const existCategory = async (
 ): Promise<"exist" | "not exist"> => {
   try {
     const result = await categoryModel.findOne({ name: category });
+    console.log("inside repo" , result)
     if (result) {
       return "exist";
     } else {
