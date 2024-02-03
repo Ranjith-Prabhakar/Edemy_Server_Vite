@@ -112,7 +112,6 @@ export class UserUsecase implements IUserUseCase {
     next: Next
   ): Promise<{ user: IUser; tokens: IToken } | void> {
     try {
-      console.log("inside use case login");
       return await login(
         this.userRepository,
         this.bcrypt,

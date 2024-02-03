@@ -21,7 +21,6 @@ export class JWTtoken implements IJwt {
     const accessToken = await jwt.sign({ id: _id }, this.JWT_ACCESS_KEY, {
       expiresIn: "5h",
     });
-
     const refreshToken = await jwt.sign({ id: _id }, this.JWT_REFRESH_KEY, {
       expiresIn: "3d",
     });

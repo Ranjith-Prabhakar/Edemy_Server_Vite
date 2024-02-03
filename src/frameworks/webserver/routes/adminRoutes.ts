@@ -53,11 +53,19 @@ export const adminRoute = (router: Route) => {
   router.get(
     "/get_categories",
     isAuthenticated,
-    
     autheriseRoles("admin"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       adminController.getCategories(req, res, next);
     })
+  );
+
+  router.patch(
+    "/freezCategory/:id",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    (req: Req, res: Res, next: Next) => {
+      adminController.freezCategory(req,res,next)
+    }
   );
 
   return router;

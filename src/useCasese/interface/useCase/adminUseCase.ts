@@ -1,6 +1,8 @@
 import { ICategory } from "../../../entities/category";
 import { IUser } from "../../../entities/user";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
+import { ICategoryRepository } from "../repository/categoryRepository";
+import { ICategoryResponse } from "../response/categoryResponse";
 import { IJsonResponse } from "../services/jsonResponse";
 
 export interface IAdminUseCase {
@@ -16,4 +18,5 @@ export interface IAdminUseCase {
     message: string;
   }>;
   getCategories(next: Next): Promise<ICategory[] | void>;
+  freezCategory(req: Req, next: Next): Promise<ICategoryResponse | void>;
 }

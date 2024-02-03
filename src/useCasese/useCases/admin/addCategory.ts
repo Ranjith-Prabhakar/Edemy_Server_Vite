@@ -16,8 +16,14 @@ export const addCategory = async (
       console.log("reached=>>addCategory === exist");
       return { success: false, message: "category already exist" };
     } else {
-      await categoryRepository.addCategory(req.body.category as string);
-      return { success: true, message: "category added successfully" };
+      const result = await categoryRepository.addCategory(
+        req.body.category as string
+      );
+      return {
+        data: result,
+        success: true,
+        message: "category added successfully",
+      };
     }
   } catch (error: any) {
     return next(new ErrorHandler(500, error.message));

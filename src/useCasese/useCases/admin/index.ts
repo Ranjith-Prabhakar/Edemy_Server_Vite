@@ -4,6 +4,7 @@ import { getUser } from "./getUser";
 import { freezUser } from "./freezUser";
 import { addCategory } from "./addCategory";
 import { getCategories } from "./getCategories";
+import { freezCategory } from "./freezCategory";
 export {
   approveInstructor,
   getUsers,
@@ -11,4 +12,5 @@ export {
   freezUser,
   addCategory,
   getCategories,
+  freezCategory,
 };

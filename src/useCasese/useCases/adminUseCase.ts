@@ -11,11 +11,13 @@ import {
   freezUser,
   addCategory,
   getCategories,
+  freezCategory
 } from "./admin/index";
 import { IUser } from "../../entities/user";
 import { IAdminUseCase } from "../interface/useCase/adminUseCase";
 import { NextFunction } from "express";
 import { ICategory } from "../../entities/category";
+import { ICategoryResponse } from "../interface/response/categoryResponse";
 
 export class AdminUseCase implements IAdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -84,7 +86,18 @@ export class AdminUseCase implements IAdminUseCase {
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCategories(next: NextFunction): Promise<void | ICategory[]> {
     try {
-      return await getCategories(this.categoryRepository,next)
+      return await getCategories(this.categoryRepository, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async freezCategory(
+    req: Req,
+    next: NextFunction
+  ): Promise<ICategoryResponse |void> {
+    try {
+      return await freezCategory(req, next, this.categoryRepository);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

@@ -26,7 +26,6 @@ export const isAuthenticated = async (
   if (!decode) {
     return next(new ErrorHandler(400, "Access Token is invalid"));
   }
-  console.log(decode,accessToken,"----.")
   const user = await redis.get(decode.id);
   if (!user) {
     console.log("no user session")
@@ -34,6 +33,7 @@ export const isAuthenticated = async (
   }
 
   req.user = JSON.parse(user);
+  console.log("success from isAuth")
   next();
 };
 

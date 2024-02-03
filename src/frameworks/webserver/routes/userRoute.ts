@@ -37,6 +37,7 @@ export function userRoute(router: Route) {
   /////////
   router.get(
     "/refresh",
+    isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.refresh(req, res, next);
     })

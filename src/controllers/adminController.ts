@@ -74,8 +74,20 @@ export class AdminController {
   async getCategories(req: Req, res: Res, next: Next) {
     try {
       const result = await this.adminUseCase.getCategories(next);
-      res.status(200).json({success:true,message:"data fetched successfully",data:result})
+      res.status(200).json({
+        success: true,
+        message: "data fetched successfully",
+        data: result,
+      });
       console.log("reachig here inside of controller", result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
+  async freezCategory(req: Req, res: Res, next: Next) {
+    try {
+      const result  = await this.adminUseCase.freezCategory(req,next)
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

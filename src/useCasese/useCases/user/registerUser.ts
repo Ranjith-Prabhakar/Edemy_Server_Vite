@@ -44,12 +44,6 @@ export const registerUser = async (
         password,
       });
       return jwtToken;
-      // {
-      //   status: 200,
-      //   success: true,
-      //   message: "verification otp has been sent the mail",
-      //   token: jwtToken,
-      // };
     } else {
       const otp = await otpGenerator.generateOTP();
       await otpRepository.createOtpUserCollection({ email, otp });
@@ -63,12 +57,6 @@ export const registerUser = async (
         password,
       });
       return jwtToken;
-      //  {
-      //   status: 200,
-      //   success: true,
-      //   message: "verification otp has been sent the mail",
-      //   token: jwtToken,
-      // };
     }
   } catch (err: any) {
     return next(new ErrorHandler(500, err.message));
