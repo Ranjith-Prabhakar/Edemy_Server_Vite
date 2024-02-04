@@ -9,7 +9,12 @@ import {
   findAndUpdate,
   findByIdAndUpdate,
 } from "./userRepository/user/index";
-import { getUsers, getUser, freezUser } from "./userRepository/admin/index";
+import {
+  getUsers,
+  getUser,
+  freezUser,
+  unFreezUser,
+} from "./userRepository/admin/index";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 import { IUserResponse } from "../../../../useCasese/interface/response/userResponse";
 
@@ -54,7 +59,14 @@ export class UserRepository implements IUserRepository {
   async freezUser(id: string): Promise<IUserResponse> {
     try {
       return await freezUser(id);
-       
+    } catch (error) {
+      throw error;
+    }
+  }
+  ///888888888888888888888888888888888888888888888888888888888888888888888
+  async unFreezUser(id: string): Promise<IUserResponse> {
+    try {
+      return await unFreezUser(id);
     } catch (error) {
       throw error;
     }

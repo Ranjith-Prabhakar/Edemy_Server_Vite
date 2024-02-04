@@ -40,6 +40,15 @@ export const adminRoute = (router: Route) => {
       adminController.freezUser(req, res, next);
     })
   );
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888
+  router.post(
+    "/unFreezUser/:id",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      adminController.unFreezUser(req, res, next);
+    })
+  );
 
   router.post(
     "/add_category",
@@ -64,7 +73,7 @@ export const adminRoute = (router: Route) => {
     isAuthenticated,
     autheriseRoles("admin"),
     (req: Req, res: Res, next: Next) => {
-      adminController.freezCategory(req,res,next)
+      adminController.freezCategory(req, res, next);
     }
   );
 
