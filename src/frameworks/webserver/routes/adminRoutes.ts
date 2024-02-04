@@ -15,7 +15,7 @@ export const adminRoute = (router: Route) => {
   );
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888
   router.get(
-    "/users",
+    "/get_users",
     isAuthenticated,
     autheriseRoles("admin"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
@@ -32,7 +32,7 @@ export const adminRoute = (router: Route) => {
     })
   );
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888
-  router.patch(
+  router.post(
     "/freezUser/:id",
     isAuthenticated,
     autheriseRoles("admin"),

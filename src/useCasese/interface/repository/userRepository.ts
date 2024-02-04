@@ -1,4 +1,5 @@
 import { IUser } from "../../../entities/user";
+import { IUserResponse } from "../response/userResponse";
 import { IJsonResponse } from "../services/jsonResponse";
 
 
@@ -19,5 +20,5 @@ export interface IUserRepository {
   // 8888888888888888888888888888888888888888888888888888888888888888888888
   getUser(id: string): Promise<IUser>;
   // 8888888888888888888888888888888888888888888888888888888888888888888888
-  freezUser(id:string):Promise<boolean>
+  freezUser(id:string):Promise<IUserResponse>
 }

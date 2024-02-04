@@ -27,7 +27,7 @@ export class AdminController {
       res.status(200).json({
         success: true,
         message: "users have been fetched successfully ",
-        users: result,
+        data: result,
       });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
@@ -50,11 +50,8 @@ export class AdminController {
   // *****************************************************************************************************************************
   async freezUser(req: Req, res: Res, next: Next) {
     try {
-      const response = await this.adminUseCase.freezUser(req, next);
-      res.status(200).json({
-        success: true,
-        message: "user have been freezed successfully",
-      });
+      const result = await this.adminUseCase.freezUser(req, next);
+      res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -96,12 +93,10 @@ export class AdminController {
   // *****************************************************************************************************************************
   async unFreezCategory(req: Req, res: Res, next: Next) {
     try {
-      
       const result = await this.adminUseCase.unFreezCategory(req, next);
       res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
-
 }

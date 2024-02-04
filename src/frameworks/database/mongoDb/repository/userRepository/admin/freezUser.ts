@@ -1,9 +1,10 @@
+import { IUserResponse } from "../../../../../../useCasese/interface/response/userResponse";
 import userModel from "../../../models/userModel";
 
-export const freezUser = async (id: string): Promise<boolean> => {
+export const freezUser = async (id: string): Promise<IUserResponse> => {
   try {
-    await userModel.updateOne({ _id: id }, { $update: { status: "freez" } });
-    return true;
+    const result = await userModel.findByIdAndUpdate(id,{ status: "frozen" },{new:true});
+    return { success: true, message: "user has been blocked", data: result };;
   } catch (error) {
     throw error;
   }

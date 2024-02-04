@@ -19,6 +19,7 @@ import { IAdminUseCase } from "../interface/useCase/adminUseCase";
 import { NextFunction } from "express";
 import { ICategory } from "../../entities/category";
 import { ICategoryResponse } from "../interface/response/categoryResponse";
+import { IUserResponse } from "../interface/response/userResponse";
 
 export class AdminUseCase implements IAdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -63,7 +64,7 @@ export class AdminUseCase implements IAdminUseCase {
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async freezUser(req: Req, next: Next): Promise<boolean | void> {
+  async freezUser(req: Req, next: Next): Promise<IUserResponse | void> {
     try {
       return freezUser(this.userRepository, req, next);
     } catch (error: any) {
@@ -109,7 +110,6 @@ export class AdminUseCase implements IAdminUseCase {
     next: NextFunction
   ): Promise<ICategoryResponse | void> {
     try {
-      
       return await unFreezCategory(req, next, this.categoryRepository);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

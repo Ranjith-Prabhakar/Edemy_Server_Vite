@@ -8,7 +8,7 @@ export interface IUser{
     url:string
   },
   role?:"user" | "instructor" | "admin",
-  status?:"active" | "freez"
+  status?:"active" | "frozen"
   isVerified?:boolean,
   courses?:Array<{courseId:string}>,
   enrolledCourses?:Array<{courseId:string}>

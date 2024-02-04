@@ -11,6 +11,7 @@ import {
 } from "./userRepository/user/index";
 import { getUsers, getUser, freezUser } from "./userRepository/admin/index";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
+import { IUserResponse } from "../../../../useCasese/interface/response/userResponse";
 
 export class UserRepository implements IUserRepository {
   constructor(private userModels: typeof userModel) {}
@@ -50,7 +51,12 @@ export class UserRepository implements IUserRepository {
     }
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
-  async freezUser(id: string): Promise<boolean> {
-    return await freezUser(id);
+  async freezUser(id: string): Promise<IUserResponse> {
+    try {
+      return await freezUser(id);
+       
+    } catch (error) {
+      throw error;
+    }
   }
 }
