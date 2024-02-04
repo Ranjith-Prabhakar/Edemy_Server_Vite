@@ -1,8 +1,10 @@
-import { Req } from "../../../frameworks/types/serverPackageTypes";
+import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { IOtpRepository } from "../../interface/repository/otpRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
+import { IGeneralResponse } from "../../interface/response/generalResponse";
 import { IHashpassword } from "../../interface/services/hashPassword";
 import { IJwt } from "../../interface/services/jwt.types";
+import ErrorHandler from "../../middlewares/errorHandler";
 
 export const resetForgotPassword = async (
   userRepository: IUserRepository,
@@ -10,8 +12,9 @@ export const resetForgotPassword = async (
   jwtVerifier: IJwt,
   bcrypt: IHashpassword,
   req: Req,
-  token: string
-) => {
+  token: string,
+  next: Next
+): Promise<IGeneralResponse | void> => {
   try {
     let decode = (await jwtVerifier.verifyJwt(token)) as {
       userId: string;
@@ -19,10 +22,17 @@ export const resetForgotPassword = async (
       iat: number;
       exp: number;
     };
-    await otpRepository.findAndDeleteUser(
-      decode.email as string,
-      req.body.verificationCode
+    console.log("resetForgotPassword decode", decode);
+    let otpRepAction = await otpRepository.findByMailAndDelete(
+      decode.email as string
     );
+    if (!otpRepAction)
+      return next(
+        new ErrorHandler(
+          400,
+          "you didn`t make any request to change the password"
+        )
+      );
 
     let password = await bcrypt.createHash(req.body.password);
     const user = await userRepository.findByIdAndUpdate(
@@ -31,7 +41,6 @@ export const resetForgotPassword = async (
     );
     if (user) {
       return {
-        status: 200,
         success: true,
         message: "user password has been updated",
       };

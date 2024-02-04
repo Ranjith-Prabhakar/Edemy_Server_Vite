@@ -52,13 +52,24 @@ export function userRoute(router: Route) {
   );
   /////////
   router.post(
-    "/forgot_password",
+    "/forgot_password_email_submission",
+    (req: Req, res: Res, next: Next) => {
+      console.log("reaching==. forgot_password_email_submission");
+      next()
+    },
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.forgotPassword(req, res, next);
     })
   );
   /////////
-  router.patch(
+
+  router.post(
+    "/forgot_password_otp_verification",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      userController.forgotPasswordOtpVerification(req, res, next);
+    })
+  );
+  router.post(
     "/reset_forgot_password",
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.resetForgotPassword(req, res, next);

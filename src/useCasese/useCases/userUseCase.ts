@@ -17,12 +17,14 @@ import {
   forgotPassword,
   resetForgotPassword,
   userSession,
+  forgotPasswordOtpVerification,
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserUseCase } from "../interface/useCase/userUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
 import { IUser } from "../../entities/user";
 import { IJsonResponse } from "../interface/services/jsonResponse";
+import { IGeneralResponse } from "../interface/response/generalResponse";
 
 export class UserUsecase implements IUserUseCase {
   private readonly userRepository: IUserRepository;
@@ -177,19 +179,17 @@ export class UserUsecase implements IUserUseCase {
     }
   }
   // **************************************************************************************
-
-  async resetForgotPassword(
+  async forgotPasswordOtpVerification(
     req: Req,
-    token: string,
-    next:Next
-  ): Promise<IJsonResponse | void> {
+    next: Next,
+    token: string
+  ): Promise<IGeneralResponse | void> {
     try {
-      return await resetForgotPassword(
-        this.userRepository,
+      return await forgotPasswordOtpVerification(
         this.otpRepository,
         this.jwtToken,
-        this.bcrypt,
         req,
+        next,
         token
       );
     } catch (error: any) {
@@ -197,11 +197,32 @@ export class UserUsecase implements IUserUseCase {
     }
   }
   // **************************************************************************************
-  async userSession(req:Req,next:Next): Promise<IUser |  void> {
+
+  async resetForgotPassword(
+    req: Req,
+    token: string,
+    next: Next
+  ): Promise<IGeneralResponse | void> {
     try {
-      return await userSession(req,next)
-    } catch (error:any) {
-      return next(new ErrorHandler(500,error.message))
+      return await resetForgotPassword(
+        this.userRepository,
+        this.otpRepository,
+        this.jwtToken,
+        this.bcrypt,
+        req,
+        token,
+        next
+      );
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // **************************************************************************************
+  async userSession(req: Req, next: Next): Promise<IUser | void> {
+    try {
+      return await userSession(req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
     }
   }
 }

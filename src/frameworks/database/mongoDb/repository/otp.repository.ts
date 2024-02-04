@@ -14,11 +14,11 @@ export class OtpRepository implements IOtpRepository {
     }
   }
   // **************************************************************************************
-  async findUser(email: string): Promise<null> {
+  async findUser(email: string): Promise<IOtp | null> {
     try {
       return await otpModel.findOne({ email });
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
@@ -43,4 +43,24 @@ export class OtpRepository implements IOtpRepository {
   }
 
   // **************************************************************************************
+  async findByMailAndDelete(email: string): Promise<void | boolean> {
+    try {
+      const result = await otpModel.deleteOne({ email: email });
+      if (!result) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+  // **************************************************************************************
+  async findAndVerifyUser(email: string, otp: string): Promise<IOtp | null> {
+    try {
+      return await otpModel.findOne({email,otp})
+    } catch (error) {
+      throw error
+    }
+  }
 }

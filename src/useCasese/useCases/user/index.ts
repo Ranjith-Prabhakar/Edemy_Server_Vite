@@ -7,6 +7,7 @@ import { beInstructor } from "./beInstructor";
 import { forgotPassword } from "./forgotPassword";
 import { resetForgotPassword } from "./resetForgotPassword";
 import {userSession} from "./userSession"
+import { forgotPasswordOtpVerification } from "./forgotPasswordOtpVerification";
 
 export {
   createUser,
@@ -18,4 +19,5 @@ export {
   forgotPassword,
   resetForgotPassword,
   userSession,
+  forgotPasswordOtpVerification,
 };

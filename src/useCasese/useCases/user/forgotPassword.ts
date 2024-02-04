@@ -17,27 +17,36 @@ export const forgotPassword = async (
 ): Promise<string | void> => {
   try {
     const user = await userRepository.findUserByEmail(req.body.email);
-    const otp = await otpGenerator.generateOTP();
-    await sendMail.sendEmailVerification(
-      user?.name as string,
-      user?.email as string,
-      otp
-    );
-    const verificationToken = await jwtToken.forgotPasswordToken(
-      user?._id as string,
-      user?.email as string
-    );
-    await otpRepository.createOtpUserCollection({
-      email: user?.email as string,
-      otp,
-    });
-    return verificationToken;
-    // {
-    //   token: verificationToken,
-    //   status: 200,
-    //   succuss: true,
-    //   message: "verification code has been sent to your account",
-    // };
+    if(!user) return next(new ErrorHandler(500,"user not found for this mail id"))
+    const isExistInOtpRep = await otpRepository.findUser(req.body.email);
+    if (isExistInOtpRep) {
+      await sendMail.sendEmailVerification(
+        user?.name as string,
+        user?.email as string,
+        isExistInOtpRep.otp
+      );
+      const verificationToken = await jwtToken.forgotPasswordToken(
+        user?._id as string,
+        user?.email as string
+      );
+      return verificationToken;
+    } else {
+      const otp = await otpGenerator.generateOTP();
+      await sendMail.sendEmailVerification(
+        user?.name as string,
+        user?.email as string,
+        otp
+      );
+      const verificationToken = await jwtToken.forgotPasswordToken(
+        user?._id as string,
+        user?.email as string
+      );
+      await otpRepository.createOtpUserCollection({
+        email: user?.email as string,
+        otp,
+      });
+      return verificationToken;
+    }
   } catch (error: any) {
     return next(new ErrorHandler(500, error.message));
   }

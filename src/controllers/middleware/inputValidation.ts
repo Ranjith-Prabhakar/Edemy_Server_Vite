@@ -41,6 +41,8 @@ export const inputValidation: TInputValidation = async (
         }
 
         if (prop === "password") {
+          console.log("prop === password", prop, typeof req.body[prop]);
+          console.log("prop === password", req.body[prop].length);
           // Validate password length and complexity
           if (req.body[prop].length < 8 || !isStrongPassword(req.body[prop])) {
             return next(
@@ -87,7 +89,7 @@ export const inputValidation: TInputValidation = async (
       }
       break;
     //----------------------------------------------------------------------
-    case "resetForgotPassword":
+    case "forgotPasswordOtpVerification":
       if (req.body.verificationCode.length !== 4) {
         return next(
           new ErrorHandler(400, "verification code should be four digits")

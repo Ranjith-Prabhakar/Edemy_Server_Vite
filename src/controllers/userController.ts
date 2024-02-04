@@ -107,6 +107,7 @@ export class UserController {
   // *****************************************************************************************************************************
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
+      console.log("forgotPassword controller", req.body);
       await inputValidation(req, "forgotPassword", next);
       const result = await this.userUseCase.forgotPassword(req, next);
 
@@ -120,9 +121,27 @@ export class UserController {
     }
   }
   // *****************************************************************************************************************************
+  async forgotPasswordOtpVerification(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "forgotPasswordOtpVerification", next);
+      const token = req.cookies.verificationToken as string;
+      let result = await this.userUseCase.forgotPasswordOtpVerification(
+        req,
+        next,
+        token
+      );
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
   async resetForgotPassword(req: Req, res: Res, next: Next) {
     try {
+      console.log("req.body", req.body);
       await inputValidation(req, "resetForgotPassword", next);
+      console.log("req.body after validation");
+
       let token = req.cookies.verificationToken;
       const result = await this.userUseCase.resetForgotPassword(
         req,
@@ -130,11 +149,8 @@ export class UserController {
         next
       );
 
-      if (result?.success) {
-        res.clearCookie("verificationToken").send(result);
-      } else {
-        res.send(result);
-      }
+      res.clearCookie("verificationToken");
+      res.status(200).send(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

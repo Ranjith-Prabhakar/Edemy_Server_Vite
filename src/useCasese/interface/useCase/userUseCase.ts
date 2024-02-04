@@ -1,5 +1,6 @@
 import { IUser } from "../../../entities/user";
 import { Next, Req, Res } from "../../../frameworks/types/serverPackageTypes";
+import { IGeneralResponse } from "../response/generalResponse";
 import { IJsonResponse } from "../services/jsonResponse";
 import { IToken } from "../services/jwt.types";
 
@@ -32,6 +33,16 @@ export interface IUserUseCase {
   refresh(req: Req, res: Res, next: Next): Promise<IToken | void>;
   beInstructor(req: Req, next: Next): Promise<IJsonResponse | void>;
   forgotPassword(req: Req, next: Next): Promise<string | void>;
-  resetForgotPassword(req: Req, token: string,next:Next): Promise<IJsonResponse | void>;
-  userSession(req:Req,next:Next):Promise<IUser | void>
+  forgotPasswordOtpVerification(
+    req: Req,
+    next: Next,
+    token: string
+  ): Promise<IGeneralResponse | void>;
+
+  resetForgotPassword(
+    req: Req,
+    token: string,
+    next: Next
+  ): Promise<IGeneralResponse | void>;
+  userSession(req: Req, next: Next): Promise<IUser | void>;
 }
