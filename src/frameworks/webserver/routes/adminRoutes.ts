@@ -59,12 +59,21 @@ export const adminRoute = (router: Route) => {
     })
   );
 
-  router.patch(
+  router.post(
     "/freezCategory/:id",
     isAuthenticated,
     autheriseRoles("admin"),
     (req: Req, res: Res, next: Next) => {
       adminController.freezCategory(req,res,next)
+    }
+  );
+
+  router.post(
+    "/unFreezCategory/:id",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    (req: Req, res: Res, next: Next) => {
+      adminController.unFreezCategory(req, res, next);
     }
   );
 

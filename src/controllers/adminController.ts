@@ -87,9 +87,21 @@ export class AdminController {
   // *****************************************************************************************************************************
   async freezCategory(req: Req, res: Res, next: Next) {
     try {
-      const result  = await this.adminUseCase.freezCategory(req,next)
+      const result = await this.adminUseCase.freezCategory(req, next);
+      res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
+  // *****************************************************************************************************************************
+  async unFreezCategory(req: Req, res: Res, next: Next) {
+    try {
+      
+      const result = await this.adminUseCase.unFreezCategory(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
 }

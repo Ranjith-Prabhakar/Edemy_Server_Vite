@@ -19,4 +19,5 @@ export interface IAdminUseCase {
   }>;
   getCategories(next: Next): Promise<ICategory[] | void>;
   freezCategory(req: Req, next: Next): Promise<ICategoryResponse | void>;
+  unFreezCategory(req: Req, next: Next): Promise<ICategoryResponse | void>;
 }

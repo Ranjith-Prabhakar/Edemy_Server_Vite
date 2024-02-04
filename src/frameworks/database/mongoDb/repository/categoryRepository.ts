@@ -7,6 +7,7 @@ import {
   existCategory,
   getCategories,
   freezCategory,
+  unFreezCategory,
 } from "./categoryRepository/index";
 
 export class CategoryRepository implements ICategoryRepository {
@@ -39,6 +40,14 @@ export class CategoryRepository implements ICategoryRepository {
   async freezCategory(id: string): Promise<ICategoryResponse | void> {
     try {
       return await freezCategory(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async unFreezCategory(id: string): Promise<ICategoryResponse | void> {
+    try {
+      return await unFreezCategory(id);
     } catch (error) {
       throw error;
     }

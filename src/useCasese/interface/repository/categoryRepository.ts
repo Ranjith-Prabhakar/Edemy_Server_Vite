@@ -6,4 +6,5 @@ export interface ICategoryRepository {
   existCategory(category: string): Promise<"exist" | "not exist">;
   getCategories(): Promise<ICategory[] | void>;
   freezCategory(id: string): Promise<ICategoryResponse | void>;
+  unFreezCategory(id: string): Promise<ICategoryResponse | void>;
 }
