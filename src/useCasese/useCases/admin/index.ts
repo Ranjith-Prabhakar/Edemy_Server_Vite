@@ -8,6 +8,7 @@ import { getCategories } from "./getCategories";
 import { freezCategory } from "./freezCategory";
 import { unFreezCategory } from "./unFreezCategory";
 import { unFreezUser } from "./unFreezUser";
+import { instructorRequests } from "./instructorRequests";
 export {
   approveInstructor,
   getUsers,
@@ -19,4 +20,5 @@ export {
   freezCategory,
   unFreezCategory,
   unFreezUser,
+  instructorRequests,
 };

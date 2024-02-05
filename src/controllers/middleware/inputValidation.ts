@@ -80,14 +80,7 @@ export const inputValidation: TInputValidation = async (
         );
       }
       break;
-    // ------------------------------------------------------------
-    case "beInstructor":
-      if (req.body.consent !== true) {
-        return next(
-          new ErrorHandler(400, "to proceed you should agree the terms")
-        );
-      }
-      break;
+    
     //----------------------------------------------------------------------
     case "forgotPasswordOtpVerification":
       if (req.body.verificationCode.length !== 4) {

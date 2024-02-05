@@ -15,6 +15,15 @@ export const adminRoute = (router: Route) => {
   );
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888
   router.get(
+    "/get_instructor_request",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      adminController.instructorRequests(req, res, next);
+    })
+  );
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888
+  router.get(
     "/get_users",
     isAuthenticated,
     autheriseRoles("admin"),
@@ -31,6 +40,7 @@ export const adminRoute = (router: Route) => {
       adminController.getUser(req, res, next);
     })
   );
+
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888
   router.post(
     "/freezUser/:id",

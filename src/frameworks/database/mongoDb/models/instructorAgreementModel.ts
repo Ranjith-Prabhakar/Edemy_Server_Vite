@@ -1,17 +1,17 @@
-import mongoose,{Schema,Model,ObjectId} from "mongoose";
+import mongoose, { Schema, Model, ObjectId } from "mongoose";
 import { IInstructorAgreement } from "../../../../entities/instructorAgreement";
 
 const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
   userId: {
-    type:String,
-    unique:true
+    type: String,
+    unique: true,
   },
-  status:{
-    type:String,
-    default:"pending"
+  status: {
+    type: String,
+    default: "pending",
   },
   qualification: String,
-  consent: Boolean,
+  consent: { type: Boolean, default: true },
   contract: {
     type: String,
     default: `you are responsible to provide quality education, adhere to the platform's guidelines,
@@ -21,7 +21,7 @@ const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
          of the income generated, and the platform retains 30%, as specified in our terms and conditions
        `,
   },
-}); 
+});
 
 const instructorAgreementModel: Model<IInstructorAgreement> = mongoose.model(
   "instructor_agreement",

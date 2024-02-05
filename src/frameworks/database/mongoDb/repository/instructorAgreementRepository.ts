@@ -3,9 +3,8 @@ import ErrorHandler from "../../../../useCasese/middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../../../useCasese/interface/repository/instructorAgreementRepository";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 import instructorAgreementModel from "../models/instructorAgreementModel";
-export class InstrctorAgreementRepository
-  implements IInstructorAgreementRepository
-{
+import { IInstructorAgreementResponse } from "../../../../useCasese/interface/response/instructorAgreementResponse";
+export class InstrctorAgreementRepository implements IInstructorAgreementRepository {
   // ******************************************************************************************
   async createAgreement(
     agreement: IInstructorAgreement
@@ -33,6 +32,20 @@ export class InstrctorAgreementRepository
       throw error;
     }
   }
+  // ******************************************************************************************
+  async getAgreements(): Promise<void | object> {
+    try {
+      const result = await instructorAgreementModel.find();
+      return {
+        success: true,
+        message: "instructors agreements have been fetched successfully",
+        data: result,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+ 
   // ******************************************************************************************
   async updateStatus(userId: string, action: string): Promise<IJsonResponse> {
     try {

@@ -15,6 +15,7 @@ import {
   getCategories,
   freezCategory,
   unFreezCategory,
+  instructorRequests,
 } from "./admin/index";
 import { IUser } from "../../entities/user";
 import { IAdminUseCase } from "../interface/useCase/adminUseCase";
@@ -22,6 +23,8 @@ import { NextFunction } from "express";
 import { ICategory } from "../../entities/category";
 import { ICategoryResponse } from "../interface/response/categoryResponse";
 import { IUserResponse } from "../interface/response/userResponse";
+import { IInstructorAgreement } from "../../entities/instructorAgreement";
+import { IInstructorAgreementResponse } from "../interface/response/instructorAgreementResponse";
 
 export class AdminUseCase implements IAdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -49,6 +52,16 @@ export class AdminUseCase implements IAdminUseCase {
       return next(new ErrorHandler(500, error.message)) as any;
     }
   }
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async instructorRequests(next: NextFunction): Promise<void | object> {
+    try {
+      return await instructorRequests(this.instrctorAgreementRepository, next);
+     
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getUsers(next: Next): Promise<IUser[] | void> {
     try {
@@ -84,7 +97,6 @@ export class AdminUseCase implements IAdminUseCase {
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getInstructors(next: Next): Promise<IUser[] | void> {
     try {
-       
       return await getInstructors(this.userRepository, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

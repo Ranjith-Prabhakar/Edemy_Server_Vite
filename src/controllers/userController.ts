@@ -99,6 +99,7 @@ export class UserController {
         req,
         next
       )) as IJsonResponse;
+      console.log("after fetch controll", result);
       res.status(result.status).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

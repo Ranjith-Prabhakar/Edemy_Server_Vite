@@ -20,6 +20,16 @@ export class AdminController {
     }
   }
   // *****************************************************************************************************************************
+  async instructorRequests(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.adminUseCase.instructorRequests(next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  // *****************************************************************************************************************************
   async getUsers(req: Req, res: Res, next: Next) {
     try {
       const result = await this.adminUseCase.getUsers(next);
