@@ -44,8 +44,8 @@ export class UserRepository implements IUserRepository {
     return await findByIdAndUpdate(id, data);
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
-  async getUsers(): Promise<IUser[]> {
-    return await getUsers();
+  async getUsers(role:string): Promise<IUser[]> {
+    return await getUsers(role);
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
   async getUser(id: string): Promise<IUser> {

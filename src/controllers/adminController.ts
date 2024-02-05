@@ -66,6 +66,20 @@ export class AdminController {
     }
   }
   // *****************************************************************************************************************************
+  async getInstructors(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.adminUseCase.getInstructors(next);
+      console.log("admin controller getUser", result);
+      res.status(200).json({
+        success: true,
+        message: "instructors have been fetched successfully",
+        data: result,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // *****************************************************************************************************************************
   async addCategory(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "addCategory", next);

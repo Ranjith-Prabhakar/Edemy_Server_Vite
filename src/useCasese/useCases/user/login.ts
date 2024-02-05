@@ -17,11 +17,11 @@ export const login = async (
   next: Next
 ): Promise<{ user: IUser; tokens: IToken } | void> => {
   try {
-    
     const user = await userRepository.findUserByEmail(email);
-    
-    if (!user) return next(new ErrorHandler(400, "invalid email id"));
 
+    if (!user) return next(new ErrorHandler(400, "invalid email id"));
+    if (user.status === "frozen")
+      next(new ErrorHandler(400, "access has been denied by admin"));
     const hashPassword = user.password;
 
     const result = await bcrypt.comparePassword(password, hashPassword);
@@ -32,7 +32,7 @@ export const login = async (
     await cloudSession.createUserSession(user?._id as string, user);
     return {
       user,
-      tokens
+      tokens,
     };
   } catch (error) {
     throw error;

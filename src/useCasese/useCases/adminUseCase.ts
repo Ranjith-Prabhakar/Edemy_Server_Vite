@@ -10,6 +10,7 @@ import {
   getUser,
   freezUser,
   unFreezUser,
+  getInstructors,
   addCategory,
   getCategories,
   freezCategory,
@@ -76,6 +77,15 @@ export class AdminUseCase implements IAdminUseCase {
   async unFreezUser(req: Req, next: Next): Promise<IUserResponse | void> {
     try {
       return unFreezUser(this.userRepository, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getInstructors(next: Next): Promise<IUser[] | void> {
+    try {
+       
+      return await getInstructors(this.userRepository, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

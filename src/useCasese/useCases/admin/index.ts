@@ -2,6 +2,7 @@ import { approveInstructor } from "./approveInstructor";
 import { getUsers } from "./getUsers";
 import { getUser } from "./getUser";
 import { freezUser } from "./freezUser";
+import { getInstructors } from "./getInstructors";
 import { addCategory } from "./addCategory";
 import { getCategories } from "./getCategories";
 import { freezCategory } from "./freezCategory";
@@ -12,6 +13,7 @@ export {
   getUsers,
   getUser,
   freezUser,
+  getInstructors,
   addCategory,
   getCategories,
   freezCategory,

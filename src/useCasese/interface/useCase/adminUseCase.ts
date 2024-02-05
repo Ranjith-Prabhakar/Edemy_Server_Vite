@@ -11,6 +11,7 @@ export interface IAdminUseCase {
   getUser(req: Req, next: Next): Promise<void | IUser>;
   freezUser(req: Req, next: Next): Promise<IUserResponse | void>;
   unFreezUser(req: Req, next: Next): Promise<IUserResponse | void>;
+  getInstructors(next: Next): Promise<void | IUser[]>;
   addCategory(
     req: Req,
     next: Next

@@ -49,6 +49,17 @@ export const adminRoute = (router: Route) => {
       adminController.unFreezUser(req, res, next);
     })
   );
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888
+
+  router.get(
+    "/get_instructors",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      adminController.getInstructors(req, res, next);
+    })
+  );
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888
 
   router.post(
     "/add_category",
