@@ -27,7 +27,7 @@ export function userRoute(router: Route) {
     )
   );
   /////////
-  router.get(
+  router.post(
     "/logout",
     isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {

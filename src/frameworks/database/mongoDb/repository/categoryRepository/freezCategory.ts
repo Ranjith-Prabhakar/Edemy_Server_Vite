@@ -11,7 +11,7 @@ export const freezCategory = async (id: string): Promise<ICategoryResponse | voi
     );
     return {
       status: 200,
-      message: "category has been updated successfully",
+      message: "category has been blocked",
       data: result as ICategory,
     };
   } catch (error) {

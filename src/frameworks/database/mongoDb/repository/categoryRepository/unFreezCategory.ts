@@ -14,7 +14,7 @@ export const unFreezCategory = async (
     console.log("unFreezCategory", result);
     return {
       status: 200,
-      message: "category has been updated successfully",
+      message: "category has been un-blocked",
       data: result as ICategory,
     };
   } catch (error) {
