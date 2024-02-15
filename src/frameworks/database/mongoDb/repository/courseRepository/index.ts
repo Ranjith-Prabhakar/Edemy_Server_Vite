@@ -1,2 +1,4 @@
 import { getCourseInProgress } from "./getCourseInProgress";
-export { getCourseInProgress };
+import { addCourseData } from "./addCourseData";
+import { updateCourse } from "./updateCourse";
+export { getCourseInProgress, addCourseData, updateCourse };

@@ -25,14 +25,14 @@ export interface IReviewRating{
 
 
 export interface ICourse {
-  name: string;
+  courseName: string;
   instructor: string;
-  description: string;
+  discription: string;
   tags: string[];
   thumbnail: string;
   uplaoadedDate: Date;
   status: "approved" | "pending" | "freez";
-  duration: number;
+  duration: string;
   modules: Array<IModule>;
   review: Array<IReviewRating>;
   rating: number;

@@ -8,10 +8,20 @@ export function courseRoute(router: Route) {
     "/get_course_in_progress",
     isAuthenticated,
     autheriseRoles("instructor"),
-    catchAsyncErrors((req:Req,res:Res,next:Next)=>{
-      courseController.getCourseInProgress(req,res,next)
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getCourseInProgress(req, res, next);
     })
   );
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  router.post(
+    "/addCourseData",
+    isAuthenticated,
+    autheriseRoles("instructor"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.addCourseData(req, res, next); // adds only data but videos
+    })
+  );
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   router.post(
     "/addModule",
     isAuthenticated,
@@ -20,5 +30,15 @@ export function courseRoute(router: Route) {
       courseController.addModule(req, res, next);
     })
   );
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+ router.post(
+   "/updateCourse",
+   isAuthenticated,
+   autheriseRoles("instructor"),
+   catchAsyncErrors((req: Req, res: Res, next: Next) => {
+     courseController.updateCourse(req, res, next);
+   })
+ );
+
   return router;
 }

@@ -2,7 +2,7 @@ import mongoose, { Schema, Model } from "mongoose";
 import { ICourse, IModule, IReviewRating } from "../../../../entities/course";
 
 const courseSchema: Schema<ICourse> = new Schema({
-  name: {
+  courseName: {
     type: String,
     min: [3, "name should have atleast 3 charactor"],
     required: [true, "please give a valid name"],
@@ -14,7 +14,7 @@ const courseSchema: Schema<ICourse> = new Schema({
     required: [true, "please give a valid name"],
     trim: true,
   },
-  description: {
+  discription: {
     type: String,
     required: [true, "please give a valid description"],
     trim: true,
@@ -35,7 +35,7 @@ const courseSchema: Schema<ICourse> = new Schema({
     default: "pending",
   },
   duration: {
-    type: Number,
+    type: String,
     required: [true, "please provide the duration"],
   },
   modules: Array<IModule>,

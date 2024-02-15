@@ -5,7 +5,12 @@ import { ICloudStorage } from "../interface/services/cloudStorage";
 import { ICourseUseCase } from "../interface/useCase/courseUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
 
-import { getCourseInProgress, addModule } from "./course/index";
+import {
+  getCourseInProgress,
+  addCourseData,
+  addModule,
+  updateCourse,
+} from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 
 export class CourseUseCase implements ICourseUseCase {
@@ -30,9 +35,25 @@ export class CourseUseCase implements ICourseUseCase {
     }
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async addCourseData(req: Req, next: Next): Promise<ICourseResponse | void> {
+    try {
+      return await addCourseData(this.courseRepository, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async addModule(req: Req, next: Next): Promise<string | void> {
     try {
       return await addModule(this.cloudStorage, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async updateCourse(req: Req, next: Next): Promise<ICourseResponse | void> {
+    try {
+      return await updateCourse(this.courseRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
