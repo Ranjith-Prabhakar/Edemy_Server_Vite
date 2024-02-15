@@ -4,9 +4,9 @@ import { ICourseResponse } from "../../../../useCasese/interface/response/course
 import {getCourseInProgress} from './courseRepository/index';
 
 export class CourseRepository implements ICourseRepository {
-  async getCourseInProgress(): Promise<ICourseResponse> {
+  async getCourseInProgress(instructor:string): Promise<ICourseResponse> {
     try {
-      return await getCourseInProgress();
+      return await getCourseInProgress(instructor);
     } catch (error: any) {
       throw error;
     }

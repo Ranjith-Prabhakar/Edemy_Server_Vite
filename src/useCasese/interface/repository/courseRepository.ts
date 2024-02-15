@@ -1,5 +1,5 @@
 import { ICourseResponse } from "../response/courseResponse";
 
 export interface ICourseRepository {
-  getCourseInProgress(): Promise<ICourseResponse>;
+  getCourseInProgress(instructor:string): Promise<ICourseResponse>;
 }
