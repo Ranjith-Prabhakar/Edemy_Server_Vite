@@ -3,17 +3,24 @@ import { UserRepository } from "../../../database/mongoDb/repository/userReposit
 import { OtpRepository } from "../../../database/mongoDb/repository/otp.repository";
 import { CategoryRepository } from "../../../database/mongoDb/repository/categoryRepository";
 import { InstrctorAgreementRepository } from "../../../database/mongoDb/repository/instructorAgreementRepository";
+import { CourseRepository } from "../../../database/mongoDb/repository/courseRepository";
+
 import { UserUsecase } from "../../../../useCasese/useCases/userUseCase";
+import { AdminUseCase } from "../../../../useCasese/useCases/adminUseCase";
+import { CourseUseCase } from "../../../../useCasese/useCases/courseUseCase";
+
+import { UserController } from "../../../../controllers/userController";
+import { AdminController } from "../../../../controllers/adminController";
+import { CoursesController } from "../../../../controllers/coursesController";
+
 import { Encrypt } from "../../../services/hashPassword";
 import { GenerateOtp } from "../../../services/generateOtp";
 import { SendMail } from "../../../services/sendMail";
-
 import { JWTtoken } from "../../../services/jwt";
 import { CloudSession } from "../../../services/cloudSession";
 import { RequestManagement } from "../../../services/requestManagement";
-import { UserController } from "../../../../controllers/userController";
-import { AdminUseCase } from "../../../../useCasese/useCases/adminUseCase";
-import { AdminController } from "../../../../controllers/adminController";
+import { CloudStorage } from "../../../services/cloudStorage";
+
 
 const userRepository = new UserRepository(userModel);
 const bcryptService = new Encrypt();
@@ -25,6 +32,8 @@ const cloudSession = new CloudSession();
 const requestManagement = new RequestManagement();
 const instrctorAgreementRepository = new InstrctorAgreementRepository();
 const categoryRepository = new CategoryRepository()
+const cloudStorage = new CloudStorage()
+const courseRepository = new CourseRepository()
 
 const userUseCase = new UserUsecase(
   userRepository,
@@ -44,6 +53,10 @@ const adminUseCase = new AdminUseCase(
   categoryRepository
 );
 
+const courseUseCase = new CourseUseCase(cloudStorage, courseRepository);
+
 const userController = new UserController(userUseCase);
 const adminController = new AdminController(adminUseCase);
-export { userController, adminController };
+const courseController = new CoursesController(courseUseCase);
+
+export { userController, adminController, courseController };

@@ -1,12 +1,12 @@
-import { AdminUseCase } from "../useCasese/useCases/adminUseCase";
 import { Req, Res, Next } from "../frameworks/types/serverPackageTypes";
 import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { inputValidation } from "./middleware/inputValidation";
+import { IAdminUseCase } from "../useCasese/interface/useCase/adminUseCase";
 
 export class AdminController {
-  private readonly adminUseCase: AdminUseCase;
+  private readonly adminUseCase: IAdminUseCase;
 
-  constructor(adminUseCase: AdminUseCase) {
+  constructor(adminUseCase: IAdminUseCase) {
     this.adminUseCase = adminUseCase;
   }
   // *****************************************************************************************************************************

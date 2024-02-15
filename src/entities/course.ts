@@ -10,14 +10,14 @@ interface Questions {
   ];
 }
 
-interface Module {
+export interface IModule {
   moduleNo: number;
   moduleTittle:string,
   duration: number;
   questions: Questions;
 }
 
-interface ReviewRating{
+export interface IReviewRating{
   userId:string;
   review:string;
   rating:number
@@ -27,13 +27,14 @@ interface ReviewRating{
 export interface ICourse {
   name: string;
   instructor: string;
-  description:string;
+  description: string;
   tags: string[];
   thumbnail: string;
   uplaoadedDate: Date;
   status: "approved" | "pending" | "freez";
   duration: number;
-  modules: Array<Module>;
-  review: Array<ReviewRating>;
-  rating: number
+  modules: Array<IModule>;
+  review: Array<IReviewRating>;
+  rating: number;
+  submissionStatus: "work-in-progress" | "completed";
 }

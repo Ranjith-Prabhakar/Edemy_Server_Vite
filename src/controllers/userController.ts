@@ -1,5 +1,4 @@
 import { Req, Res, Next } from "../frameworks/types/serverPackageTypes";
-import { UserUsecase } from "../useCasese/useCases/userUseCase";
 import { inputValidation } from "./middleware/inputValidation";
 
 import {
@@ -9,11 +8,12 @@ import {
 import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
 import { IToken } from "../useCasese/interface/services/jwt.types";
+import { IUserUseCase } from "../useCasese/interface/useCase/userUseCase";
 
 export class UserController {
-  private userUseCase: UserUsecase;
+  private userUseCase: IUserUseCase;
 
-  constructor(userUseCase: UserUsecase) {
+  constructor(userUseCase: IUserUseCase) {
     this.userUseCase = userUseCase;
   }
 
