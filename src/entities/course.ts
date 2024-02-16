@@ -1,4 +1,4 @@
-interface Questions {
+interface IQuestions {
   userId: string;
   question: string;
   answers: [
@@ -11,18 +11,25 @@ interface Questions {
 }
 
 export interface IModule {
-  moduleNo: number;
-  moduleTittle:string,
-  duration: number;
-  questions: Questions;
+  moduleNo: string;
+  moduleTittle: string;
+  videos: [
+    {
+      videoNo: string;
+      videoTittle: string;
+      duration?: number;
+      finished?: boolean;
+      currentPosition?: number;
+      questions?: Array<IQuestions>;
+    }
+  ];
 }
 
-export interface IReviewRating{
-  userId:string;
-  review:string;
-  rating:number
+export interface IReviewRating {
+  userId: string;
+  review: string;
+  rating: number;
 }
-
 
 export interface ICourse {
   courseName: string;

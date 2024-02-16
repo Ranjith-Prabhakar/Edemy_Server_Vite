@@ -39,6 +39,17 @@ export function courseRoute(router: Route) {
      courseController.updateCourse(req, res, next);
    })
  );
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+ router.post(
+   "/add_Module_Videos",
+   isAuthenticated,
+   autheriseRoles("instructor"),
+   catchAsyncErrors((req: Req, res: Res, next: Next) => {
+     courseController.addModuleVideos(req, res, next);
+   })
+ );
+
+
 
   return router;
 }

@@ -1,10 +1,12 @@
 import { ICourseRepository } from "../../../../useCasese/interface/repository/courseRepository";
+import { IModuleVideoBody } from "../../../../useCasese/interface/request/course";
 import { ICourseResponse } from "../../../../useCasese/interface/response/courseResponse";
 
 import {
   getCourseInProgress,
   addCourseData,
   updateCourse,
+  addModuleVideos,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -31,6 +33,17 @@ export class CourseRepository implements ICourseRepository {
   ): Promise<ICourseResponse> {
     try {
       return await updateCourse(instructor, datum);
+    } catch (error: any) {
+      throw error;
+    }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async addModuleVideos(
+    data: IModuleVideoBody,
+    instructor: string
+  ): Promise<ICourseResponse> {
+    try {
+      return await addModuleVideos(data, instructor);
     } catch (error: any) {
       throw error;
     }

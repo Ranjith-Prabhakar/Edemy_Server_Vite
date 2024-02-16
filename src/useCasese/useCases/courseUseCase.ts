@@ -10,6 +10,7 @@ import {
   addCourseData,
   addModule,
   updateCourse,
+  addModuleVideos,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 
@@ -54,6 +55,14 @@ export class CourseUseCase implements ICourseUseCase {
   async updateCourse(req: Req, next: Next): Promise<ICourseResponse | void> {
     try {
       return await updateCourse(this.courseRepository, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async addModuleVideos(req: Req, next: Next): Promise<ICourseResponse | void> {
+    try {
+      return await addModuleVideos(this.courseRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

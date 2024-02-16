@@ -39,14 +39,23 @@ export class CoursesController {
     }
   }
 
-  async updateCourse(req:Req,res:Res,next:Next){
+  async updateCourse(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "updateCourse", next);
       const result = await this.courseUseCase.updateCourse(req, next);
       res.status(200).json(result);
-    } catch (error:any) {
+    } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
 
+  async addModuleVideos(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "updateCourse", next);
+      const result = await this.courseUseCase.addModuleVideos(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

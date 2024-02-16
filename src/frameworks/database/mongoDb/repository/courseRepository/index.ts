@@ -1,4 +1,5 @@
 import { getCourseInProgress } from "./getCourseInProgress";
 import { addCourseData } from "./addCourseData";
 import { updateCourse } from "./updateCourse";
-export { getCourseInProgress, addCourseData, updateCourse };
+import { addModuleVideos } from "./addModuleVideos";
+export { getCourseInProgress, addCourseData, updateCourse, addModuleVideos };
