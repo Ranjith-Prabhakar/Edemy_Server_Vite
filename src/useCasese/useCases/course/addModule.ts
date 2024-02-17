@@ -1,11 +1,25 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
+import { ICourseRepository } from "../../interface/repository/courseRepository";
 import { ICloudStorage } from "../../interface/services/cloudStorage";
 import ErrorHandler from "../../middlewares/errorHandler";
 
-export const addModule = async(cloudStorage:ICloudStorage ,req: Req, next: Next) => {
+export const addModule = async (
+  cloudStorage: ICloudStorage,
+  courseRepository: ICourseRepository,
+  req: Req,
+  next: Next
+) => {
   try {
-    return await cloudStorage.addModule(req.body.fileName,req.body.contentType,req.body.userId) 
-  } catch (error:any) {
-    return next(new ErrorHandler(500,error.message))
+    const isCourseExist = await courseRepository.findByName(
+      req.body.courseName
+    );
+    if (isCourseExist) return isCourseExist; 
+    return await cloudStorage.addModule(
+      req.body.fileName,
+      req.body.contentType,
+      req.body.userId
+    );
+  } catch (error: any) {
+    return next(new ErrorHandler(500, error.message));
   }
 };

@@ -2,7 +2,6 @@ import { IModuleVideoBody } from "../request/course";
 import { ICourseResponse } from "../response/courseResponse";
 
 export interface ICourseRepository {
-  [x: string]: any;
   getCourseInProgress(instructor: string): Promise<ICourseResponse>;
   addCourseData(courseData: ICourseRepository): Promise<ICourseResponse>;
   updateCourse(
@@ -13,4 +12,5 @@ export interface ICourseRepository {
     data: IModuleVideoBody,
     instructor: string
   ): Promise<ICourseResponse>;
+  findByName(courseName: string): Promise<string | void>
 }

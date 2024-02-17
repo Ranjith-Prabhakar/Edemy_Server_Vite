@@ -7,9 +7,11 @@ import {
   addCourseData,
   updateCourse,
   addModuleVideos,
+  findByName,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
+  constructor() {}
   async getCourseInProgress(instructor: string): Promise<ICourseResponse> {
     try {
       return await getCourseInProgress(instructor);
@@ -44,6 +46,14 @@ export class CourseRepository implements ICourseRepository {
   ): Promise<ICourseResponse> {
     try {
       return await addModuleVideos(data, instructor);
+    } catch (error: any) {
+      throw error;
+    }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async findByName(courseName: string): Promise<string | void> {
+    try {
+      return await findByName(courseName);
     } catch (error: any) {
       throw error;
     }

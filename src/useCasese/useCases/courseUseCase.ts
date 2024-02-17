@@ -46,7 +46,7 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async addModule(req: Req, next: Next): Promise<string | void> {
     try {
-      return await addModule(this.cloudStorage, req, next);
+      return await addModule(this.cloudStorage,this.courseRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
