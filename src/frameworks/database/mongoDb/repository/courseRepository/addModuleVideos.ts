@@ -21,32 +21,32 @@ export const addModuleVideos = async (
           moduleTittle: data.moduleTittle,
           videos: [
             {
-              videoNo: data.videoNo,
+              videoNo: data.videoNo as string,
               videoTittle: data.videoTittle,
+              videoUrl: data.videoUrl,
             },
           ],
         };
         dbResult.modules.push(details as IModule);
       } else {
-        const index = dbResult.modules.findIndex(
+        const moduleIndex = dbResult.modules.findIndex(
+          (item) => item.moduleNo === data.moduleNo
+        );
+        const moduleTittleIndex = dbResult.modules.findIndex(
           (item) => item.moduleTittle === data.moduleTittle
         );
-        console.log("data from course repository index", index);
-        if (index > -1) {
-          console.log(
-            "data from course repository if index",
-            dbResult.modules[index].videos
-          );
-          dbResult.modules[index].videos.push({
-            videoNo: data.videoNo,
+        if (moduleIndex > -1 && moduleTittleIndex > -1) {
+          dbResult.modules[moduleTittleIndex].videos.push({
+            videoNo: data.videoNo ,
             videoTittle: data.videoTittle,
+            videoUrl:data.videoUrl
           });
-
-          console.log(
-            "data from course repository if index affter============>",
-            dbResult.modules[index].videos
-          );
         } else {
+          if (moduleIndex > -1 && !(moduleTittleIndex > -1))
+            return {
+              status: 400,
+              message: "module already exist",
+            };
           const details = {
             moduleNo: data.moduleNo,
             moduleTittle: data.moduleTittle,
@@ -54,6 +54,7 @@ export const addModuleVideos = async (
               {
                 videoNo: data.videoNo,
                 videoTittle: data.videoTittle,
+                videoUrl: data.videoUrl,
               },
             ],
           };
@@ -69,8 +70,6 @@ export const addModuleVideos = async (
           },
           dbResult
         );
-        // const result = await dbResult.save();
-        // console.log("dbResult after saving====>", result);
         if (upsert)
           return {
             status: 200,
@@ -79,7 +78,6 @@ export const addModuleVideos = async (
           };
       } catch (error) {
         console.error("Error saving to the database:", error);
-        // Handle the error, throw it, or log as needed
         return {
           status: 500,
           message: "Internal Server Error",

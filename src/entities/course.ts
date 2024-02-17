@@ -17,6 +17,7 @@ export interface IModule {
     {
       videoNo: string;
       videoTittle: string;
+      videoUrl: string;
       duration?: string;
       finished?: boolean;
       currentPosition?: number;
