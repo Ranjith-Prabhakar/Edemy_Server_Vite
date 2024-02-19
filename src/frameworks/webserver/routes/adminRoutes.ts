@@ -5,12 +5,12 @@ import { adminController } from "./injections/injuctions";
 
 export const adminRoute = (router: Route) => {
   /////////
-  router.patch(
-    "/instructor_approval",
+  router.post(
+    "/instructor_approval_or_reject",
     isAuthenticated,
     autheriseRoles("admin"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-      adminController.approveInstructor(req, res, next);
+      adminController.approveOrRejectInstructor(req, res, next);
     })
   );
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888

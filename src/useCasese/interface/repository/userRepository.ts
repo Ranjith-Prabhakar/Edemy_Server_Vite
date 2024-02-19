@@ -1,7 +1,6 @@
 import { IUser } from "../../../entities/user";
-import { IUserResponse } from "../response/userResponse";
+import { IUserResponse } from "../request_And_Response/user";
 import { IJsonResponse } from "../services/jsonResponse";
-
 
 export interface IUserRepository {
   findUserByEmail(email: string): Promise<IUser | null>;
@@ -16,7 +15,7 @@ export interface IUserRepository {
     data: { [key: string]: string | number }
   ): Promise<IJsonResponse>;
   // 8888888888888888888888888888888888888888888888888888888888888888888888
-  getUsers(role:string): Promise<IUser[]>;
+  getUsers(role: string): Promise<IUser[]>;
   // 8888888888888888888888888888888888888888888888888888888888888888888888
   getUser(id: string): Promise<IUser>;
   // 8888888888888888888888888888888888888888888888888888888888888888888888

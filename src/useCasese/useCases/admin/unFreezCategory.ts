@@ -1,7 +1,7 @@
 import { ICategory } from "../../../entities/category";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICategoryRepository } from "../../interface/repository/categoryRepository";
-import { ICategoryResponse } from "../../interface/response/categoryResponse";
+import { ICategoryResponse } from "../../interface/request_And_Response/category";
 import ErrorHandler from "../../middlewares/errorHandler";
 
 export const unFreezCategory = async (

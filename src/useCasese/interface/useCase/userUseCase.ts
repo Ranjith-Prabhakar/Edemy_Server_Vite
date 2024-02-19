@@ -1,6 +1,6 @@
 import { IUser } from "../../../entities/user";
 import { Next, Req, Res } from "../../../frameworks/types/serverPackageTypes";
-import { IGeneralResponse } from "../response/generalResponse";
+import { IGeneralResponse } from "../request_And_Response/generalResponse";
 import { IJsonResponse } from "../services/jsonResponse";
 import { IToken } from "../services/jwt.types";
 

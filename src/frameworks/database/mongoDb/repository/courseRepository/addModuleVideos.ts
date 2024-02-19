@@ -1,6 +1,6 @@
 import { IModule } from "../../../../../entities/course";
 import { IModuleVideoBody } from "../../../../../useCasese/interface/request/course";
-import { ICourseResponse } from "../../../../../useCasese/interface/response/courseResponse";
+import { ICourseResponse } from "../../../../../useCasese/interface/request_And_Response/course";
 import courseModel from "../../models/courseModel";
 
 export const addModuleVideos = async (
@@ -37,9 +37,9 @@ export const addModuleVideos = async (
         );
         if (moduleIndex > -1 && moduleTittleIndex > -1) {
           dbResult.modules[moduleTittleIndex].videos.push({
-            videoNo: data.videoNo ,
+            videoNo: data.videoNo,
             videoTittle: data.videoTittle,
-            videoUrl:data.videoUrl
+            videoUrl: data.videoUrl,
           });
         } else {
           if (moduleIndex > -1 && !(moduleTittleIndex > -1))

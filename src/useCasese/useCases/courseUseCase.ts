@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 import { Next, Req } from "../../frameworks/types/serverPackageTypes";
-import { ICourseResponse } from "../interface/response/courseResponse";
+import { ICourseResponse } from "../interface/request_And_Response/course";
 import { ICloudStorage } from "../interface/services/cloudStorage";
 import { ICourseUseCase } from "../interface/useCase/courseUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
@@ -46,7 +46,12 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async addModule(req: Req, next: Next): Promise<string | void> {
     try {
-      return await addModule(this.cloudStorage,this.courseRepository, req, next);
+      return await addModule(
+        this.cloudStorage,
+        this.courseRepository,
+        req,
+        next
+      );
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

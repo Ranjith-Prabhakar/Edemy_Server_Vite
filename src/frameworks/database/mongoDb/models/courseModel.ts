@@ -20,7 +20,7 @@ const courseSchema: Schema<ICourse> = new Schema({
     trim: true,
   },
   tags: {
-    type: [String],
+    type: String,
     required: [true, "please provide some valid tags"],
   },
   thumbnail: {

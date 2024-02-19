@@ -16,7 +16,7 @@ import {
   unFreezUser,
 } from "./userRepository/admin/index";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
-import { IUserResponse } from "../../../../useCasese/interface/response/userResponse";
+import { IUserResponse } from "../../../../useCasese/interface/request_And_Response/user";
 
 export class UserRepository implements IUserRepository {
   constructor(private userModels: typeof userModel) {}
@@ -44,7 +44,7 @@ export class UserRepository implements IUserRepository {
     return await findByIdAndUpdate(id, data);
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
-  async getUsers(role:string): Promise<IUser[]> {
+  async getUsers(role: string): Promise<IUser[]> {
     return await getUsers(role);
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888

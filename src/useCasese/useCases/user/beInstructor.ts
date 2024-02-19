@@ -11,6 +11,7 @@ export const beInstructor = async (
   try {
     return await instructorAgreementRepository.createAgreement({
       userId: req.user?._id as string,
+      userName: req.user?.name as string,
       ...req.body,
     });
   } catch (error: any) {

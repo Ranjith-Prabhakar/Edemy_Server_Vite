@@ -1,4 +1,4 @@
-import { IUserResponse } from "../../../../../../useCasese/interface/response/userResponse";
+import { IUserResponse } from "../../../../../../useCasese/interface/request_And_Response/user";
 import userModel from "../../../models/userModel";
 
 export const unFreezUser = async (id: string): Promise<IUserResponse> => {

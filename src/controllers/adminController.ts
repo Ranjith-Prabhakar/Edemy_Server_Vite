@@ -10,11 +10,11 @@ export class AdminController {
     this.adminUseCase = adminUseCase;
   }
   // *****************************************************************************************************************************
-  async approveInstructor(req: Req, res: Res, next: Next) {
+  async approveOrRejectInstructor(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "approveInstructor", next);
-      const result = await this.adminUseCase.approveInstructor(req, next);
-      res.status(result.status).json(result);
+      const result = await this.adminUseCase.approveOrRejectInstructor(req, next);
+      res.status(result.status as number).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

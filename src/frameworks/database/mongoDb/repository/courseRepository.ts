@@ -1,6 +1,6 @@
 import { ICourseRepository } from "../../../../useCasese/interface/repository/courseRepository";
 import { IModuleVideoBody } from "../../../../useCasese/interface/request/course";
-import { ICourseResponse } from "../../../../useCasese/interface/response/courseResponse";
+import { ICourseResponse } from "../../../../useCasese/interface/request_And_Response/course";
 
 import {
   getCourseInProgress,

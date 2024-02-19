@@ -1,6 +1,6 @@
 import { ICategory } from "../../../../entities/category";
 import { ICategoryRepository } from "../../../../useCasese/interface/repository/categoryRepository";
-import { ICategoryResponse } from "../../../../useCasese/interface/response/categoryResponse";
+import { ICategoryResponse } from "../../../../useCasese/interface/request_And_Response/category";
 
 import {
   addCategory,

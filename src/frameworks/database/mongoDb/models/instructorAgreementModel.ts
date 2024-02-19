@@ -6,6 +6,10 @@ const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
     type: String,
     unique: true,
   },
+  userName: {
+    type: String,
+    required:[true,"please give the name"]
+  },
   status: {
     type: String,
     default: "pending",

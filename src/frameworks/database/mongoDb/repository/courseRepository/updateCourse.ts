@@ -1,5 +1,5 @@
 import { ICourse } from "../../../../../entities/course";
-import { ICourseResponse } from "../../../../../useCasese/interface/response/courseResponse";
+import { ICourseResponse } from "../../../../../useCasese/interface/request_And_Response/course";
 import courseModel from "../../models/courseModel";
 
 export const updateCourse = async (
@@ -13,10 +13,10 @@ export const updateCourse = async (
         submissionStatus: "work-in-progress",
       },
       { $set: { ...datum } },
-      { new: true } 
+      { new: true }
     );
 
-    console.log("result from updateCourse",datum);
+    console.log("result from updateCourse", datum);
     if (result) {
       return {
         status: 200,

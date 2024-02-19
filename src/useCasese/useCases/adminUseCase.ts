@@ -3,9 +3,8 @@ import ErrorHandler from "../middlewares/errorHandler";
 import { ICategoryRepository } from "../interface/repository/categoryRepository";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../interface/repository/userRepository";
-import { IJsonResponse } from "../interface/services/jsonResponse";
 import {
-  approveInstructor,
+  approveOrRejectInstructor,
   getUsers,
   getUser,
   freezUser,
@@ -21,10 +20,9 @@ import { IUser } from "../../entities/user";
 import { IAdminUseCase } from "../interface/useCase/adminUseCase";
 import { NextFunction } from "express";
 import { ICategory } from "../../entities/category";
-import { ICategoryResponse } from "../interface/response/categoryResponse";
-import { IUserResponse } from "../interface/response/userResponse";
-import { IInstructorAgreement } from "../../entities/instructorAgreement";
-import { IInstructorAgreementResponse } from "../interface/response/instructorAgreementResponse";
+import { ICategoryResponse } from "../interface/request_And_Response/category";
+import { IUserResponse } from "../interface/request_And_Response/user";
+import { IInstructorAgreementResponse } from "../interface/request_And_Response/instructorAgreement";
 
 export class AdminUseCase implements IAdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -40,9 +38,12 @@ export class AdminUseCase implements IAdminUseCase {
     this.categoryRepository = categoryRepository;
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async approveInstructor(req: Req, next: Next): Promise<IJsonResponse> {
+  async approveOrRejectInstructor(
+    req: Req,
+    next: Next
+  ): Promise<IInstructorAgreementResponse> {
     try {
-      return await approveInstructor(
+      return await approveOrRejectInstructor(
         this.userRepository,
         this.instrctorAgreementRepository,
         req,
@@ -56,7 +57,6 @@ export class AdminUseCase implements IAdminUseCase {
   async instructorRequests(next: NextFunction): Promise<void | object> {
     try {
       return await instructorRequests(this.instrctorAgreementRepository, next);
-     
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

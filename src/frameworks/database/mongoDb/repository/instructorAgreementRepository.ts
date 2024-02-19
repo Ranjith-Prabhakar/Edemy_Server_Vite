@@ -1,9 +1,9 @@
 import { IInstructorAgreement } from "../../../../entities/instructorAgreement";
-import ErrorHandler from "../../../../useCasese/middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../../../useCasese/interface/repository/instructorAgreementRepository";
+import { IInstructorAgreementResponse } from "../../../../useCasese/interface/request_And_Response/instructorAgreement";
 import { IJsonResponse } from "../../../../useCasese/interface/services/jsonResponse";
 import instructorAgreementModel from "../models/instructorAgreementModel";
-import { IInstructorAgreementResponse } from "../../../../useCasese/interface/response/instructorAgreementResponse";
+
 export class InstrctorAgreementRepository implements IInstructorAgreementRepository {
   // ******************************************************************************************
   async createAgreement(
@@ -45,9 +45,12 @@ export class InstrctorAgreementRepository implements IInstructorAgreementReposit
       throw error;
     }
   }
- 
+
   // ******************************************************************************************
-  async updateStatus(userId: string, action: string): Promise<IJsonResponse> {
+  async updateStatus(
+    userId: string,
+    action: string
+  ): Promise<IInstructorAgreementResponse> {
     try {
       const result = await instructorAgreementModel.findByIdAndUpdate(
         userId,
@@ -61,6 +64,7 @@ export class InstrctorAgreementRepository implements IInstructorAgreementReposit
           status: 200,
           success: true,
           message: "status has been updated",
+          data: result,
         };
       } else {
         return {

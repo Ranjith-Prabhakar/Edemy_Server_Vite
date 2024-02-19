@@ -1,13 +1,15 @@
 import { ICategory } from "../../../entities/category";
 import { IUser } from "../../../entities/user";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import { ICategoryResponse } from "../response/categoryResponse";
-import { IInstructorAgreementResponse } from "../response/instructorAgreementResponse";
-import { IUserResponse } from "../response/userResponse";
-import { IJsonResponse } from "../services/jsonResponse";
+import { ICategoryResponse } from "../request_And_Response/category";
+import { IInstructorAgreementResponse } from "../request_And_Response/instructorAgreement";
+import { IUserResponse } from "../request_And_Response/user";
 
 export interface IAdminUseCase {
-  approveInstructor(req: Req, next: Next): Promise<IJsonResponse>;
+  approveOrRejectInstructor(
+    req: Req,
+    next: Next
+  ): Promise<IInstructorAgreementResponse>;
   instructorRequests(next: Next): Promise<void | object>;
   getUsers(next: Next): Promise<IUser[] | void>;
   getUser(req: Req, next: Next): Promise<void | IUser>;

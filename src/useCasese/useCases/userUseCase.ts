@@ -24,7 +24,7 @@ import { IUserUseCase } from "../interface/useCase/userUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
 import { IUser } from "../../entities/user";
 import { IJsonResponse } from "../interface/services/jsonResponse";
-import { IGeneralResponse } from "../interface/response/generalResponse";
+import { IGeneralResponse } from "../interface/request_And_Response/generalResponse";
 
 export class UserUsecase implements IUserUseCase {
   private readonly userRepository: IUserRepository;

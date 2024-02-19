@@ -1,7 +1,7 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { IOtpRepository } from "../../interface/repository/otpRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
-import { IGeneralResponse } from "../../interface/response/generalResponse";
+import { IGeneralResponse } from "../../interface/request_And_Response/generalResponse";
 import { IHashpassword } from "../../interface/services/hashPassword";
 import { IJwt } from "../../interface/services/jwt.types";
 import ErrorHandler from "../../middlewares/errorHandler";

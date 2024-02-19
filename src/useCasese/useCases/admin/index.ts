@@ -1,4 +1,4 @@
-import { approveInstructor } from "./approveInstructor";
+import { approveOrRejectInstructor } from "./approveOrRejectInstructor";
 import { getUsers } from "./getUsers";
 import { getUser } from "./getUser";
 import { freezUser } from "./freezUser";
@@ -10,7 +10,7 @@ import { unFreezCategory } from "./unFreezCategory";
 import { unFreezUser } from "./unFreezUser";
 import { instructorRequests } from "./instructorRequests";
 export {
-  approveInstructor,
+  approveOrRejectInstructor,
   getUsers,
   getUser,
   freezUser,

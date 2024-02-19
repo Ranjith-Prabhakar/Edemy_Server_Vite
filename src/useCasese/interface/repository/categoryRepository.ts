@@ -1,5 +1,5 @@
 import { ICategory } from "../../../entities/category";
-import { ICategoryResponse } from "../response/categoryResponse";
+import { ICategoryResponse } from "../request_And_Response/category";
 
 export interface ICategoryRepository {
   addCategory(category: string): Promise<ICategory>;

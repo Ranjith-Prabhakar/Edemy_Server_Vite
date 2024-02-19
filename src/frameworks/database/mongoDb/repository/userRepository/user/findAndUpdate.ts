@@ -8,7 +8,7 @@ export const findAndUpdate = async (
   const id = data.userId as string;
   delete data.userId;
   delete data?.agreementId;
-  const update = await userModels.findByIdAndUpdate(id, data, { new: true });
+  const update = await userModels.findByIdAndUpdate(id, {role:"instructor"}, { new: true });
   if (!update) {
     return {
       status: 404,

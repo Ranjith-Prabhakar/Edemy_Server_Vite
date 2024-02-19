@@ -36,7 +36,7 @@ export interface ICourse {
   courseName: string;
   instructor: string;
   discription: string;
-  tags: string[];
+  tags: string;
   thumbnail: string;
   uplaoadedDate: Date;
   status: "approved" | "pending" | "freez";

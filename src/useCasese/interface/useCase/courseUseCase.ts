@@ -1,5 +1,5 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import { ICourseResponse } from "../response/courseResponse";
+import { ICourseResponse } from "../request_And_Response/course";
 
 export interface ICourseUseCase {
   getCourseInProgress(req: Req, next: Next): Promise<ICourseResponse | void>;
