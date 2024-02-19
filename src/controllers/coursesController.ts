@@ -58,4 +58,22 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getCourses(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.courseUseCase.getCourses(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  async getCoursesInRequest(req: Req, res: Res, next: Next) {
+    try {
+      const result = await this.courseUseCase.getCoursesInRequest(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

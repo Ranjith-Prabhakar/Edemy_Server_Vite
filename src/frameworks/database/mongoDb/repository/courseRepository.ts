@@ -8,6 +8,8 @@ import {
   updateCourse,
   addModuleVideos,
   findByName,
+  getCourses,
+  getCoursesInRequest,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -57,5 +59,22 @@ export class CourseRepository implements ICourseRepository {
     } catch (error: any) {
       throw error;
     }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getCourses(): Promise<void | ICourseResponse> {
+    try {
+      return await getCourses();
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getCoursesInRequest(): Promise<void | ICourseResponse> {
+     try {
+       return await getCoursesInRequest();
+     } catch (error: any) {
+       throw error;
+     }
   }
 }

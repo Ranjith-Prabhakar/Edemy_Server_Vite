@@ -45,4 +45,5 @@ export interface ICourse {
   review: Array<IReviewRating>;
   rating: number;
   submissionStatus: "work-in-progress" | "completed";
+  noOfPurchase:number
 }

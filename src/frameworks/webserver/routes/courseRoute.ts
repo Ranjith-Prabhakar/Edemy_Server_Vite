@@ -49,6 +49,25 @@ export function courseRoute(router: Route) {
    })
  );
 
+  router.get(
+    "/get_courses",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getCourses(req, res, next);
+    })
+  );
+
+  router.get(
+    "/get_courses_in_Request",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getCoursesInRequest(req, res, next);
+    })
+  );
+
+
 
 
   return router;

@@ -14,4 +14,6 @@ export interface ICourseRepository {
     instructor: string
   ): Promise<ICourseResponse>;
   findByName(courseName: string): Promise<string | void>;
+  getCourses(): Promise<void | ICourseResponse>;
+  getCoursesInRequest(): Promise<void | ICourseResponse>;
 }
