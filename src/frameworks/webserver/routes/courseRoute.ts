@@ -31,23 +31,23 @@ export function courseRoute(router: Route) {
     })
   );
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
- router.post(
-   "/updateCourse",
-   isAuthenticated,
-   autheriseRoles("instructor"),
-   catchAsyncErrors((req: Req, res: Res, next: Next) => {
-     courseController.updateCourse(req, res, next);
-   })
- );
+  router.post(
+    "/updateCourse",
+    isAuthenticated,
+    autheriseRoles("instructor"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.updateCourse(req, res, next);
+    })
+  );
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
- router.post(
-   "/add_Module_Videos",
-   isAuthenticated,
-   autheriseRoles("instructor"),
-   catchAsyncErrors((req: Req, res: Res, next: Next) => {
-     courseController.addModuleVideos(req, res, next);
-   })
- );
+  router.post(
+    "/add_Module_Videos",
+    isAuthenticated,
+    autheriseRoles("instructor"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.addModuleVideos(req, res, next);
+    })
+  );
 
   router.get(
     "/get_courses",
@@ -67,18 +67,23 @@ export function courseRoute(router: Route) {
     })
   );
 
+  router.post(
+    "/get_video",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getVideoPresignedUrl(req, res, next);
+    })
+  );
 
-   router.post(
-     "/get_video",
-     isAuthenticated,
-     autheriseRoles("admin"),
-     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-       courseController.getVideoPresignedUrl(req, res, next);
-     })
-   );
-  ;
-
-
+  router.post(
+    "/approve_or_reject_course",
+    isAuthenticated,
+    autheriseRoles("admin"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.approveOrRejectVideo(req, res, next);
+    })
+  );
 
   return router;
 }

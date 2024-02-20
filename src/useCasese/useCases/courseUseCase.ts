@@ -1,4 +1,3 @@
-import { NextFunction } from "express";
 import { Next, Req } from "../../frameworks/types/serverPackageTypes";
 import { ICourseResponse } from "../interface/request_And_Response/course";
 import { ICloudStorage } from "../interface/services/cloudStorage";
@@ -14,6 +13,7 @@ import {
   getCourses,
   getCoursesInRequest,
   getVideoPresignedUrl,
+  approveOrRejectVideo,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -31,7 +31,7 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
     req: Req,
-    next: NextFunction
+    next: Next
   ): Promise<ICourseResponse | void> {
     try {
       return await getCourseInProgress(this.courseRepository, req, next);
@@ -80,7 +80,7 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourses(
     req: Req,
-    next: NextFunction
+    next: Next
   ): Promise<void | ICourseResponse> {
     try {
       return await getCourses(this.courseRepository, next);
@@ -91,7 +91,7 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCoursesInRequest(
     req: Req,
-    next: NextFunction
+    next: Next
   ): Promise<void | ICourseResponse> {
     try {
       return await getCoursesInRequest(this.courseRepository, next);
@@ -102,10 +102,21 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getVideoPresignedUrl(
     req: Req,
-    next: NextFunction
+    next: Next
   ): Promise<void | ICloudStorageResponse> {
     try {
-      return await getVideoPresignedUrl(this.cloudStorage,req, next);
+      return await getVideoPresignedUrl(this.cloudStorage, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async approveOrRejectVideo(
+    req: Req,
+    next: Next
+  ): Promise<void | ICourseResponse> {
+    try {
+return await approveOrRejectVideo(this.courseRepository,req,next)
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

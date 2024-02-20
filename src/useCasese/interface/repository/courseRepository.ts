@@ -16,4 +16,8 @@ export interface ICourseRepository {
   findByName(courseName: string): Promise<string | void>;
   getCourses(): Promise<void | ICourseResponse>;
   getCoursesInRequest(): Promise<void | ICourseResponse>;
+  approveOrRejectVideo(
+    courseId: string,
+    action: string
+  ): Promise<void | ICourseResponse>;
 }

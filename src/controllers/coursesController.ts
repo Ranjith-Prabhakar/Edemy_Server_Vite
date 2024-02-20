@@ -79,8 +79,18 @@ export class CoursesController {
 
   async getVideoPresignedUrl(req: Req, res: Res, next: Next) {
     try {
-      await inputValidation(req, "addModuleVideos", next);
+      await inputValidation(req, "getVideoPresignedUrl", next);
       const result = await this.courseUseCase.getVideoPresignedUrl(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  async approveOrRejectVideo(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "approveOrRejectVideo", next);
+      const result = await this.courseUseCase.approveOrRejectVideo(req, next);
       res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

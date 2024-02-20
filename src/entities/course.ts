@@ -39,7 +39,7 @@ export interface ICourse {
   tags: string;
   thumbnail: string;
   uplaoadedDate: Date;
-  status: "approved" | "pending" | "freez";
+  status: "approved" | "pending" | "freez" | "rejected";
   duration: string;
   modules: Array<IModule>;
   review: Array<IReviewRating>;

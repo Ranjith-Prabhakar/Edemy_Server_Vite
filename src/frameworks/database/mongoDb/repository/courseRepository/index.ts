@@ -5,6 +5,7 @@ import { addModuleVideos } from "./addModuleVideos";
 import { findByName } from "./findByName";
 import { getCourses } from "./getCourses";
 import { getCoursesInRequest } from "./getCoursesInRequest";
+import { approveOrRejectVideo } from "./approveOrRejectVideo";
 export {
   getCourseInProgress,
   addCourseData,
@@ -13,4 +14,5 @@ export {
   findByName,
   getCourses,
   getCoursesInRequest,
+  approveOrRejectVideo,
 };
