@@ -5,6 +5,7 @@ import { updateCourse } from "./updateCourse";
 import { addModuleVideos } from "./addModuleVideos"; 
 import { getCourses } from "./getCourses"; 
 import { getCoursesInRequest } from "./getCoursesInRequest"; 
+import { getVideoPresignedUrl } from "./getVideoPresignedUrl"; 
 export {
   addModule,
   addCourseData,
@@ -13,4 +14,5 @@ export {
   addModuleVideos,
   getCourses,
   getCoursesInRequest,
+  getVideoPresignedUrl,
 };

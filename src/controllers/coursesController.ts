@@ -51,7 +51,7 @@ export class CoursesController {
 
   async addModuleVideos(req: Req, res: Res, next: Next) {
     try {
-      await inputValidation(req, "updateCourse", next);
+      await inputValidation(req, "addModuleVideos", next);
       const result = await this.courseUseCase.addModuleVideos(req, next);
       res.status(200).json(result);
     } catch (error: any) {
@@ -71,6 +71,16 @@ export class CoursesController {
   async getCoursesInRequest(req: Req, res: Res, next: Next) {
     try {
       const result = await this.courseUseCase.getCoursesInRequest(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  async getVideoPresignedUrl(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "addModuleVideos", next);
+      const result = await this.courseUseCase.getVideoPresignedUrl(req, next);
       res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

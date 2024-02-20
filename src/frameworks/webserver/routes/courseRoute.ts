@@ -68,6 +68,16 @@ export function courseRoute(router: Route) {
   );
 
 
+   router.post(
+     "/get_video",
+     isAuthenticated,
+     autheriseRoles("admin"),
+     catchAsyncErrors((req: Req, res: Res, next: Next) => {
+       courseController.getVideoPresignedUrl(req, res, next);
+     })
+   );
+  ;
+
 
 
   return router;

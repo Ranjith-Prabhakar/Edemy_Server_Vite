@@ -35,7 +35,7 @@ export class InstrctorAgreementRepository implements IInstructorAgreementReposit
   // ******************************************************************************************
   async getAgreements(): Promise<void | object> {
     try {
-      const result = await instructorAgreementModel.find();
+      const result = await instructorAgreementModel.find({ status :"pending"});
       return {
         success: true,
         message: "instructors agreements have been fetched successfully",

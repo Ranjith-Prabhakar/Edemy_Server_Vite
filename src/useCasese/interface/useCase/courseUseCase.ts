@@ -1,4 +1,5 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
+import { ICloudStorageResponse } from "../request_And_Response/cloudStorageResponse";
 import { ICourseResponse } from "../request_And_Response/course";
 
 export interface ICourseUseCase {
@@ -9,4 +10,8 @@ export interface ICourseUseCase {
   addModuleVideos(req: Req, next: Next): Promise<ICourseResponse | void>;
   getCourses(req: Req, next: Next): Promise<ICourseResponse | void>;
   getCoursesInRequest(req: Req, next: Next): Promise<ICourseResponse | void>;
+  getVideoPresignedUrl(
+    req: Req,
+    next: Next
+  ): Promise<ICloudStorageResponse | void>;
 }

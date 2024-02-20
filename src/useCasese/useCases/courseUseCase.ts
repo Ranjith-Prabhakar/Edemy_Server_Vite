@@ -13,8 +13,10 @@ import {
   addModuleVideos,
   getCourses,
   getCoursesInRequest,
+  getVideoPresignedUrl,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
+import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
@@ -93,6 +95,17 @@ export class CourseUseCase implements ICourseUseCase {
   ): Promise<void | ICourseResponse> {
     try {
       return await getCoursesInRequest(this.courseRepository, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getVideoPresignedUrl(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICloudStorageResponse> {
+    try {
+      return await getVideoPresignedUrl(this.cloudStorage,req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

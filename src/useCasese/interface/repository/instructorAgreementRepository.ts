@@ -9,5 +9,4 @@ export interface IInstructorAgreementRepository {
     userId: string,
     action: string
   ): Promise<IInstructorAgreementResponse>;
-
 }
