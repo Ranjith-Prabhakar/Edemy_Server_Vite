@@ -84,6 +84,13 @@ export function courseRoute(router: Route) {
       courseController.approveOrRejectVideo(req, res, next);
     })
   );
+  router.get(
+    "/get_courses_for_user",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getCoursesForUser(req, res, next);
+    })
+  );
 
   return router;
 }

@@ -15,4 +15,5 @@ export interface ICourseUseCase {
     next: Next
   ): Promise<ICloudStorageResponse | void>;
   approveOrRejectVideo(req: Req, next: Next): Promise<ICourseResponse | void>;
+  getCoursesForUser(req: Req, next: Next): Promise<ICourseResponse | void>;
 }

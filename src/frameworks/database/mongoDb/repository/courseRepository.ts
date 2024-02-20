@@ -11,6 +11,7 @@ import {
   getCourses,
   getCoursesInRequest,
   approveOrRejectVideo,
+  getCoursesForUser,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -79,11 +80,22 @@ export class CourseRepository implements ICourseRepository {
     }
   }
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async approveOrRejectVideo(courseId: string, action: string): Promise<void | ICourseResponse> {
+  async approveOrRejectVideo(
+    courseId: string,
+    action: string
+  ): Promise<void | ICourseResponse> {
     try {
       return await approveOrRejectVideo(courseId, action);
-    } catch (error:any) {
-      throw error
+    } catch (error: any) {
+      throw error;
     }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getCoursesForUser(): Promise<void | ICourseResponse> {
+   try {
+    return await getCoursesForUser()
+   } catch (error:any) {
+    throw error
+   } 
   }
 }

@@ -20,4 +20,5 @@ export interface ICourseRepository {
     courseId: string,
     action: string
   ): Promise<void | ICourseResponse>;
+  getCoursesForUser(): Promise<void | ICourseResponse>;
 }

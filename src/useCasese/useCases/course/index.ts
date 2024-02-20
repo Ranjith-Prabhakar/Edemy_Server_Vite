@@ -7,6 +7,7 @@ import { getCourses } from "./getCourses";
 import { getCoursesInRequest } from "./getCoursesInRequest"; 
 import { getVideoPresignedUrl } from "./getVideoPresignedUrl"; 
 import { approveOrRejectVideo } from "./approveOrRejectVideo"; 
+import { getCoursesForUser } from "./getCoursesForUser"; 
 export {
   addModule,
   addCourseData,
@@ -17,4 +18,5 @@ export {
   getCoursesInRequest,
   getVideoPresignedUrl,
   approveOrRejectVideo,
+  getCoursesForUser,
 };

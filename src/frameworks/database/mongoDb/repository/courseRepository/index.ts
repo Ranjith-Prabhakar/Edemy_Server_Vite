@@ -6,6 +6,7 @@ import { findByName } from "./findByName";
 import { getCourses } from "./getCourses";
 import { getCoursesInRequest } from "./getCoursesInRequest";
 import { approveOrRejectVideo } from "./approveOrRejectVideo";
+import { getCoursesForUser } from "./getCoursesForUser";
 export {
   getCourseInProgress,
   addCourseData,
@@ -15,4 +16,5 @@ export {
   getCourses,
   getCoursesInRequest,
   approveOrRejectVideo,
+  getCoursesForUser,
 };

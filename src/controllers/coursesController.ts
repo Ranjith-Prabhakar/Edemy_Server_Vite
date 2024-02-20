@@ -96,4 +96,14 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getCoursesForUser(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "getCoursesForUser", next);
+      const result = await this.courseUseCase.getCoursesForUser(req, next);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }
