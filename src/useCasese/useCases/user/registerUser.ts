@@ -7,6 +7,7 @@ import { IJwt } from "../../interface/services/jwt.types";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import ErrorHandler from "../../middlewares/errorHandler";
 import { Next } from "../../../frameworks/types/serverPackageTypes";
+import { catchError } from "../../middlewares/catchError";
 
 export const registerUser = async (
   otpRepository: IOtpRepository,
@@ -58,7 +59,7 @@ export const registerUser = async (
       });
       return jwtToken;
     }
-  } catch (err: any) {
-    return next(new ErrorHandler(500, err.message));
+  } catch (error: unknown) {
+    catchError(error, next);
   }
 };

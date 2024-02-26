@@ -1,6 +1,6 @@
 import { Route, Req, Res, Next } from "../../types/serverPackageTypes";
 import { userController } from "./injections/injuctions";
-import { isAuthenticated, autheriseRoles } from "../middlewares/auth";
+import { isAuthenticated} from "../middlewares/auth";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 
 export function userRoute(router: Route) {

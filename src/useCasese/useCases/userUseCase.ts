@@ -21,10 +21,10 @@ import {
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserUseCase } from "../interface/useCase/userUseCase";
-import ErrorHandler from "../middlewares/errorHandler";
 import { IUser } from "../../entities/user";
 import { IJsonResponse } from "../interface/services/jsonResponse";
 import { IGeneralResponse } from "../interface/request_And_Response/generalResponse";
+import { catchError } from "../middlewares/catchError";
 
 export class UserUsecase implements IUserUseCase {
   private readonly userRepository: IUserRepository;
@@ -85,8 +85,8 @@ export class UserUsecase implements IUserUseCase {
         next
       );
       return result;
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error:unknown) {
+      catchError(error,next);
     }
   }
   // **************************************************************************************
@@ -104,8 +104,8 @@ export class UserUsecase implements IUserUseCase {
         token,
         next
       );
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
@@ -123,8 +123,8 @@ export class UserUsecase implements IUserUseCase {
         password,
         next
       );
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
@@ -137,8 +137,8 @@ export class UserUsecase implements IUserUseCase {
         res,
         next
       );
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
@@ -150,16 +150,16 @@ export class UserUsecase implements IUserUseCase {
         req,
         next
       )) as IToken;
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
   async beInstructor(req: Req, next: Next): Promise<IJsonResponse | void> {
     try {
       return await beInstructor(this.instructorAgreementRepository, req, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
@@ -174,8 +174,8 @@ export class UserUsecase implements IUserUseCase {
         req,
         next
       );
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
@@ -192,8 +192,8 @@ export class UserUsecase implements IUserUseCase {
         next,
         token
       );
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
@@ -213,16 +213,16 @@ export class UserUsecase implements IUserUseCase {
         token,
         next
       );
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
   // **************************************************************************************
   async userSession(req: Req, next: Next): Promise<IUser | void> {
     try {
       return await userSession(req, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error: unknown) {
+      catchError(error, next);
     }
   }
 }

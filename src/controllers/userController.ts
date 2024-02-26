@@ -5,6 +5,7 @@ import {
   accessTokenOptions,
   refreshTokenOptions,
 } from "./middleware/tokenOptions";
+
 import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
 import { IToken } from "../useCasese/interface/services/jwt.types";
@@ -63,7 +64,7 @@ export class UserController {
         result?.tokens.accessToken,
         refreshTokenOptions
       );
-      res.status(200).json(result?.user);
+      res.status(200).json({user:result?.user,message:"user loggedIn successfully"});
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

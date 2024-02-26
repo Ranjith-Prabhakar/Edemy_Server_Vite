@@ -4,7 +4,7 @@ import ErrorResponse from "./errorHandler";
 export const errorMiddleware = (err: any, req: Req, res: Res, next: Next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "internal server error";
-console.log("inside error middleware")
+  console.log("inside error middleware");
   console.error(err);
 
   //wrong mongoDb id
@@ -35,6 +35,7 @@ console.log("inside error middleware")
   //   });
   // }
   res.status(err.statusCode).json({
+    status: err.statusCode,
     success: false,
     message: err.message,
   });
