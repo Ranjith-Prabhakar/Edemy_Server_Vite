@@ -17,7 +17,7 @@ export const forgotPassword = async (
 ): Promise<string | void> => {
   try {
     const user = await userRepository.findUserByEmail(req.body.email);
-    if(!user) return next(new ErrorHandler(500,"user not found for this mail id"))
+    if(!user) next(new ErrorHandler(400,"user not found for this mail id"))
     const isExistInOtpRep = await otpRepository.findUser(req.body.email);
     if (isExistInOtpRep) {
       await sendMail.sendEmailVerification(

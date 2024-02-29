@@ -64,7 +64,9 @@ export class UserController {
         result?.tokens.accessToken,
         refreshTokenOptions
       );
-      res.status(200).json({user:result?.user,message:"user loggedIn successfully"});
+      res
+        .status(200)
+        .json({ user: result?.user, message: "user loggedIn successfully" });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -109,7 +111,7 @@ export class UserController {
   // *****************************************************************************************************************************
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
-      console.log("forgotPassword controller", req.body);
+      console.log("forgotPassword controller time===>", req.body, Date.now());
       await inputValidation(req, "forgotPassword", next);
       const result = await this.userUseCase.forgotPassword(req, next);
 
