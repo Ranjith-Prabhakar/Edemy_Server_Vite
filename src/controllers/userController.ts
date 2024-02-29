@@ -115,7 +115,11 @@ export class UserController {
       await inputValidation(req, "forgotPassword", next);
       const result = await this.userUseCase.forgotPassword(req, next);
 
-      res.cookie("verificationToken", result);
+      res.cookie("verificationToken", result, {
+        sameSite: "strict",
+        httpOnly: true,
+        maxAge: 5 * 60 * 1000,
+      });
       res.status(200).json({
         succuss: true,
         message: "verification code has been sent to your account",
@@ -129,6 +133,7 @@ export class UserController {
     try {
       await inputValidation(req, "forgotPasswordOtpVerification", next);
       const token = req.cookies.verificationToken as string;
+      console.log("token",token)
       let result = await this.userUseCase.forgotPasswordOtpVerification(
         req,
         next,

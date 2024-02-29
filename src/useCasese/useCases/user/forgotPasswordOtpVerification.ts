@@ -23,10 +23,7 @@ export const forgotPasswordOtpVerification = async (
       decode?.email,
       req.body.verificationCode
     );
-    if (!isExist)
-      return next(
-        new ErrorHandler(400, "you didn`t made any request for change password")
-      );
+    if (!isExist) return next(new ErrorHandler(400, "entered a wrong OTP..."));
     return { success: true, message: "otp matches " };
   } catch (error: any) {
     return next(new ErrorHandler(500, error.message));
