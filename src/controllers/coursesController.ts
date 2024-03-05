@@ -22,6 +22,7 @@ export class CoursesController {
   async addCourseData(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "addCourseData", next);
+      console.log("req.body from addCourseData =====>", req.body);
       const result = await this.courseUseCase.addCourseData(req, next);
       res.status(200).json(result);
     } catch (error: any) {

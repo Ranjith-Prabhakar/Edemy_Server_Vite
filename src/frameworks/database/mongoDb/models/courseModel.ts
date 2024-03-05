@@ -2,6 +2,12 @@ import mongoose, { Schema, Model } from "mongoose";
 import { ICourse, IModule, IReviewRating } from "../../../../entities/course";
 
 const courseSchema: Schema<ICourse> = new Schema({
+  category: {
+    type: String,
+    min: [3, "name should have atleast 3 charactor"],
+    required: [true, "please give a valid category"],
+    trim: true,
+  },
   courseName: {
     type: String,
     min: [3, "name should have atleast 3 charactor"],
