@@ -53,7 +53,7 @@ const adminUseCase = new AdminUseCase(
   categoryRepository
 );
 
-const courseUseCase = new CourseUseCase(cloudStorage, courseRepository);
+const courseUseCase = new CourseUseCase(cloudStorage, courseRepository,categoryRepository);
 
 const userController = new UserController(userUseCase);
 const adminController = new AdminController(adminUseCase);

@@ -92,5 +92,14 @@ export function courseRoute(router: Route) {
     })
   );
 
+  router.get(
+    "/get_categories",
+    isAuthenticated,
+    autheriseRoles("instructor"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getCategories(req, res, next);
+    })
+  );
+
   return router;
 }

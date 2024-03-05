@@ -1,3 +1,4 @@
+import { ICourse } from "../../../../entities/course";
 import { ICourseRepository } from "../../../../useCasese/interface/repository/courseRepository";
 import { IModuleVideoBody } from "../../../../useCasese/interface/request/course";
 import { ICourseResponse } from "../../../../useCasese/interface/request_And_Response/course";
@@ -24,13 +25,21 @@ export class CourseRepository implements ICourseRepository {
     }
   }
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async addCourseData(courseData: ICourseRepository): Promise<ICourseResponse> {
+  async addCourseData(courseData: ICourse): Promise<ICourseResponse> {
     try {
       return await addCourseData(courseData);
     } catch (error: any) {
       throw error;
     }
   }
+
+  // async addCourseData(courseData: ICourseRepository): Promise<ICourseResponse> {
+  //   try {
+  //     return await addCourseData(courseData);
+  //   } catch (error: any) {
+  //     throw error;
+  //   }
+  // }
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
   async updateCourse(
@@ -92,10 +101,10 @@ export class CourseRepository implements ICourseRepository {
   }
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCoursesForUser(): Promise<void | ICourseResponse> {
-   try {
-    return await getCoursesForUser()
-   } catch (error:any) {
-    throw error
-   } 
+    try {
+      return await getCoursesForUser();
+    } catch (error: any) {
+      throw error;
+    }
   }
 }

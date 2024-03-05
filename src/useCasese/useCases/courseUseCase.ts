@@ -15,20 +15,27 @@ import {
   getVideoPresignedUrl,
   approveOrRejectVideo,
   getCoursesForUser,
+  getCategories,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
 import { NextFunction } from "express";
+import { ICategoryResponse } from "../interface/request_And_Response/category";
+import { ICategoryRepository } from "../interface/repository/categoryRepository";
+import { ICategory } from "../../entities/category";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
   private readonly courseRepository: ICourseRepository;
+  private readonly categoryRepository: ICategoryRepository;
   constructor(
     cloudStorage: ICloudStorage,
-    courseRepository: ICourseRepository
+    courseRepository: ICourseRepository,
+    categoryRepository: ICategoryRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
+    this.categoryRepository = categoryRepository;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -126,7 +133,19 @@ export class CourseUseCase implements ICourseUseCase {
     next: NextFunction
   ): Promise<void | ICourseResponse> {
     try {
-      return await getCoursesForUser(this.courseRepository,req,next)
+      return await getCoursesForUser(this.courseRepository, req, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+  async getCategories(
+    req: Req,
+    next: NextFunction
+  ): Promise<ICategory[] | void> {
+    try {
+      return await getCategories(this.categoryRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
