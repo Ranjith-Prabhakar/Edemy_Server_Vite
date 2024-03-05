@@ -22,6 +22,7 @@ export interface IModule {
       finished?: boolean;
       currentPosition?: number;
       questions?: Array<IQuestions>;
+      preview:boolean
     }
   ];
 }

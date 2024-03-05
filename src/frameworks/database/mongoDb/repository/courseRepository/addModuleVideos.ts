@@ -24,6 +24,7 @@ export const addModuleVideos = async (
               videoNo: data.videoNo as string,
               videoTittle: data.videoTittle,
               videoUrl: data.videoUrl,
+              preview: data.preview,
             },
           ],
         };
@@ -40,6 +41,7 @@ export const addModuleVideos = async (
             videoNo: data.videoNo,
             videoTittle: data.videoTittle,
             videoUrl: data.videoUrl,
+            preview:data.preview
           });
         } else {
           if (moduleIndex > -1 && !(moduleTittleIndex > -1))
@@ -55,6 +57,7 @@ export const addModuleVideos = async (
                 videoNo: data.videoNo,
                 videoTittle: data.videoTittle,
                 videoUrl: data.videoUrl,
+                preview: data.preview,
               },
             ],
           };

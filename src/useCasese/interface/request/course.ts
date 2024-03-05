@@ -4,4 +4,5 @@ export interface IModuleVideoBody {
   videoNo: string;
   videoTittle: string;
   videoUrl:string
+  preview:boolean
 }
