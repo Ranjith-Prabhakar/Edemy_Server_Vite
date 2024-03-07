@@ -23,11 +23,11 @@ export function courseRoute(router: Route) {
   );
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   router.post(
-    "/addModule",
+    "/addFileToCloud",
     isAuthenticated,
     autheriseRoles("instructor"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-      courseController.addModule(req, res, next);
+      courseController.addFileToCloud(req, res, next);
     })
   );
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888

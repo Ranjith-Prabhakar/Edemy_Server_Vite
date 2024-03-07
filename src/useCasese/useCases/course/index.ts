@@ -1,6 +1,6 @@
 import { getCourseInProgress } from "./getCourseInProgress"; 
 import { addCourseData } from "./addCourseData"; 
-import {addModule} from './addModule' 
+import { addFileToCloud } from "./addFileToCloud"; 
 import { updateCourse } from "./updateCourse"; 
 import { addModuleVideos } from "./addModuleVideos"; 
 import { getCourses } from "./getCourses"; 
@@ -10,7 +10,7 @@ import { approveOrRejectVideo } from "./approveOrRejectVideo";
 import { getCoursesForUser } from "./getCoursesForUser"; 
 import { getCategories } from "./getCategories"; 
 export {
-  addModule,
+  addFileToCloud,
   addCourseData,
   getCourseInProgress,
   updateCourse,

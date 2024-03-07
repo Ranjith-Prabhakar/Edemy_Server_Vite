@@ -30,10 +30,10 @@ export class CoursesController {
     }
   }
 
-  async addModule(req: Req, res: Res, next: Next) {
+  async addFileToCloud(req: Req, res: Res, next: Next) {
     try {
-      await inputValidation(req, "addModule", next);
-      const result = await this.courseUseCase.addModule(req, next);
+      await inputValidation(req, "addFileToCloud", next);
+      const result = await this.courseUseCase.addFileToCloud(req, next);
       res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
@@ -108,22 +108,18 @@ export class CoursesController {
     }
   }
 
-  async  getCategories(req: Req, res: Res, next: Next) {
+  async getCategories(req: Req, res: Res, next: Next) {
     try {
       const result = await this.courseUseCase.getCategories(req, next);
-      console.log("result",result)
-      
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "categories fectched successfully",
-          data: result,
-        });
+      console.log("result", result);
+
+      res.status(200).json({
+        success: true,
+        message: "categories fectched successfully",
+        data: result,
+      });
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
   }
-
- 
 }

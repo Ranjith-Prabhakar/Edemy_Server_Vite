@@ -19,15 +19,17 @@ const s3Client = new S3Client({
 });
 
 export class CloudStorage implements ICloudStorage {
-  async addModule(
+  async addFileToCloud(
     fileName: string,
     contentType: string,
-    userId: string
+    userId: string,
+    folderName: string
   ): Promise<string | void> {
     try {
+      console.log("courseName===>>>", folderName);
       const command = new PutObjectCommand({
         Bucket: "bucket.edemy",
-        Key: `uploads/user-uploads/${userId}/${fileName}`,
+        Key: `uploads/user-uploads/${userId}/${folderName}/${fileName}`,
         ContentType: contentType,
       });
       const url = await getSignedUrl(s3Client, command);
@@ -41,7 +43,6 @@ export class CloudStorage implements ICloudStorage {
     courseName: string
   ): Promise<void | ICloudStorageResponse> {
     try {
-
       console.log("bucket", process.env.S3_BOCKET_NAME);
 
       console.log(

@@ -7,7 +7,7 @@ import ErrorHandler from "../middlewares/errorHandler";
 import {
   getCourseInProgress,
   addCourseData,
-  addModule,
+  addFileToCloud,
   updateCourse,
   addModuleVideos,
   getCourses,
@@ -57,9 +57,9 @@ export class CourseUseCase implements ICourseUseCase {
     }
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async addModule(req: Req, next: Next): Promise<string | void> {
+  async addFileToCloud(req: Req, next: Next): Promise<string | void> {
     try {
-      return await addModule(
+      return await addFileToCloud(
         this.cloudStorage,
         this.courseRepository,
         req,
