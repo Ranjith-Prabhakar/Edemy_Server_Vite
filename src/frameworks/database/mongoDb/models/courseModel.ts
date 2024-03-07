@@ -2,6 +2,11 @@ import mongoose, { Schema, Model } from "mongoose";
 import { ICourse, IModule, IReviewRating } from "../../../../entities/course";
 
 const courseSchema: Schema<ICourse> = new Schema({
+  price: {
+    type: Number,
+    required: [true, "please give a valid category"],
+    trim: true,
+  },
   category: {
     type: String,
     min: [3, "name should have atleast 3 charactor"],

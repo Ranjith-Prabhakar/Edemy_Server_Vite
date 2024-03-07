@@ -12,7 +12,7 @@ export const addCourseData = async (
     return await courseRepository.addCourseData({
       ...req.body,
       instructor: req.user,
-      // tags:req.body.tags.split(",")
+      price:req.body.price*1
     });
   } catch (error: any) {
     next(new ErrorHandler(500, error.message));
