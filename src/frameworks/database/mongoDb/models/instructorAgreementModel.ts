@@ -8,7 +8,7 @@ const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
   },
   userName: {
     type: String,
-    required:[true,"please give the name"]
+    required: [true, "please give the name"],
   },
   status: {
     type: String,
@@ -24,6 +24,10 @@ const instrctorAgreementSchema: Schema<IInstructorAgreement> = new Schema({
         tutor agrees to a revenue-sharing model of 30/70, where the tutor receives 70%
          of the income generated, and the platform retains 30%, as specified in our terms and conditions
        `,
+  },
+  certificate: {
+    type: String,
+    required: [true, "please give the name"],
   },
 });
 

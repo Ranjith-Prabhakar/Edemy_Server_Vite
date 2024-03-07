@@ -25,7 +25,6 @@ export function courseRoute(router: Route) {
   router.post(
     "/addFileToCloud",
     isAuthenticated,
-    autheriseRoles("instructor"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.addFileToCloud(req, res, next);
     })
