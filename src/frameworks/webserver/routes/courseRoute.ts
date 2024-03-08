@@ -100,5 +100,14 @@ export function courseRoute(router: Route) {
     })
   );
 
+  router.post(
+    "/get_video_for_user",
+    isAuthenticated,
+    autheriseRoles("instructor", "user"),
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getVideoForUser(req, res, next);
+    })
+  );
+
   return router;
 }

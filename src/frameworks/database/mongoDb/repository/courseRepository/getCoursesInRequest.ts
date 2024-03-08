@@ -6,6 +6,7 @@ export const getCoursesInRequest =
     try {
       const result = await courseModel.find({
         status: "pending",
+        submissionStatus: "completed",
       });
       return {
         status: 200,

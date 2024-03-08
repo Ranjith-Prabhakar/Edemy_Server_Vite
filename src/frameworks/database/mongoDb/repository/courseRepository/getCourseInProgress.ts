@@ -9,9 +9,10 @@ export const getCourseInProgress = async (
   try {
     const result = await courseModel.findOne({
       instructor,
-      submissionStatus: "work-in-progress",
+      submissionStatus: "work-in-progress" ,
     });
     if (result === null) throw new ErrorHandler(404, "no courses in progress");
+    console.log("result ----->>>", result);
     return {
       status: 200,
       message: "course has been found successfully",

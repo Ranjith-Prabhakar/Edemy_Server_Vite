@@ -19,4 +19,5 @@ export interface ICourseUseCase {
   approveOrRejectVideo(req: Req, next: Next): Promise<ICourseResponse | void>;
   getCoursesForUser(req: Req, next: Next): Promise<ICourseResponse | void>;
   getCategories(req: Req, next: Next): Promise<ICategory[] | void>;
+  getVideoForUser(req: Req, next: Next): Promise<string | void>;
 }

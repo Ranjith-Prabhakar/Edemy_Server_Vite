@@ -16,6 +16,7 @@ import {
   approveOrRejectVideo,
   getCoursesForUser,
   getCategories,
+  getVideoForUser,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -23,6 +24,8 @@ import { NextFunction } from "express";
 import { ICategoryResponse } from "../interface/request_And_Response/category";
 import { ICategoryRepository } from "../interface/repository/categoryRepository";
 import { ICategory } from "../../entities/category";
+import { catchError } from "../middlewares/catchError";
+import { IUserRepository } from "../interface/repository/userRepository";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
@@ -31,7 +34,7 @@ export class CourseUseCase implements ICourseUseCase {
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
-    categoryRepository: ICategoryRepository
+    categoryRepository: ICategoryRepository,
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
@@ -148,6 +151,22 @@ export class CourseUseCase implements ICourseUseCase {
       return await getCategories(this.categoryRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getVideoForUser(req: Req, next: NextFunction): Promise<string | void> {
+    try {
+      console.log("getVideoForUser ===> useCase");
+
+      return await getVideoForUser(
+        this.courseRepository,
+        this.cloudStorage,
+        req,
+        next
+      );
+    } catch (error) {
+      catchError(error, next);
     }
   }
 }

@@ -9,6 +9,7 @@ import { getVideoPresignedUrl } from "./getVideoPresignedUrl";
 import { approveOrRejectVideo } from "./approveOrRejectVideo"; 
 import { getCoursesForUser } from "./getCoursesForUser"; 
 import { getCategories } from "./getCategories"; 
+import { getVideoForUser } from "./getVideoForUser"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -21,4 +22,5 @@ export {
   approveOrRejectVideo,
   getCoursesForUser,
   getCategories,
+  getVideoForUser,
 };

@@ -122,4 +122,16 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getVideoForUser(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getVideoForUser ===> controller");
+      await inputValidation(req, "getVideoForUser", next);
+      const result = await this.courseUseCase.getVideoForUser(req, next);
+      console.log("result", result);
+    
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }
