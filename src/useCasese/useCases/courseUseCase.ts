@@ -17,6 +17,7 @@ import {
   getCoursesForUser,
   getCategories,
   getVideoForUser,
+  getVideoForVisitors,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -163,6 +164,21 @@ export class CourseUseCase implements ICourseUseCase {
       console.log("getVideoForUser ===> useCase");
 
       return await getVideoForUser(
+        this.courseRepository,
+        this.cloudStorage,
+        req,
+        next
+      );
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+
+ async getVideoForVisitors(req: Req, next: NextFunction): Promise<void | ICloudStorageResponse> {
+    try {
+      console.log("getVideoForVisitors ===> useCase");
+
+      return await getVideoForVisitors(
         this.courseRepository,
         this.cloudStorage,
         req,

@@ -133,4 +133,15 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getVideoForVisitors(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getVideoForVisitors ===> controller");
+      await inputValidation(req, "getVideoForVisitors", next);
+      const result = await this.courseUseCase.getVideoForVisitors(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

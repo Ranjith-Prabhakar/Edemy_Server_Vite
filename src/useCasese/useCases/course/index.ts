@@ -10,6 +10,7 @@ import { approveOrRejectVideo } from "./approveOrRejectVideo";
 import { getCoursesForUser } from "./getCoursesForUser"; 
 import { getCategories } from "./getCategories"; 
 import { getVideoForUser } from "./getVideoForUser"; 
+import { getVideoForVisitors } from "./getVideoForVisitors"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -23,4 +24,5 @@ export {
   getCoursesForUser,
   getCategories,
   getVideoForUser,
+  getVideoForVisitors,
 };

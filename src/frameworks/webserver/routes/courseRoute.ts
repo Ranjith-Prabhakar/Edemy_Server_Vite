@@ -108,5 +108,13 @@ export function courseRoute(router: Route) {
     })
   );
 
+  router.post(
+    "/get_video_for_visitors",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getVideoForVisitors(req, res, next);
+    })
+  );
+  
+
   return router;
 }
