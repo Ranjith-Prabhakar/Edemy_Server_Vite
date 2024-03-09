@@ -18,28 +18,32 @@ import {
   getCategories,
   getVideoForUser,
   getVideoForVisitors,
+  enrollCourse,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
 import { NextFunction } from "express";
-import { ICategoryResponse } from "../interface/request_And_Response/category";
 import { ICategoryRepository } from "../interface/repository/categoryRepository";
 import { ICategory } from "../../entities/category";
 import { catchError } from "../middlewares/catchError";
-import { IUserRepository } from "../interface/repository/userRepository";
+import { IPaymentRespose } from "../interface/request_And_Response/payment";
+import { IPaymentService } from "../interface/services/paymentService";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
   private readonly courseRepository: ICourseRepository;
   private readonly categoryRepository: ICategoryRepository;
+  private readonly paymentService:IPaymentService
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
-    categoryRepository: ICategoryRepository
+    categoryRepository: ICategoryRepository,
+    paymentService: IPaymentService
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
     this.categoryRepository = categoryRepository;
+    this.paymentService = paymentService;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -173,8 +177,12 @@ export class CourseUseCase implements ICourseUseCase {
       catchError(error, next);
     }
   }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
- async getVideoForVisitors(req: Req, next: NextFunction): Promise<void | ICloudStorageResponse> {
+  async getVideoForVisitors(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICloudStorageResponse> {
     try {
       console.log("getVideoForVisitors ===> useCase");
 
@@ -187,5 +195,14 @@ export class CourseUseCase implements ICourseUseCase {
     } catch (error) {
       catchError(error, next);
     }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async enrollCourse(req: Req, next: NextFunction): Promise<void | IPaymentRespose> {
+    try {
+      return await enrollCourse(this.paymentService,req,next);
+    } catch (error) {
+      catchError(error,next)
+    }
+    
   }
 }

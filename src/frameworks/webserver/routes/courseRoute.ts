@@ -114,6 +114,15 @@ export function courseRoute(router: Route) {
       courseController.getVideoForVisitors(req, res, next);
     })
   );
+
+   router.post(
+     "/enroll_course",
+     isAuthenticated,
+     catchAsyncErrors((req: Req, res: Res, next: Next) => {
+       courseController.enrollCourse(req, res, next);
+     })
+   );
+  
   
 
   return router;

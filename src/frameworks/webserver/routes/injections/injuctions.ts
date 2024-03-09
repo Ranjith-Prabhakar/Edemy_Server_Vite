@@ -20,7 +20,7 @@ import { JWTtoken } from "../../../services/jwt";
 import { CloudSession } from "../../../services/cloudSession";
 import { RequestManagement } from "../../../services/requestManagement";
 import { CloudStorage } from "../../../services/cloudStorage";
-
+import { PaymentService } from "../../../services/paymentService";
 
 const userRepository = new UserRepository(userModel);
 const bcryptService = new Encrypt();
@@ -31,9 +31,10 @@ const jwtToken = new JWTtoken();
 const cloudSession = new CloudSession();
 const requestManagement = new RequestManagement();
 const instrctorAgreementRepository = new InstrctorAgreementRepository();
-const categoryRepository = new CategoryRepository()
-const cloudStorage = new CloudStorage()
-const courseRepository = new CourseRepository()
+const categoryRepository = new CategoryRepository();
+const cloudStorage = new CloudStorage();
+const courseRepository = new CourseRepository();
+const paymentService = new PaymentService();
 
 const userUseCase = new UserUsecase(
   userRepository,
@@ -53,7 +54,12 @@ const adminUseCase = new AdminUseCase(
   categoryRepository
 );
 
-const courseUseCase = new CourseUseCase(cloudStorage, courseRepository,categoryRepository);
+const courseUseCase = new CourseUseCase(
+  cloudStorage,
+  courseRepository,
+  categoryRepository,
+  paymentService
+);
 
 const userController = new UserController(userUseCase);
 const adminController = new AdminController(adminUseCase);

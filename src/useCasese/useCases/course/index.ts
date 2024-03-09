@@ -11,6 +11,7 @@ import { getCoursesForUser } from "./getCoursesForUser";
 import { getCategories } from "./getCategories"; 
 import { getVideoForUser } from "./getVideoForUser"; 
 import { getVideoForVisitors } from "./getVideoForVisitors"; 
+import { enrollCourse } from "./enrollCourse"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -25,4 +26,5 @@ export {
   getCategories,
   getVideoForUser,
   getVideoForVisitors,
+  enrollCourse,
 };

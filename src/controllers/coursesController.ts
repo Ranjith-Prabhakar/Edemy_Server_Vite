@@ -144,4 +144,15 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async enrollCourse(req: Req, res: Res, next: Next) {
+    try {
+      console.log("enrollCourse ===> controller");
+      await inputValidation(req, "enrollCourse", next);
+      const result = await this.courseUseCase.enrollCourse(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

@@ -12,12 +12,13 @@ import { courseRoute } from "../routes/courseRoute";
 export const app = express();
 
 
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT,
     credentials: true,
     methods: ["GET", "PATCH", "PUT", "POST"],
-  optionsSuccessStatus: 204,
+    optionsSuccessStatus: 204,
   })
 );
 
