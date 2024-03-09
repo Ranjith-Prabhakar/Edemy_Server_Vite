@@ -7,6 +7,7 @@ import { getCourses } from "./getCourses";
 import { getCoursesInRequest } from "./getCoursesInRequest";
 import { approveOrRejectVideo } from "./approveOrRejectVideo";
 import { getCoursesForUser } from "./getCoursesForUser";
+import { isPreview } from "./isPreview";
 export {
   getCourseInProgress,
   addCourseData,
@@ -17,4 +18,5 @@ export {
   getCoursesInRequest,
   approveOrRejectVideo,
   getCoursesForUser,
+  isPreview,
 };

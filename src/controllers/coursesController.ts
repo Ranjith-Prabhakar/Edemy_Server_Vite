@@ -128,8 +128,7 @@ export class CoursesController {
       console.log("getVideoForUser ===> controller");
       await inputValidation(req, "getVideoForUser", next);
       const result = await this.courseUseCase.getVideoForUser(req, next);
-      console.log("result", result);
-    
+      if (result) res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

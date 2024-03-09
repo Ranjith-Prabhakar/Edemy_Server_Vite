@@ -10,4 +10,5 @@ export interface ICloudStorage {
   getVideoPresignedUrl(
     courseName: string
   ): Promise<ICloudStorageResponse | void>;
+  
 }

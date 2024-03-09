@@ -21,4 +21,9 @@ export interface ICourseRepository {
     action: string
   ): Promise<void | ICourseResponse>;
   getCoursesForUser(): Promise<void | ICourseResponse>;
+  isPreview(
+    courseId: string,
+    moduleNo: string,
+    videoNo: string
+  ): Promise<boolean>;
 }

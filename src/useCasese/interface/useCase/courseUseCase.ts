@@ -1,6 +1,5 @@
 import { ICategory } from "../../../entities/category";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import { ICategoryResponse } from "../request_And_Response/category";
 import { ICloudStorageResponse } from "../request_And_Response/cloudStorageResponse";
 import { ICourseResponse } from "../request_And_Response/course";
 
@@ -19,5 +18,5 @@ export interface ICourseUseCase {
   approveOrRejectVideo(req: Req, next: Next): Promise<ICourseResponse | void>;
   getCoursesForUser(req: Req, next: Next): Promise<ICourseResponse | void>;
   getCategories(req: Req, next: Next): Promise<ICategory[] | void>;
-  getVideoForUser(req: Req, next: Next): Promise<string | void>;
+  getVideoForUser(req: Req, next: Next): Promise<ICloudStorageResponse | void>;
 }

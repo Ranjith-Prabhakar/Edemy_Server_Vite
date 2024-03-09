@@ -34,7 +34,7 @@ export class CourseUseCase implements ICourseUseCase {
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
-    categoryRepository: ICategoryRepository,
+    categoryRepository: ICategoryRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
@@ -155,7 +155,10 @@ export class CourseUseCase implements ICourseUseCase {
   }
 
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async getVideoForUser(req: Req, next: NextFunction): Promise<string | void> {
+  async getVideoForUser(
+    req: Req,
+    next: NextFunction
+  ): Promise<ICloudStorageResponse | void> {
     try {
       console.log("getVideoForUser ===> useCase");
 

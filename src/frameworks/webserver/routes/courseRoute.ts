@@ -85,7 +85,7 @@ export function courseRoute(router: Route) {
   );
   router.get(
     "/get_courses_for_user",
-    isAuthenticated,
+    // isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getCoursesForUser(req, res, next);
     })
@@ -103,7 +103,6 @@ export function courseRoute(router: Route) {
   router.post(
     "/get_video_for_user",
     isAuthenticated,
-    autheriseRoles("instructor", "user"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getVideoForUser(req, res, next);
     })

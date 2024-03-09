@@ -13,6 +13,7 @@ import {
   getCoursesInRequest,
   approveOrRejectVideo,
   getCoursesForUser,
+  isPreview,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -103,8 +104,18 @@ export class CourseRepository implements ICourseRepository {
   async getCoursesForUser(): Promise<void | ICourseResponse> {
     try {
       return await getCoursesForUser();
-    } catch (error: any) {
+    } catch (error) {
       throw error;
     }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async isPreview(courseId: string, moduleNo: string, videoNo: string): Promise<boolean> {
+  try {
+    console.log("get_video_for_users repo ");
+
+    return await isPreview(courseId,moduleNo,videoNo)
+  } catch (error) {
+    throw error
+  }  
   }
 }

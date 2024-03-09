@@ -1,6 +1,6 @@
 import {app} from './frameworks/webserver/config/app'
-import connectDb from './frameworks/webserver/config/db'
-import { redisDb } from './frameworks/database/redis/config'
+import connectDb from './frameworks/webserver/config/mongoDb'
+import { redisDb } from './frameworks/webserver/config/redis'
 require("dotenv").config()
 
 const PORT = process.env.PORT || 3000
