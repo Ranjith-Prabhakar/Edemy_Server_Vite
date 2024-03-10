@@ -21,6 +21,7 @@ import { CloudSession } from "../../../services/cloudSession";
 import { RequestManagement } from "../../../services/requestManagement";
 import { CloudStorage } from "../../../services/cloudStorage";
 import { PaymentService } from "../../../services/paymentService";
+import { PaymentRepository } from "../../../database/mongoDb/repository/paymentRepository";
 
 const userRepository = new UserRepository(userModel);
 const bcryptService = new Encrypt();
@@ -35,6 +36,7 @@ const categoryRepository = new CategoryRepository();
 const cloudStorage = new CloudStorage();
 const courseRepository = new CourseRepository();
 const paymentService = new PaymentService();
+const paymentRepository = new PaymentRepository();
 
 const userUseCase = new UserUsecase(
   userRepository,
@@ -58,7 +60,8 @@ const courseUseCase = new CourseUseCase(
   cloudStorage,
   courseRepository,
   categoryRepository,
-  paymentService
+  paymentService,
+  paymentRepository
 );
 
 const userController = new UserController(userUseCase);

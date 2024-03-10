@@ -4,5 +4,9 @@ export interface IPaymentRespose {
   data?: string;
 }
 
-export type TPaymentRequest = { courseName: string; price: string }[];
+export type TPaymentRequest = {
+  courseId: string;
+  courseName: string;
+  price: string;
+}[];
 

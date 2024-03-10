@@ -28,22 +28,26 @@ import { ICategory } from "../../entities/category";
 import { catchError } from "../middlewares/catchError";
 import { IPaymentRespose } from "../interface/request_And_Response/payment";
 import { IPaymentService } from "../interface/services/paymentService";
+import { IPaymentRepository } from "../interface/repository/paymentRepository";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
   private readonly courseRepository: ICourseRepository;
   private readonly categoryRepository: ICategoryRepository;
-  private readonly paymentService:IPaymentService
+  private readonly paymentService: IPaymentService;
+  private readonly paymentRepository: IPaymentRepository;
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
     categoryRepository: ICategoryRepository,
-    paymentService: IPaymentService
+    paymentService: IPaymentService,
+    paymentRepository: IPaymentRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
     this.categoryRepository = categoryRepository;
     this.paymentService = paymentService;
+    this.paymentRepository = paymentRepository;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -197,12 +201,19 @@ export class CourseUseCase implements ICourseUseCase {
     }
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async enrollCourse(req: Req, next: NextFunction): Promise<void | IPaymentRespose> {
+  async enrollCourse(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | IPaymentRespose> {
     try {
-      return await enrollCourse(this.paymentService,req,next);
+      return await enrollCourse(
+        this.paymentService,
+        this.paymentRepository,
+        req,
+        next
+      );
     } catch (error) {
-      catchError(error,next)
+      catchError(error, next);
     }
-    
   }
 }
