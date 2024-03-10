@@ -21,4 +21,5 @@ export interface IUserRepository {
   // 8888888888888888888888888888888888888888888888888888888888888888888888
   freezUser(id: string): Promise<IUserResponse>;
   unFreezUser(id: string): Promise<IUserResponse>;
+  addEnrolledCourse(courseId:string,userId:string):Promise<IUser | void>;
 }

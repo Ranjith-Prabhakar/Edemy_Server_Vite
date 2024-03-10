@@ -19,6 +19,7 @@ import {
   getVideoForUser,
   getVideoForVisitors,
   enrollCourse,
+  paymentStatus,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -29,6 +30,9 @@ import { catchError } from "../middlewares/catchError";
 import { IPaymentRespose } from "../interface/request_And_Response/payment";
 import { IPaymentService } from "../interface/services/paymentService";
 import { IPaymentRepository } from "../interface/repository/paymentRepository";
+import { IUserResponse } from "../interface/request_And_Response/user";
+import { IUserRepository } from "../interface/repository/userRepository";
+import { ICloudSession } from "../interface/services/cloudSession";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
@@ -36,18 +40,24 @@ export class CourseUseCase implements ICourseUseCase {
   private readonly categoryRepository: ICategoryRepository;
   private readonly paymentService: IPaymentService;
   private readonly paymentRepository: IPaymentRepository;
+  private readonly userRepository: IUserRepository;
+  private readonly cloudSesssion: ICloudSession;
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
     categoryRepository: ICategoryRepository,
     paymentService: IPaymentService,
-    paymentRepository: IPaymentRepository
+    paymentRepository: IPaymentRepository,
+    userRepository: IUserRepository,
+    cloudSesssion: ICloudSession
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
     this.categoryRepository = categoryRepository;
     this.paymentService = paymentService;
     this.paymentRepository = paymentRepository;
+    this.userRepository = userRepository;
+    this.cloudSesssion = cloudSesssion;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -209,6 +219,24 @@ export class CourseUseCase implements ICourseUseCase {
       return await enrollCourse(
         this.paymentService,
         this.paymentRepository,
+        req,
+        next
+      );
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async paymentStatus(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | IUserResponse> {
+    try {
+      return await paymentStatus(
+        this.paymentRepository,
+        this.userRepository,
+        this.courseRepository,
+        this.cloudSesssion,
         req,
         next
       );

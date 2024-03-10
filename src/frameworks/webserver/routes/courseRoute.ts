@@ -123,7 +123,13 @@ export function courseRoute(router: Route) {
      })
    );
   
-  
+   router.post(
+     "/payment_status",
+     isAuthenticated,
+     catchAsyncErrors((req: Req, res: Res, next: Next) => {
+       courseController.paymentStatus(req, res, next);
+     })
+   );
 
   return router;
 }

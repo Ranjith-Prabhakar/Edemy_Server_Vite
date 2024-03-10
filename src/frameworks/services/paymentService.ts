@@ -9,7 +9,7 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export class PaymentService implements IPaymentService {
-  async pay(productData: TPaymentRequest): Promise<void | IPaymentRespose> {
+  async pay(productData: TPaymentRequest,role:string): Promise<void | IPaymentRespose> {
     try {
       const lineItems = productData.map((product) => ({
         price_data: {
@@ -26,7 +26,7 @@ export class PaymentService implements IPaymentService {
         payment_method_types: ["card"],
         mode: "payment",
         line_items: lineItems,
-        success_url: `${process.env.CLIENT}/user/success`,
+        success_url: `${process.env.CLIENT}/${role}/payment_success`,
         cancel_url: `${process.env.CLIENT}/cancel`,
       });
       return { status: 200, message: "pay now", data: session.url as string };

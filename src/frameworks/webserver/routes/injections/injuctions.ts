@@ -1,9 +1,9 @@
-import userModel from "../../../database/mongoDb/models/userModel";
-import { UserRepository } from "../../../database/mongoDb/repository/userRepository";
-import { OtpRepository } from "../../../database/mongoDb/repository/otp.repository";
-import { CategoryRepository } from "../../../database/mongoDb/repository/categoryRepository";
-import { InstrctorAgreementRepository } from "../../../database/mongoDb/repository/instructorAgreementRepository";
-import { CourseRepository } from "../../../database/mongoDb/repository/courseRepository";
+import userModel from "../../../database/models/userModel";
+import { UserRepository } from "../../../database/repository/userRepository";
+import { OtpRepository } from "../../../database/repository/otp.repository";
+import { CategoryRepository } from "../../../database/repository/categoryRepository";
+import { InstrctorAgreementRepository } from "../../../database/repository/instructorAgreementRepository";
+import { CourseRepository } from "../../../database/repository/courseRepository";
 
 import { UserUsecase } from "../../../../useCasese/useCases/userUseCase";
 import { AdminUseCase } from "../../../../useCasese/useCases/adminUseCase";
@@ -21,7 +21,7 @@ import { CloudSession } from "../../../services/cloudSession";
 import { RequestManagement } from "../../../services/requestManagement";
 import { CloudStorage } from "../../../services/cloudStorage";
 import { PaymentService } from "../../../services/paymentService";
-import { PaymentRepository } from "../../../database/mongoDb/repository/paymentRepository";
+import { PaymentRepository } from "../../../database/repository/paymentRepository";
 
 const userRepository = new UserRepository(userModel);
 const bcryptService = new Encrypt();
@@ -61,7 +61,9 @@ const courseUseCase = new CourseUseCase(
   courseRepository,
   categoryRepository,
   paymentService,
-  paymentRepository
+  paymentRepository,
+  userRepository,
+  cloudSession
 );
 
 const userController = new UserController(userUseCase);

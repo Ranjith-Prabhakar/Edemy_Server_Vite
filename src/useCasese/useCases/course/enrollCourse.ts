@@ -16,7 +16,10 @@ export const enrollCourse = async (
   next: NextFunction
 ): Promise<void | IPaymentRespose> => {
   try {
-    const stripeGateWay = await paymentService.pay(req.body as TPaymentRequest);
+    const stripeGateWay = await paymentService.pay(
+      req.body as TPaymentRequest,
+      req.user?.role as string
+    );
     if (stripeGateWay) {
       const result = await paymentRepository.createCollection(
         req.body[0] as TPaymentRequest,

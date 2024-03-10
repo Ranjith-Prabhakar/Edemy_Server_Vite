@@ -3,6 +3,7 @@ import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICloudStorageResponse } from "../request_And_Response/cloudStorageResponse";
 import { ICourseResponse } from "../request_And_Response/course";
 import { IPaymentRespose } from "../request_And_Response/payment";
+import { IUserResponse } from "../request_And_Response/user";
 
 export interface ICourseUseCase {
   getCourseInProgress(req: Req, next: Next): Promise<ICourseResponse | void>;
@@ -25,4 +26,5 @@ export interface ICourseUseCase {
     next: Next
   ): Promise<ICloudStorageResponse | void>;
   enrollCourse(req: Req, next: Next): Promise<IPaymentRespose | void>;
+  paymentStatus(req: Req, next: Next): Promise<IUserResponse | void>;
 }

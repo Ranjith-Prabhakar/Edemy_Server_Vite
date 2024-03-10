@@ -155,4 +155,14 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+  async paymentStatus(req: Req, res: Res, next: Next) {
+    try {
+      console.log("paymentStatus ===> controller");
+      await inputValidation(req, "paymentStatus", next);
+      const result = await this.courseUseCase.paymentStatus(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }
