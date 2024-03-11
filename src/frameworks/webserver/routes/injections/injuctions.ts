@@ -22,6 +22,7 @@ import { RequestManagement } from "../../../services/requestManagement";
 import { CloudStorage } from "../../../services/cloudStorage";
 import { PaymentService } from "../../../services/paymentService";
 import { PaymentRepository } from "../../../database/repository/paymentRepository";
+import { ReviewAndRatingRepository } from "../../../database/repository/reviewAndRatingRepository";
 
 const userRepository = new UserRepository(userModel);
 const bcryptService = new Encrypt();
@@ -37,6 +38,7 @@ const cloudStorage = new CloudStorage();
 const courseRepository = new CourseRepository();
 const paymentService = new PaymentService();
 const paymentRepository = new PaymentRepository();
+const reviewAndRatingRepository = new ReviewAndRatingRepository();
 
 const userUseCase = new UserUsecase(
   userRepository,
@@ -63,7 +65,8 @@ const courseUseCase = new CourseUseCase(
   paymentService,
   paymentRepository,
   userRepository,
-  cloudSession
+  cloudSession,
+  reviewAndRatingRepository
 );
 
 const userController = new UserController(userUseCase);

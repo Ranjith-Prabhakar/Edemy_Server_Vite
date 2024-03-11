@@ -115,21 +115,28 @@ export function courseRoute(router: Route) {
     })
   );
 
-   router.post(
-     "/enroll_course",
-     isAuthenticated,
-     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-       courseController.enrollCourse(req, res, next);
-     })
-   );
-  
-   router.post(
-     "/payment_status",
-     isAuthenticated,
-     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-       courseController.paymentStatus(req, res, next);
-     })
-   );
+  router.post(
+    "/enroll_course",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.enrollCourse(req, res, next);
+    })
+  );
 
+  router.post(
+    "/payment_status",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.paymentStatus(req, res, next);
+    })
+  );
+
+  router.post(
+    "/update_review_and_rating",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.updateReviewAndRating(req, res, next);
+    })
+  );
   return router;
 }

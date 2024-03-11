@@ -13,6 +13,7 @@ import { getVideoForUser } from "./getVideoForUser";
 import { getVideoForVisitors } from "./getVideoForVisitors"; 
 import { enrollCourse } from "./enrollCourse"; 
 import { paymentStatus } from "./paymentStatus"; 
+import { updateReviewAndRating } from "./updateReviewAndRating"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -29,4 +30,5 @@ export {
   getVideoForVisitors,
   enrollCourse,
   paymentStatus,
+  updateReviewAndRating,
 };

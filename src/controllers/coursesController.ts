@@ -165,4 +165,15 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async updateReviewAndRating(req: Req, res: Res, next: Next) {
+    try {
+      console.log("updateReviewAndRating ===> controller");
+      await inputValidation(req, "updateReviewAndRating", next);
+      const result = await this.courseUseCase.updateReviewAndRating(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }
