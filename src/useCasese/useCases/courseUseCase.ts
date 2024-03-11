@@ -20,6 +20,7 @@ import {
   getVideoForVisitors,
   enrollCourse,
   paymentStatus,
+  updateReviewAndRating,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -33,6 +34,8 @@ import { IPaymentRepository } from "../interface/repository/paymentRepository";
 import { IUserResponse } from "../interface/request_And_Response/user";
 import { IUserRepository } from "../interface/repository/userRepository";
 import { ICloudSession } from "../interface/services/cloudSession";
+import { IReviewAndRatingResponse } from "../interface/request_And_Response/reviewAndRatingResponse";
+import { IReviewAndRatingRepository } from "../interface/repository/reviewAndRatingRepository";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
@@ -42,6 +45,7 @@ export class CourseUseCase implements ICourseUseCase {
   private readonly paymentRepository: IPaymentRepository;
   private readonly userRepository: IUserRepository;
   private readonly cloudSesssion: ICloudSession;
+  private readonly reviewAndRatingRepository:IReviewAndRatingRepository
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
@@ -49,7 +53,8 @@ export class CourseUseCase implements ICourseUseCase {
     paymentService: IPaymentService,
     paymentRepository: IPaymentRepository,
     userRepository: IUserRepository,
-    cloudSesssion: ICloudSession
+    cloudSesssion: ICloudSession,
+    reviewAndRatingRepository:IReviewAndRatingRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
@@ -58,6 +63,7 @@ export class CourseUseCase implements ICourseUseCase {
     this.paymentRepository = paymentRepository;
     this.userRepository = userRepository;
     this.cloudSesssion = cloudSesssion;
+    this.reviewAndRatingRepository = reviewAndRatingRepository;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -240,6 +246,17 @@ export class CourseUseCase implements ICourseUseCase {
         req,
         next
       );
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async updateReviewAndRating(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | IReviewAndRatingResponse> {
+    try {
+      return await updateReviewAndRating(this.reviewAndRatingRepository,req,next);
     } catch (error) {
       catchError(error, next);
     }
