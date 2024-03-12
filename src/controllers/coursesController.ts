@@ -176,4 +176,14 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getReviewAndRating(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getReviewAndRating ===> controller");
+      const result = await this.courseUseCase.getReviewAndRating(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

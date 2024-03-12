@@ -21,6 +21,7 @@ import {
   enrollCourse,
   paymentStatus,
   updateReviewAndRating,
+  getReviewAndRating,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -45,7 +46,7 @@ export class CourseUseCase implements ICourseUseCase {
   private readonly paymentRepository: IPaymentRepository;
   private readonly userRepository: IUserRepository;
   private readonly cloudSesssion: ICloudSession;
-  private readonly reviewAndRatingRepository:IReviewAndRatingRepository
+  private readonly reviewAndRatingRepository: IReviewAndRatingRepository;
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
@@ -54,7 +55,7 @@ export class CourseUseCase implements ICourseUseCase {
     paymentRepository: IPaymentRepository,
     userRepository: IUserRepository,
     cloudSesssion: ICloudSession,
-    reviewAndRatingRepository:IReviewAndRatingRepository
+    reviewAndRatingRepository: IReviewAndRatingRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
@@ -256,9 +257,29 @@ export class CourseUseCase implements ICourseUseCase {
     next: NextFunction
   ): Promise<void | IReviewAndRatingResponse> {
     try {
-      return await updateReviewAndRating(this.reviewAndRatingRepository,req,next);
+      return await updateReviewAndRating(
+        this.reviewAndRatingRepository,
+        req,
+        next
+      );
     } catch (error) {
       catchError(error, next);
     }
   }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async getReviewAndRating(
+    req: Req,
+    next: Next
+  ): Promise<void | IReviewAndRatingResponse> {
+    try {
+      return await getReviewAndRating(
+        this.reviewAndRatingRepository,
+        req,
+        next
+      );
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+  ;
 }

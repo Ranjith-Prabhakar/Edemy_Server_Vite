@@ -32,4 +32,8 @@ export interface ICourseUseCase {
     req: Req,
     next: Next
   ): Promise<IReviewAndRatingResponse | void>;
+  getReviewAndRating(
+    req: Req,
+    next: Next
+  ): Promise<IReviewAndRatingResponse | void>;
 }

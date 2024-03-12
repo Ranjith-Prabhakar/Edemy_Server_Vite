@@ -138,5 +138,14 @@ export function courseRoute(router: Route) {
       courseController.updateReviewAndRating(req, res, next);
     })
   );
+
+   router.get(
+     "/get_review_and_rating",
+     catchAsyncErrors((req: Req, res: Res, next: Next) => {
+       courseController.getReviewAndRating(req, res, next);
+     })
+   );
+
+ 
   return router;
 }

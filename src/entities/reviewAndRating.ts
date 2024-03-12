@@ -1,7 +1,7 @@
 export interface IReviewAndRatingArrayData {
   userId: string;
   userName: string;
-  date: string;
+  date: Date;
   review?: string;
   rating?: number;
 }

@@ -14,6 +14,7 @@ import { getVideoForVisitors } from "./getVideoForVisitors";
 import { enrollCourse } from "./enrollCourse"; 
 import { paymentStatus } from "./paymentStatus"; 
 import { updateReviewAndRating } from "./updateReviewAndRating"; 
+import { getReviewAndRating } from "./getReviewAndRating"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -31,4 +32,5 @@ export {
   enrollCourse,
   paymentStatus,
   updateReviewAndRating,
+  getReviewAndRating,
 };

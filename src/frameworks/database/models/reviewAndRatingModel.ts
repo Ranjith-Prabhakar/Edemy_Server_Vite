@@ -26,8 +26,8 @@ const reviewAndRatingSchema: Schema<IReviewAndRating> = new mongoose.Schema(
           trim: true,
         },
         date: {
-          type: String,
-          default: new Date().getDate().toLocaleString(),
+          type: Date,
+          default: Date.now()
         },
         review: {
           type: String,
