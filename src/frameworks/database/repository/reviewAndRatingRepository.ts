@@ -106,4 +106,19 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
       throw error;
     }
   }
+
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getReviewAndRating(): Promise<void | IReviewAndRatingResponse> {
+    try {
+      const result = await reviewAndRatingModel.find();
+      if (result)
+        return {
+          success: true,
+          message: "review and ratings are fetched",
+          data: result,
+        };
+    } catch (error) {
+      throw error;
+    }
+  }
 }
