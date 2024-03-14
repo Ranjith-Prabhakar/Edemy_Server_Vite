@@ -119,42 +119,7 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
   }
 
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  // async getSingleCourseReviewAndRating(
-  //   courseId: string
-  // ): Promise<void | IReviewAndRatingResponse> {
-  //   try {
-  //     // start from here by giving the arg
-  //     console.log(
-  //       "result getSingleCourseReviewAndRating repo courseId ===================",
-  //       courseId
-  //     );
-
-  //     const objectId = new mongoose.Types.ObjectId(courseId);
-  //     console.log(
-  //       "result getSingleCourseReviewAndRating repo objectId ===================",
-  //       objectId
-  //     );
-  //     console.log(
-  //       "result getSingleCourseReviewAndRating repo objectId ==== mongodb ===================",
-  //       objectId
-  //     );
-
-  //     const result = await reviewAndRatingModel.findOne({ _id: objectId });
-  //     console.log(
-  //       "result getSingleCourseReviewAndRating repo result ===================",
-  //       result
-  //     );
-  //     if (result)
-  //       return {
-  //         success: true,
-  //         message: "review and ratings are fetched",
-  //         data: result,
-  //       };
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-  async getSingleCourseReviewAndRating(
+    async getSingleCourseReviewAndRating(
     courseId: string
   ): Promise<void | IReviewAndRatingResponse> {
     try {
