@@ -14,7 +14,8 @@ import { getVideoForVisitors } from "./getVideoForVisitors";
 import { enrollCourse } from "./enrollCourse"; 
 import { paymentStatus } from "./paymentStatus"; 
 import { updateReviewAndRating } from "./updateReviewAndRating"; 
-import { getReviewAndRating } from "./getReviewAndRating"; 
+import { getSingleCourseReviewAndRating } from "./getSingleCourseReviewAndRating"; 
+import { getThumbnamilImagePresignedUrl } from "./getThumbnamilImagePresignedUrl"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -32,5 +33,6 @@ export {
   enrollCourse,
   paymentStatus,
   updateReviewAndRating,
-  getReviewAndRating,
+  getSingleCourseReviewAndRating,
+  getThumbnamilImagePresignedUrl,
 };

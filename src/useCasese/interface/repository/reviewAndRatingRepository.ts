@@ -4,5 +4,5 @@ export interface IReviewAndRatingRepository {
   updateReviewAndRating(
     reviewAndRating: IReviewAndRatingReq
   ): Promise<IReviewAndRatingResponse | void>;
-  getReviewAndRating(): Promise<IReviewAndRatingResponse | void>;
+  getSingleCourseReviewAndRating(courseId:string): Promise<IReviewAndRatingResponse | void>;
 }

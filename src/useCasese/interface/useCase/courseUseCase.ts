@@ -32,8 +32,12 @@ export interface ICourseUseCase {
     req: Req,
     next: Next
   ): Promise<IReviewAndRatingResponse | void>;
-  getReviewAndRating(
+  getSingleCourseReviewAndRating(
     req: Req,
     next: Next
   ): Promise<IReviewAndRatingResponse | void>;
+  getThumbnamilImagePresignedUrl(
+    req: Req,
+    next: Next
+  ): Promise<ICloudStorageResponse | void>;
 }

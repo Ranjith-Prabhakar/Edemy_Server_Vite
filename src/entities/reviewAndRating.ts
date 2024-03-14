@@ -1,3 +1,4 @@
+import { TDocumentId } from "../frameworks/types/dbTypes";
 export interface IReviewAndRatingArrayData {
   userId: string;
   userName: string;
@@ -7,7 +8,7 @@ export interface IReviewAndRatingArrayData {
 }
 
 export interface IReviewAndRating {
-  _id: string;
+  _id: TDocumentId;
   courseId: string;
   courseName: string;
   reviewAndRating: IReviewAndRatingArrayData[];

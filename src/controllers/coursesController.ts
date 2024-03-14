@@ -177,10 +177,26 @@ export class CoursesController {
     }
   }
 
-  async getReviewAndRating(req: Req, res: Res, next: Next) {
+  async getSingleCourseReviewAndRating(req: Req, res: Res, next: Next) {
     try {
-      console.log("getReviewAndRating ===> controller");
-      const result = await this.courseUseCase.getReviewAndRating(req, next);
+      console.log("getSingleCourseReviewAndRating ===> controller");
+      const result = await this.courseUseCase.getSingleCourseReviewAndRating(
+        req,
+        next
+      );
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  async getThumbnamilImagePresignedUrl(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getThumbnamilImagePresignedUrl ===> controller");
+      const result = await this.courseUseCase.getThumbnamilImagePresignedUrl(
+        req,
+        next
+      );
       if (result) res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

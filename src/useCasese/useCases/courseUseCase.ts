@@ -21,7 +21,8 @@ import {
   enrollCourse,
   paymentStatus,
   updateReviewAndRating,
-  getReviewAndRating,
+  getSingleCourseReviewAndRating,
+  getThumbnamilImagePresignedUrl,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -267,12 +268,12 @@ export class CourseUseCase implements ICourseUseCase {
     }
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
-  async getReviewAndRating(
+  async getSingleCourseReviewAndRating(
     req: Req,
     next: Next
   ): Promise<void | IReviewAndRatingResponse> {
     try {
-      return await getReviewAndRating(
+      return await getSingleCourseReviewAndRating(
         this.reviewAndRatingRepository,
         req,
         next
@@ -281,5 +282,15 @@ export class CourseUseCase implements ICourseUseCase {
       catchError(error, next);
     }
   }
-  ;
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async getThumbnamilImagePresignedUrl(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICloudStorageResponse> {
+    try {
+      return await getThumbnamilImagePresignedUrl(this.cloudStorage, req, next);
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
 }

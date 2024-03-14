@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { IReviewAndRating } from "../../../entities/reviewAndRating";
 import { IReviewAndRatingRepository } from "../../../useCasese/interface/repository/reviewAndRatingRepository";
 import {
@@ -28,6 +29,10 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
             $elemMatch: { userId: reviewAndRating.reviewAndRating.userId },
           },
         });
+        console.log(
+          "isUserAlreadyAddedReview ====>>>>>>",
+          isUserAlreadyAddedReview
+        );
 
         if (isUserAlreadyAddedReview) {
           // check whether he has to update the review
@@ -75,20 +80,26 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
               message: "new review and rating repo has been created",
               data: updatedReviewAndRating as unknown as IReviewAndRating[],
             };
-          } else {
-            // if the user made neither rating or review
-            const updatedReviewAndRating =
-              await reviewAndRatingModel.findOneAndUpdate(
-                { courseId: reviewAndRating.courseId },
-                { $addToSet: { reviewAndRating: reviewAndRating } },
-                { returnDocument: "after" }
-              );
-            return {
-              success: true,
-              message: "new review and rating repo has been created",
-              data: updatedReviewAndRating as unknown as IReviewAndRating[],
-            };
           }
+        } else {
+          console.log(
+            "inside else_________+++++++",
+            reviewAndRating.reviewAndRating
+          );
+          // if the user made neither rating or review
+          const updatedReviewAndRating =
+            await reviewAndRatingModel.findOneAndUpdate(
+              { courseId: reviewAndRating.courseId },
+              {
+                $addToSet: { reviewAndRating: reviewAndRating.reviewAndRating },
+              },
+              { returnDocument: "after" }
+            );
+          return {
+            success: true,
+            message: "new review and rating repo has been created",
+            data: updatedReviewAndRating as unknown as IReviewAndRating[],
+          };
         }
       } else {
         // if the course is not added already
@@ -108,15 +119,62 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
   }
 
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async getReviewAndRating(): Promise<void | IReviewAndRatingResponse> {
+  // async getSingleCourseReviewAndRating(
+  //   courseId: string
+  // ): Promise<void | IReviewAndRatingResponse> {
+  //   try {
+  //     // start from here by giving the arg
+  //     console.log(
+  //       "result getSingleCourseReviewAndRating repo courseId ===================",
+  //       courseId
+  //     );
+
+  //     const objectId = new mongoose.Types.ObjectId(courseId);
+  //     console.log(
+  //       "result getSingleCourseReviewAndRating repo objectId ===================",
+  //       objectId
+  //     );
+  //     console.log(
+  //       "result getSingleCourseReviewAndRating repo objectId ==== mongodb ===================",
+  //       objectId
+  //     );
+
+  //     const result = await reviewAndRatingModel.findOne({ _id: objectId });
+  //     console.log(
+  //       "result getSingleCourseReviewAndRating repo result ===================",
+  //       result
+  //     );
+  //     if (result)
+  //       return {
+  //         success: true,
+  //         message: "review and ratings are fetched",
+  //         data: result,
+  //       };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+  async getSingleCourseReviewAndRating(
+    courseId: string
+  ): Promise<void | IReviewAndRatingResponse> {
     try {
-      const result = await reviewAndRatingModel.find();
-      if (result)
+      console.log("courseId from getSingleCourseReviewAndRating", courseId);
+      const objectId = mongoose.Types.ObjectId.createFromHexString(courseId); // Using mongoose.Types.ObjectId.createFromHexString()
+
+      const result = await reviewAndRatingModel.findOne({ courseId: objectId });
+
+      if (result) {
         return {
           success: true,
-          message: "review and ratings are fetched",
+          message: "Review and ratings are fetched",
           data: result,
         };
+      } else {
+        return {
+          success: false,
+          message: "No review and ratings found for the provided courseId",
+        };
+      }
     } catch (error) {
       throw error;
     }

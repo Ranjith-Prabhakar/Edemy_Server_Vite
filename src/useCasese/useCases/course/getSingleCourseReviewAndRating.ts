@@ -3,14 +3,16 @@ import { IReviewAndRatingRepository } from "../../interface/repository/reviewAnd
 import { IReviewAndRatingResponse } from "../../interface/request_And_Response/reviewAndRatingResponse";
 import { catchError } from "../../middlewares/catchError";
 
-export const getReviewAndRating = async (
+export const getSingleCourseReviewAndRating = async (
   reviewAndRatingRepository: IReviewAndRatingRepository,
   req: Req,
   next: Next
 ): Promise<void | IReviewAndRatingResponse> => {
   try {
-    return await reviewAndRatingRepository.getReviewAndRating()
+    return await reviewAndRatingRepository.getSingleCourseReviewAndRating(req.body.courseId);
   } catch (error) {
-    catchError(error,next)
+    catchError(error, next);
   }
 };
+
+// have to change interface for getReviewAndRating and so on 

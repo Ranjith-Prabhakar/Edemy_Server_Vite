@@ -139,13 +139,22 @@ export function courseRoute(router: Route) {
     })
   );
 
-   router.get(
-     "/get_review_and_rating",
+  router.post(
+    "/get_single_course_review_and_rating",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getSingleCourseReviewAndRating(req, res, next);
+    })
+  );
+   router.post(
+     "/get_thumbnail_image_presigned_url",
      catchAsyncErrors((req: Req, res: Res, next: Next) => {
-       courseController.getReviewAndRating(req, res, next);
+       courseController.getThumbnamilImagePresignedUrl(req, res, next);
      })
    );
 
  
+
+  
+
   return router;
 }
