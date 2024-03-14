@@ -27,4 +27,5 @@ export interface ICourseRepository {
     videoNo: string
   ): Promise<boolean>;
   updatePurchas(courseId: string): Promise<boolean | void>;
+  getUserEnrolledCourses(courses: string[]): Promise<ICourseResponse |void>;
 }

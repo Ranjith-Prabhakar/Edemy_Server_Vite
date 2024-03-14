@@ -145,16 +145,20 @@ export function courseRoute(router: Route) {
       courseController.getSingleCourseReviewAndRating(req, res, next);
     })
   );
-   router.post(
-     "/get_thumbnail_image_presigned_url",
-     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-       courseController.getThumbnamilImagePresignedUrl(req, res, next);
-     })
-   );
+  router.post(
+    "/get_thumbnail_image_presigned_url",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getThumbnamilImagePresignedUrl(req, res, next);
+    })
+  );
 
- 
-
-  
+  router.post(
+    "/get_user_enrolled_courses",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getUserEnrolledCourses(req, res, next);
+    })
+  );
 
   return router;
 }

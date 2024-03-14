@@ -15,6 +15,7 @@ import {
   getCoursesForUser,
   isPreview,
   updatePurchas,
+  getUserEnrolledCourses,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -126,7 +127,15 @@ export class CourseRepository implements ICourseRepository {
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async updatePurchas(courseId: string): Promise<boolean | void> {
     try {
-        return await updatePurchas(courseId);
+      return await updatePurchas(courseId);
+    } catch (error) {
+      throw error;
+    }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getUserEnrolledCourses(courses: string[]): Promise<void | ICourseResponse> {
+    try {
+      return await getUserEnrolledCourses(courses);
     } catch (error) {
       throw error
     }

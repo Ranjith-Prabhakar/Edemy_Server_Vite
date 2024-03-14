@@ -23,6 +23,7 @@ import {
   updateReviewAndRating,
   getSingleCourseReviewAndRating,
   getThumbnamilImagePresignedUrl,
+  getUserEnrolledCourses,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -293,4 +294,16 @@ export class CourseUseCase implements ICourseUseCase {
       catchError(error, next);
     }
   }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async getUserEnrolledCourses(
+    req: Req,
+    next: Next
+  ): Promise<void | ICourseResponse> {
+    try {
+      return await getUserEnrolledCourses(this.courseRepository,req,next);
+    } catch (error) {
+      catchError(error,next);
+    }
+  }
 }
+

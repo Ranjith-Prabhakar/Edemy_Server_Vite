@@ -202,4 +202,15 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getUserEnrolledCourses(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getUserEnrolledCourses ===> controller");
+      await inputValidation(req, "getUserEnrolledCourses", next);
+      const result = await this.courseUseCase.getUserEnrolledCourses(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

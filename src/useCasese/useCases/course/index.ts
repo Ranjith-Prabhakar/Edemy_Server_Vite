@@ -16,6 +16,7 @@ import { paymentStatus } from "./paymentStatus";
 import { updateReviewAndRating } from "./updateReviewAndRating"; 
 import { getSingleCourseReviewAndRating } from "./getSingleCourseReviewAndRating"; 
 import { getThumbnamilImagePresignedUrl } from "./getThumbnamilImagePresignedUrl"; 
+import { getUserEnrolledCourses } from "./getUserEnrolledCourses"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -35,4 +36,5 @@ export {
   updateReviewAndRating,
   getSingleCourseReviewAndRating,
   getThumbnamilImagePresignedUrl,
+  getUserEnrolledCourses,
 };

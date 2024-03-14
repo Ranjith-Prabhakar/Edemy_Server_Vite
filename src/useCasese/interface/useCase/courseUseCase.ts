@@ -40,4 +40,5 @@ export interface ICourseUseCase {
     req: Req,
     next: Next
   ): Promise<ICloudStorageResponse | void>;
+  getUserEnrolledCourses(req: Req, next: Next): Promise<ICourseResponse | void>;
 }
