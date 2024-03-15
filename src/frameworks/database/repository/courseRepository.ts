@@ -1,7 +1,7 @@
 import { ICourse } from "../../../entities/course";
 import { ICourseRepository } from "../../../useCasese/interface/repository/courseRepository";
 import { IModuleVideoBody } from "../../../useCasese/interface/request/course";
-import { ICourseResponse } from "../../../useCasese/interface/request_And_Response/course";
+import { ICourseCategoryBaseResponse, ICourseResponse } from "../../../useCasese/interface/request_And_Response/course";
 
 import {
   getCourseInProgress,
@@ -16,6 +16,7 @@ import {
   isPreview,
   updatePurchas,
   getUserEnrolledCourses,
+  getCourseByCategory,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -133,11 +134,25 @@ export class CourseRepository implements ICourseRepository {
     }
   }
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-  async getUserEnrolledCourses(courses: string[]): Promise<void | ICourseResponse> {
+  async getUserEnrolledCourses(
+    courses: string[]
+  ): Promise<void | ICourseResponse> {
     try {
       return await getUserEnrolledCourses(courses);
     } catch (error) {
-      throw error
+      throw error;
+    }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getCourseByCategory(
+    category: string,
+    pageNumber: number,
+    frequency: number
+  ): Promise<void | ICourseCategoryBaseResponse> {
+    try {
+      return await getCourseByCategory(category, pageNumber, frequency);
+    } catch (error) {
+      throw error;
     }
   }
 }

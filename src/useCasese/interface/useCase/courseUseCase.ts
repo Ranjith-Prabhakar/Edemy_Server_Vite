@@ -1,7 +1,7 @@
 import { ICategory } from "../../../entities/category";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICloudStorageResponse } from "../request_And_Response/cloudStorageResponse";
-import { ICourseResponse } from "../request_And_Response/course";
+import { ICourseCategoryBaseResponse, ICourseResponse } from "../request_And_Response/course";
 import { IPaymentRespose } from "../request_And_Response/payment";
 import { IReviewAndRatingResponse } from "../request_And_Response/reviewAndRatingResponse";
 import { IUserResponse } from "../request_And_Response/user";
@@ -41,4 +41,8 @@ export interface ICourseUseCase {
     next: Next
   ): Promise<ICloudStorageResponse | void>;
   getUserEnrolledCourses(req: Req, next: Next): Promise<ICourseResponse | void>;
+  getCourseByCategory(
+    req: Req,
+    next: Next
+  ): Promise<ICourseCategoryBaseResponse | void>;
 }

@@ -6,7 +6,6 @@ export const getUserEnrolledCourses = async (
 ): Promise<void | ICourseResponse> => {
   try {
     const result = await courseModel.find({ _id: { $in: courses } });
-    console.log("result from getUserEnrolledCourses", result.length);
     return {
       status: 200,
       message: "user enrolled courses fetched well",

@@ -213,4 +213,15 @@ export class CoursesController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  async getCourseByCategory(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getCourseByCategory ===> controller");
+      await inputValidation(req, "getCourseByCategory", next);
+      const result = await this.courseUseCase.getCourseByCategory(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }

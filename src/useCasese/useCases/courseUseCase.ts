@@ -1,5 +1,5 @@
 import { Next, Req } from "../../frameworks/types/serverPackageTypes";
-import { ICourseResponse } from "../interface/request_And_Response/course";
+import { ICourseCategoryBaseResponse, ICourseResponse } from "../interface/request_And_Response/course";
 import { ICloudStorage } from "../interface/services/cloudStorage";
 import { ICourseUseCase } from "../interface/useCase/courseUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
@@ -24,6 +24,7 @@ import {
   getSingleCourseReviewAndRating,
   getThumbnamilImagePresignedUrl,
   getUserEnrolledCourses,
+  getCourseByCategory,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -300,9 +301,21 @@ export class CourseUseCase implements ICourseUseCase {
     next: Next
   ): Promise<void | ICourseResponse> {
     try {
-      return await getUserEnrolledCourses(this.courseRepository,req,next);
+      return await getUserEnrolledCourses(this.courseRepository, req, next);
     } catch (error) {
-      catchError(error,next);
+      catchError(error, next);
+    }
+  }
+
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async getCourseByCategory(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICourseCategoryBaseResponse> {
+    try {
+      return await getCourseByCategory(this.courseRepository, req, next);
+    } catch (error) {
+      catchError(error, next);
     }
   }
 }

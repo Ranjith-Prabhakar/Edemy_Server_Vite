@@ -5,3 +5,7 @@ export interface ICourseResponse {
   message: string;
   data?: ICourse | ICourse[] ;
 }
+
+export interface ICourseCategoryBaseResponse extends ICourseResponse{
+  hasMore:boolean
+}

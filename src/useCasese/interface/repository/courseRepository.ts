@@ -1,6 +1,6 @@
 import { ICourse } from "../../../entities/course";
 import { IModuleVideoBody } from "../request/course";
-import { ICourseResponse } from "../request_And_Response/course";
+import { ICourseCategoryBaseResponse, ICourseResponse } from "../request_And_Response/course";
 
 export interface ICourseRepository {
   getCourseInProgress(instructor: string): Promise<ICourseResponse>;
@@ -27,5 +27,10 @@ export interface ICourseRepository {
     videoNo: string
   ): Promise<boolean>;
   updatePurchas(courseId: string): Promise<boolean | void>;
-  getUserEnrolledCourses(courses: string[]): Promise<ICourseResponse |void>;
+  getUserEnrolledCourses(courses: string[]): Promise<ICourseResponse | void>;
+  getCourseByCategory(
+    category: string,
+    pageNumber: number,
+    frequency: number
+  ): Promise<ICourseCategoryBaseResponse | void>;
 }

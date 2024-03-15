@@ -10,6 +10,7 @@ import { getCoursesForUser } from "./getCoursesForUser";
 import { isPreview } from "./isPreview";
 import { updatePurchas } from "./updatePurchas";
 import { getUserEnrolledCourses } from "./getUserEnrolledCourses";
+import { getCourseByCategory } from "./getCourseByCategory";
 export {
   getCourseInProgress,
   addCourseData,
@@ -23,4 +24,5 @@ export {
   isPreview,
   updatePurchas,
   getUserEnrolledCourses,
+  getCourseByCategory,
 };
