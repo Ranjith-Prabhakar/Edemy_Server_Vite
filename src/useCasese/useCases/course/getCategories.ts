@@ -9,7 +9,12 @@ export const getCategories = async (
   next: Next
 ): Promise<ICategory[] | void> => {
   try {
-    return await categoryRepository.getCategories();
+    if(req.user?.role === "admin"){
+return await categoryRepository.getCategories(true);
+    }else{
+      return await categoryRepository.getCategories(false);
+    }
+    
   } catch (error: any) {
     next(new ErrorHandler(500, error.message));
   }

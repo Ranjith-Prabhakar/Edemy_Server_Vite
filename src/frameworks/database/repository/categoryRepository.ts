@@ -29,9 +29,9 @@ export class CategoryRepository implements ICategoryRepository {
   }
   // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
-  async getCategories(): Promise<void | ICategory[]> {
+  async getCategories(admin:boolean): Promise<void | ICategory[]> {
     try {
-      return await getCategories();
+      return await getCategories(admin);
     } catch (error) {
       throw error;
     }
