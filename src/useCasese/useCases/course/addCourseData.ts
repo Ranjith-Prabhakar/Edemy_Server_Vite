@@ -1,3 +1,5 @@
+
+
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICourseRepository } from "../../interface/repository/courseRepository";
 import { ICourseResponse } from "../../interface/request_And_Response/course";
@@ -9,6 +11,7 @@ export const addCourseData = async (
   next: Next
 ): Promise<ICourseResponse | void> => {
   try {
+    console.log("req.user 4 5 4 5 4",req.user)
     return await courseRepository.addCourseData({
       ...req.body,
       instructor: req.user,

@@ -38,6 +38,7 @@ export interface ICourse {
   price:number;
   courseName: string;
   instructor: string;
+  instructorId:string;
   discription: string;
   tags: string;
   thumbnail: string;

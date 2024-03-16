@@ -25,6 +25,9 @@ const courseSchema: Schema<ICourse> = new Schema({
     required: [true, "please give a valid name"],
     trim: true,
   },
+  instructorId: {
+    type: String,
+  },
   discription: {
     type: String,
     required: [true, "please give a valid description"],

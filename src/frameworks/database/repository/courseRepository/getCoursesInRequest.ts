@@ -8,6 +8,7 @@ export const getCoursesInRequest =
         status: "pending",
         submissionStatus: "completed",
       });
+      console.log("result = 2525 25 2 52 5 2", result);
       return {
         status: 200,
         message: "existing courses have been fetched successfully",
