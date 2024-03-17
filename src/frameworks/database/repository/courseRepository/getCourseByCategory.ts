@@ -10,14 +10,16 @@ export const getCourseByCategory = async (
 ): Promise<void | ICourseCategoryBaseResponse> => {
   try {
     console.log(
-      "category pageNumber frequency sort filter @@@@@@@@@@",
+      "category pageNumber frequency sort filter @@@@@@@@@@ [filter]",
       category,
       pageNumber,
       frequency,
       sort,
-      filter
+      filter,
+      [filter]
     );
     const sortValue = sort === "A-Z" ? -1 : 1;
+    console.log("sortValue ######", sortValue);
     if (category === "all category") {
       const length = (await courseModel.find()).length;
 
@@ -26,9 +28,10 @@ export const getCourseByCategory = async (
         const start = end - frequency;
         const result = await courseModel
           .find()
-          .sort({ sort: sortValue })
+          .sort({ [filter]: sortValue })
           .skip(start)
           .limit(end);
+        // console.log("result ######", result);  
         return {
           status: 200,
           message: "couses have been fetched successfully",
@@ -49,9 +52,10 @@ export const getCourseByCategory = async (
         const start = end - frequency;
         const result = await courseModel
           .find({ category })
-          .sort({ sort: sortValue })
+          .sort({ [filter]: sortValue })
           .skip(start)
           .limit(end);
+          // console.log("result ######", result); 
         return {
           status: 200,
           message: "couses have been fetched successfully",

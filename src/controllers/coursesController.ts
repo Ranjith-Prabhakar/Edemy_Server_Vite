@@ -22,7 +22,6 @@ export class CoursesController {
   async addCourseData(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "addCourseData", next);
-      console.log("req.body from addCourseData =====>", req.body);
       const result = await this.courseUseCase.addCourseData(req, next);
       res.status(200).json(result);
     } catch (error: any) {
@@ -111,8 +110,6 @@ export class CoursesController {
   async getCategories(req: Req, res: Res, next: Next) {
     try {
       const result = await this.courseUseCase.getCategories(req, next);
-      console.log("result", result);
-
       res.status(200).json({
         success: true,
         message: "categories fectched successfully",
@@ -125,7 +122,6 @@ export class CoursesController {
 
   async getVideoForUser(req: Req, res: Res, next: Next) {
     try {
-      console.log("getVideoForUser ===> controller");
       await inputValidation(req, "getVideoForUser", next);
       const result = await this.courseUseCase.getVideoForUser(req, next);
       if (result) res.status(200).json(result);
@@ -136,7 +132,6 @@ export class CoursesController {
 
   async getVideoForVisitors(req: Req, res: Res, next: Next) {
     try {
-      console.log("getVideoForVisitors ===> controller");
       await inputValidation(req, "getVideoForVisitors", next);
       const result = await this.courseUseCase.getVideoForVisitors(req, next);
       if (result) res.status(200).json(result);
@@ -147,7 +142,6 @@ export class CoursesController {
 
   async enrollCourse(req: Req, res: Res, next: Next) {
     try {
-      console.log("enrollCourse ===> controller");
       await inputValidation(req, "enrollCourse", next);
       const result = await this.courseUseCase.enrollCourse(req, next);
       if (result) res.status(200).json(result);
@@ -157,7 +151,6 @@ export class CoursesController {
   }
   async paymentStatus(req: Req, res: Res, next: Next) {
     try {
-      console.log("paymentStatus ===> controller");
       await inputValidation(req, "paymentStatus", next);
       const result = await this.courseUseCase.paymentStatus(req, next);
       if (result) res.status(200).json(result);
@@ -168,7 +161,6 @@ export class CoursesController {
 
   async updateReviewAndRating(req: Req, res: Res, next: Next) {
     try {
-      console.log("updateReviewAndRating ===> controller");
       await inputValidation(req, "updateReviewAndRating", next);
       const result = await this.courseUseCase.updateReviewAndRating(req, next);
       if (result) res.status(200).json(result);
@@ -179,7 +171,6 @@ export class CoursesController {
 
   async getSingleCourseReviewAndRating(req: Req, res: Res, next: Next) {
     try {
-      console.log("getSingleCourseReviewAndRating ===> controller");
       const result = await this.courseUseCase.getSingleCourseReviewAndRating(
         req,
         next
@@ -192,7 +183,6 @@ export class CoursesController {
 
   async getThumbnamilImagePresignedUrl(req: Req, res: Res, next: Next) {
     try {
-      console.log("getThumbnamilImagePresignedUrl ===> controller");
       const result = await this.courseUseCase.getThumbnamilImagePresignedUrl(
         req,
         next
@@ -205,7 +195,6 @@ export class CoursesController {
 
   async getUserEnrolledCourses(req: Req, res: Res, next: Next) {
     try {
-      console.log("getUserEnrolledCourses ===> controller");
       await inputValidation(req, "getUserEnrolledCourses", next);
       const result = await this.courseUseCase.getUserEnrolledCourses(req, next);
       if (result) res.status(200).json(result);
@@ -216,7 +205,6 @@ export class CoursesController {
 
   async getCourseByCategory(req: Req, res: Res, next: Next) {
     try {
-      console.log("getCourseByCategory ===> controller");
       await inputValidation(req, "getCourseByCategory", next);
       const result = await this.courseUseCase.getCourseByCategory(req, next);
       if (result) res.status(200).json(result);

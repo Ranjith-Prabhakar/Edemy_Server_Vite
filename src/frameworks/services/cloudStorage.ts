@@ -26,7 +26,6 @@ export class CloudStorage implements ICloudStorage {
     folderName: string
   ): Promise<string | void> {
     try {
-      console.log("courseName===>>>", folderName);
       const command = new PutObjectCommand({
         Bucket: "bucket.edemy",
         Key: `uploads/user-uploads/${userId}/${folderName}/${fileName}`,
@@ -43,21 +42,13 @@ export class CloudStorage implements ICloudStorage {
     courseName: string
   ): Promise<void | ICloudStorageResponse> {
     try {
-      console.log("bucket", process.env.S3_BOCKET_NAME);
-
-      console.log(
-        "key",
-        `${process.env.S3_COURSE_CONTENT_LOCATION}/${courseName}`
-      );
-
-      const command = new GetObjectCommand({
+          const command = new GetObjectCommand({
         Bucket: process.env.S3_BOCKET_NAME,
         Key: `${process.env.S3_COURSE_CONTENT_LOCATION}${courseName}`,
       });
 
       const url = await getSignedUrl(s3Client, command);
       if (url) {
-        console.log("url", url);
         return { status: 200, message: "video has been fetched", data: url };
       } else {
         throw new Error("video not found");
