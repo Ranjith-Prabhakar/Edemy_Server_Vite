@@ -34,6 +34,7 @@ export interface IReviewRating {
 }
 
 export interface ICourse {
+  _id:string;
   category:string;
   price:number;
   courseName: string;

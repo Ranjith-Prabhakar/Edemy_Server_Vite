@@ -83,7 +83,7 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async addCourseData(req: Req, next: Next): Promise<ICourseResponse | void> {
     try {
-      return await addCourseData(this.courseRepository, req, next);
+      return await addCourseData(this.courseRepository,this.userRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -104,7 +104,7 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async updateCourse(req: Req, next: Next): Promise<ICourseResponse | void> {
     try {
-      return await updateCourse(this.courseRepository, req, next);
+      return await updateCourse(this.courseRepository,this.userRepository, req, next);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

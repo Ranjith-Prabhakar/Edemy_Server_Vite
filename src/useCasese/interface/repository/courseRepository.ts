@@ -31,6 +31,9 @@ export interface ICourseRepository {
   getCourseByCategory(
     category: string,
     pageNumber: number,
-    frequency: number
+    frequency: number,
+    sort:string,
+    filter:string,
+    
   ): Promise<ICourseCategoryBaseResponse | void>;
 }

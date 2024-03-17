@@ -9,6 +9,7 @@ import {
   findAndUpdate,
   findByIdAndUpdate,
   addEnrolledCourse,
+  updateCourses,
 } from "./user/index";
 import { getUsers, getUser, freezUser, unFreezUser } from "./admin/index";
 import { IJsonResponse } from "../../../useCasese/interface/services/jsonResponse";
@@ -76,6 +77,14 @@ export class UserRepository implements IUserRepository {
       return await addEnrolledCourse(courseId, userId);
     } catch (error) {
       throw error;
+    }
+  }
+  ///888888888888888888888888888888888888888888888888888888888888888888888
+  async updateCourses(courseId: string,userId:string): Promise<boolean | void> {
+    try {
+      return await updateCourses(courseId, userId);
+    } catch (error) {
+      throw error
     }
   }
 }

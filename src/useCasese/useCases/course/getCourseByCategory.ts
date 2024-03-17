@@ -9,14 +9,16 @@ export const getCourseByCategory = async (
   next: Next
 ): Promise<void | ICourseCategoryBaseResponse> => {
   try {
-    let { category, pageNumber, frequency } = req.body;
+    let { category, pageNumber, frequency, sort, filter } = req.body;
     pageNumber = +pageNumber;
     frequency = +frequency;
 
     return await courseRepository.getCourseByCategory(
       category,
       pageNumber,
-      frequency
+      frequency,
+      sort,
+      filter
     );
   } catch (error) {
     catchError(error, next);

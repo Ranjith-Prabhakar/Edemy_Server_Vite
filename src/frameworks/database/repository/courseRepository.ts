@@ -147,10 +147,18 @@ export class CourseRepository implements ICourseRepository {
   async getCourseByCategory(
     category: string,
     pageNumber: number,
-    frequency: number
+    frequency: number,
+    sort:string,
+    filter:string
   ): Promise<void | ICourseCategoryBaseResponse> {
     try {
-      return await getCourseByCategory(category, pageNumber, frequency);
+      return await getCourseByCategory(
+        category,
+        pageNumber,
+        frequency,
+        sort,
+        filter
+      );
     } catch (error) {
       throw error;
     }
