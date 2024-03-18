@@ -167,6 +167,12 @@ export function courseRoute(router: Route) {
       courseController.getCourseByCategory(req, res, next);
     })
   );
-
+  router.post(
+    "/get_courses_for_search",
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getCourseForSearch(req, res, next);
+    })
+  );
+  
   return router;
 }

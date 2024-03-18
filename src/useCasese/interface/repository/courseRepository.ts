@@ -32,8 +32,14 @@ export interface ICourseRepository {
     category: string,
     pageNumber: number,
     frequency: number,
-    sort:string,
-    filter:string,
-    
+    sort: string,
+    filter: string
+  ): Promise<ICourseCategoryBaseResponse | void>;
+  getCourseForSearch(
+    key: string,
+    pageNumber: number,
+    frequency: number,
+    sort: string,
+    filter: string
   ): Promise<ICourseCategoryBaseResponse | void>;
 }

@@ -45,4 +45,8 @@ export interface ICourseUseCase {
     req: Req,
     next: Next
   ): Promise<ICourseCategoryBaseResponse | void>;
+  getCourseForSearch(
+    req: Req,
+    next: Next
+  ): Promise<ICourseCategoryBaseResponse | void>;
 }

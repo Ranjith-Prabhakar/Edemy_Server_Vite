@@ -1,5 +1,8 @@
 import { Next, Req } from "../../frameworks/types/serverPackageTypes";
-import { ICourseCategoryBaseResponse, ICourseResponse } from "../interface/request_And_Response/course";
+import {
+  ICourseCategoryBaseResponse,
+  ICourseResponse,
+} from "../interface/request_And_Response/course";
 import { ICloudStorage } from "../interface/services/cloudStorage";
 import { ICourseUseCase } from "../interface/useCase/courseUseCase";
 import ErrorHandler from "../middlewares/errorHandler";
@@ -25,6 +28,7 @@ import {
   getThumbnamilImagePresignedUrl,
   getUserEnrolledCourses,
   getCourseByCategory,
+  getCourseForSearch,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -83,7 +87,12 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async addCourseData(req: Req, next: Next): Promise<ICourseResponse | void> {
     try {
-      return await addCourseData(this.courseRepository,this.userRepository, req, next);
+      return await addCourseData(
+        this.courseRepository,
+        this.userRepository,
+        req,
+        next
+      );
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -104,7 +113,12 @@ export class CourseUseCase implements ICourseUseCase {
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async updateCourse(req: Req, next: Next): Promise<ICourseResponse | void> {
     try {
-      return await updateCourse(this.courseRepository,this.userRepository, req, next);
+      return await updateCourse(
+        this.courseRepository,
+        this.userRepository,
+        req,
+        next
+      );
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }
@@ -318,5 +332,18 @@ export class CourseUseCase implements ICourseUseCase {
       catchError(error, next);
     }
   }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async getCourseForSearch(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICourseCategoryBaseResponse> {
+    try {
+      console.log("usecase getCourseForSearch ");
+      const result = await getCourseForSearch(this.courseRepository, req, next);
+      console.log("usecase getCourseForSearch result", result);
+      return result;
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
 }
-

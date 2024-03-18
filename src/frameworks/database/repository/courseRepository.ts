@@ -17,6 +17,7 @@ import {
   updatePurchas,
   getUserEnrolledCourses,
   getCourseByCategory,
+  getCourseForSearch,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -148,8 +149,8 @@ export class CourseRepository implements ICourseRepository {
     category: string,
     pageNumber: number,
     frequency: number,
-    sort:string,
-    filter:string
+    sort: string,
+    filter: string
   ): Promise<void | ICourseCategoryBaseResponse> {
     try {
       return await getCourseByCategory(
@@ -159,6 +160,20 @@ export class CourseRepository implements ICourseRepository {
         sort,
         filter
       );
+    } catch (error) {
+      throw error;
+    }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getCourseForSearch(
+    key: string,
+    pageNumber: number,
+    frequency: number,
+    sort: string,
+    filter: string
+  ): Promise<void | ICourseCategoryBaseResponse> {
+    try {
+      return await getCourseForSearch(key, pageNumber, frequency, sort, filter);
     } catch (error) {
       throw error;
     }

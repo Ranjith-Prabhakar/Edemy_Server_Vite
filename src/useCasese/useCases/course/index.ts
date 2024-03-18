@@ -18,6 +18,7 @@ import { getSingleCourseReviewAndRating } from "./getSingleCourseReviewAndRating
 import { getThumbnamilImagePresignedUrl } from "./getThumbnamilImagePresignedUrl"; 
 import { getUserEnrolledCourses } from "./getUserEnrolledCourses"; 
 import { getCourseByCategory } from "./getCourseByCategory"; 
+import { getCourseForSearch } from "./getCourseForSearch"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -39,4 +40,5 @@ export {
   getThumbnamilImagePresignedUrl,
   getUserEnrolledCourses,
   getCourseByCategory,
+  getCourseForSearch,
 };

@@ -11,6 +11,7 @@ import { isPreview } from "./isPreview";
 import { updatePurchas } from "./updatePurchas";
 import { getUserEnrolledCourses } from "./getUserEnrolledCourses";
 import { getCourseByCategory } from "./getCourseByCategory";
+import { getCourseForSearch } from "./getCourseForSearch";
 export {
   getCourseInProgress,
   addCourseData,
@@ -25,4 +26,5 @@ export {
   updatePurchas,
   getUserEnrolledCourses,
   getCourseByCategory,
+  getCourseForSearch,
 };
