@@ -18,6 +18,7 @@ import {
   getUserEnrolledCourses,
   getCourseByCategory,
   getCourseForSearch,
+  getInstructorTutorials,
 } from "./courseRepository/index";
 
 export class CourseRepository implements ICourseRepository {
@@ -177,5 +178,13 @@ export class CourseRepository implements ICourseRepository {
     } catch (error) {
       throw error;
     }
+  }
+  // 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+  async getInstructorTutorials(courses: string[]): Promise<void | ICourseResponse> {
+     try {
+       return await getInstructorTutorials(courses);
+     } catch (error) {
+       throw error;
+     }
   }
 }

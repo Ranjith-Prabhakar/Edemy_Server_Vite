@@ -49,4 +49,5 @@ export interface ICourseUseCase {
     req: Req,
     next: Next
   ): Promise<ICourseCategoryBaseResponse | void>;
+  getInstructorTutorials(req: Req, next: Next): Promise<ICourseResponse | void>;
 }

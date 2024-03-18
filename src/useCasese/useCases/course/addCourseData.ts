@@ -3,11 +3,13 @@ import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICourseRepository } from "../../interface/repository/courseRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { ICourseResponse } from "../../interface/request_And_Response/course";
+import { ICloudSession } from "../../interface/services/cloudSession";
 import ErrorHandler from "../../middlewares/errorHandler";
 
 export const addCourseData = async (
   courseRepository: ICourseRepository,
   userRepository: IUserRepository,
+  cloudSesssion: ICloudSession,
   req: Req,
   next: Next
 ): Promise<ICourseResponse | void> => {
@@ -23,6 +25,12 @@ export const addCourseData = async (
       courseData?._id,
       req.user?._id as string
     );
+    if (userResult) {
+      await cloudSesssion.createUserSession(
+        userResult._id as string,
+        userResult
+      );
+    }
     console.log("userResult === >>>>", userResult);
     return courseResult;
   } catch (error: any) {

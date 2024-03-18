@@ -215,10 +215,19 @@ export class CoursesController {
 
   async getCourseForSearch(req: Req, res: Res, next: Next) {
     try {
-      
       await inputValidation(req, "getCourseForSearch", next);
       const result = await this.courseUseCase.getCourseForSearch(req, next);
-      
+
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  async getInstructorTutorials(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "getInstructorTutorials", next);
+      const result = await this.courseUseCase.getInstructorTutorials(req, next);
       if (result) res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

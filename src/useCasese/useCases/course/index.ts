@@ -19,6 +19,7 @@ import { getThumbnamilImagePresignedUrl } from "./getThumbnamilImagePresignedUrl
 import { getUserEnrolledCourses } from "./getUserEnrolledCourses"; 
 import { getCourseByCategory } from "./getCourseByCategory"; 
 import { getCourseForSearch } from "./getCourseForSearch"; 
+import { getInstructorTutorials } from "./getInstructorTutorials"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -41,4 +42,5 @@ export {
   getUserEnrolledCourses,
   getCourseByCategory,
   getCourseForSearch,
+  getInstructorTutorials,
 };

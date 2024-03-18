@@ -29,6 +29,7 @@ import {
   getUserEnrolledCourses,
   getCourseByCategory,
   getCourseForSearch,
+  getInstructorTutorials,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -90,6 +91,7 @@ export class CourseUseCase implements ICourseUseCase {
       return await addCourseData(
         this.courseRepository,
         this.userRepository,
+        this.cloudSesssion,
         req,
         next
       );
@@ -342,6 +344,17 @@ export class CourseUseCase implements ICourseUseCase {
       const result = await getCourseForSearch(this.courseRepository, req, next);
       console.log("usecase getCourseForSearch result", result);
       return result;
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async getInstructorTutorials(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICourseResponse> {
+    try {
+      return await getInstructorTutorials(this.courseRepository, req, next);
     } catch (error) {
       catchError(error, next);
     }

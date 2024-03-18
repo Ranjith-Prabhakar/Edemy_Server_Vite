@@ -42,4 +42,5 @@ export interface ICourseRepository {
     sort: string,
     filter: string
   ): Promise<ICourseCategoryBaseResponse | void>;
+  getInstructorTutorials(courses: string[]): Promise<ICourseResponse | void>;
 }

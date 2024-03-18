@@ -12,6 +12,7 @@ import { updatePurchas } from "./updatePurchas";
 import { getUserEnrolledCourses } from "./getUserEnrolledCourses";
 import { getCourseByCategory } from "./getCourseByCategory";
 import { getCourseForSearch } from "./getCourseForSearch";
+import { getInstructorTutorials } from "./getInstructorTutorials";
 export {
   getCourseInProgress,
   addCourseData,
@@ -27,4 +28,5 @@ export {
   getUserEnrolledCourses,
   getCourseByCategory,
   getCourseForSearch,
+  getInstructorTutorials,
 };

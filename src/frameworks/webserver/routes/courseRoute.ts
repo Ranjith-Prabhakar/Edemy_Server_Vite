@@ -173,6 +173,15 @@ export function courseRoute(router: Route) {
       courseController.getCourseForSearch(req, res, next);
     })
   );
+    router.post(
+      "/get_instructor_tutorials",
+      isAuthenticated,
+      catchAsyncErrors((req: Req, res: Res, next: Next) => {
+        courseController.getInstructorTutorials(req, res, next);
+      })
+    );
   
+
+  ;
   return router;
 }

@@ -22,5 +22,5 @@ export interface IUserRepository {
   freezUser(id: string): Promise<IUserResponse>;
   unFreezUser(id: string): Promise<IUserResponse>;
   addEnrolledCourse(courseId: string, userId: string): Promise<IUser | void>;
-  updateCourses(courseId: string,useId:string): Promise<boolean | void>;
+  updateCourses(courseId: string,useId:string): Promise<IUser | void>;
 }

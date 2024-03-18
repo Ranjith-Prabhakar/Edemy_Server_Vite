@@ -80,7 +80,7 @@ export class UserRepository implements IUserRepository {
     }
   }
   ///888888888888888888888888888888888888888888888888888888888888888888888
-  async updateCourses(courseId: string,userId:string): Promise<boolean | void> {
+  async updateCourses(courseId: string,userId:string): Promise<IUser | void> {
     try {
       return await updateCourses(courseId, userId);
     } catch (error) {
