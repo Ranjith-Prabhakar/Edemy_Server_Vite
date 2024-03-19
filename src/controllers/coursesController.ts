@@ -122,6 +122,7 @@ export class CoursesController {
 
   async getVideoForUser(req: Req, res: Res, next: Next) {
     try {
+      console.log("controller +>>>getVideoForUser");
       await inputValidation(req, "getVideoForUser", next);
       const result = await this.courseUseCase.getVideoForUser(req, next);
       if (result) res.status(200).json(result);
@@ -132,6 +133,8 @@ export class CoursesController {
 
   async getVideoForVisitors(req: Req, res: Res, next: Next) {
     try {
+      console.log("controller +>>>getVideoForVisitors");
+
       await inputValidation(req, "getVideoForVisitors", next);
       const result = await this.courseUseCase.getVideoForVisitors(req, next);
       if (result) res.status(200).json(result);

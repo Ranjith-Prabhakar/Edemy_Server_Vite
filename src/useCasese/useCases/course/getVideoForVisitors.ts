@@ -13,18 +13,15 @@ export const getVideoForVisitors = async (
   next: Next
 ): Promise<ICloudStorageResponse | void> => {
   try {
-    console.log("getVideoForVisitors ===> engine body", req.body);
     const { courseId, moduleNo, videoNo, videoName } = req.body;
     const isPreview = await courseRepository.isPreview(
       courseId,
       moduleNo,
       videoNo
     );
-    console.log("getVideoForVisitors ===> engine isPreview", isPreview);
     if (isPreview) {
       return await cloudStorage.getVideoPresignedUrl(videoName);
     } else {
-      console.log("getVideoForVisitors ===> engine error");
       return next(
         new ErrorHandler(
           404,

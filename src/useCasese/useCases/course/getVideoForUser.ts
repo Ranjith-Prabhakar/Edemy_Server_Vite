@@ -13,30 +13,36 @@ export const getVideoForUser = async (
   next: Next
 ): Promise<ICloudStorageResponse | void> => {
   try {
-    console.log("getVideoForUser ===> engine body", req.body);
     const { courseId, moduleNo, videoNo, videoName } = req.body;
-
-    const isEnrolled = req.user?.enrolledCourses?.includes(courseId);
-    console.log("getVideoForUser ===> engine isEnrolled", isEnrolled);
-    if (isEnrolled) {
+    console.log("req.user?.courses", req.user?.courses);
+    console.log("courseId", courseId);
+    if (req.user?.role === "admin") {
       return await cloudStorage.getVideoPresignedUrl(videoName);
-    }
-    const isPreview = await courseRepository.isPreview(
-      courseId,
-      moduleNo,
-      videoNo
-    );
-    console.log("getVideoForUser ===> engine isPreview", isPreview);
-    if (isPreview) {
+    } else if (
+      req.user?.role === "instructor" &&
+      req.user?.courses?.includes(courseId)
+    ) {
       return await cloudStorage.getVideoPresignedUrl(videoName);
     } else {
-      console.log("getVideoForUser ===> engine error");
-      return next(
-        new ErrorHandler(
-          404,
-          "you have to purchase the course to watch the video"
-        )
+      const isEnrolled = req.user?.enrolledCourses?.includes(courseId);
+      if (isEnrolled) {
+        return await cloudStorage.getVideoPresignedUrl(videoName);
+      }
+      const isPreview = await courseRepository.isPreview(
+        courseId,
+        moduleNo,
+        videoNo
       );
+      if (isPreview) {
+        return await cloudStorage.getVideoPresignedUrl(videoName);
+      } else {
+        return next(
+          new ErrorHandler(
+            404,
+            "you have to purchase the course to watch the video"
+          )
+        );
+      }
     }
   } catch (error) {
     catchError(error, next);

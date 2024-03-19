@@ -205,8 +205,6 @@ export class CourseUseCase implements ICourseUseCase {
     next: NextFunction
   ): Promise<ICloudStorageResponse | void> {
     try {
-      console.log("getVideoForUser ===> useCase");
-
       return await getVideoForUser(
         this.courseRepository,
         this.cloudStorage,
@@ -224,8 +222,6 @@ export class CourseUseCase implements ICourseUseCase {
     next: NextFunction
   ): Promise<void | ICloudStorageResponse> {
     try {
-      console.log("getVideoForVisitors ===> useCase");
-
       return await getVideoForVisitors(
         this.courseRepository,
         this.cloudStorage,
@@ -340,9 +336,7 @@ export class CourseUseCase implements ICourseUseCase {
     next: NextFunction
   ): Promise<void | ICourseCategoryBaseResponse> {
     try {
-      console.log("usecase getCourseForSearch ");
       const result = await getCourseForSearch(this.courseRepository, req, next);
-      console.log("usecase getCourseForSearch result", result);
       return result;
     } catch (error) {
       catchError(error, next);

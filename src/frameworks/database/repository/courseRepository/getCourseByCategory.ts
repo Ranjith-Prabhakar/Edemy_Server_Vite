@@ -31,7 +31,7 @@ export const getCourseByCategory = async (
           .sort({ [filter]: sortValue })
           .skip(start)
           .limit(end);
-        // console.log("result ######", result);  
+        // console.log("result ######", result);
         return {
           status: 200,
           message: "couses have been fetched successfully",
@@ -46,16 +46,22 @@ export const getCourseByCategory = async (
         };
       }
     } else {
-      const length = (await courseModel.find({ category })).length;
+      const length = (
+        await courseModel.find({
+          category: { $regex: new RegExp(category, "i") },
+        })
+      ).length;
       if (length) {
         const end = pageNumber * frequency;
         const start = end - frequency;
         const result = await courseModel
-          .find({ category })
+          .find({
+            category: { $regex: new RegExp(category, "i") },
+          })
           .sort({ [filter]: sortValue })
           .skip(start)
           .limit(end);
-          // console.log("result ######", result); 
+        // console.log("result ######", result);
         return {
           status: 200,
           message: "couses have been fetched successfully",
