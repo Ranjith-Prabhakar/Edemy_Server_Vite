@@ -33,7 +33,7 @@ import {
   setVideoTrack,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
-import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
+import { ICloudStorageResponse, IExtendedCloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
 import { NextFunction } from "express";
 import { ICategoryRepository } from "../interface/repository/categoryRepository";
 import { ICategory } from "../../entities/category";
@@ -209,11 +209,12 @@ export class CourseUseCase implements ICourseUseCase {
   async getVideoForUser(
     req: Req,
     next: NextFunction
-  ): Promise<ICloudStorageResponse | void> {
+  ): Promise<IExtendedCloudStorageResponse | void> {
     try {
       return await getVideoForUser(
         this.courseRepository,
         this.cloudStorage,
+        this.courseTrackingRepository,
         req,
         next
       );
@@ -365,7 +366,7 @@ export class CourseUseCase implements ICourseUseCase {
     next: NextFunction
   ): Promise<void | ICourseTrackResponse> {
     try {
-      return await setVideoTrack(this.courseTrackingRepository,req, next);
+      return await setVideoTrack(this.courseTrackingRepository, req, next);
     } catch (error) {
       catchError(error, next);
     }

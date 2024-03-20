@@ -50,7 +50,7 @@ export function courseRoute(router: Route) {
 
   router.get(
     "/get_courses",
-    // isAuthenticated,
+    isAuthenticated,
     autheriseRoles("admin"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getCourses(req, res, next);
@@ -180,14 +180,13 @@ export function courseRoute(router: Route) {
       courseController.getInstructorTutorials(req, res, next);
     })
   );
-   router.post(
-     "/set_video_track",
-     isAuthenticated,
-     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-       courseController.setVideoTrack(req, res, next);
-     })
-   );
+  router.post(
+    "/set_video_track",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.setVideoTrack(req, res, next);
+    })
+  );
 
-  
   return router;
 }

@@ -141,4 +141,31 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
       throw error;
     }
   }
+
+  async getVideoTracking(
+    courseId: string,
+    userId: string,
+    moduleNo: string,
+    videoNo: string
+  ): Promise<void | { position: string }> {
+    try {
+      const document = await courseTrackingModel.findOne({
+        courseId,
+        userId,
+        "modules.moduleNo": moduleNo,
+        "modules.videos.videoNo": videoNo,
+      });
+      console.log("document", document);
+      const position = document?.modules
+        ?.find((module) => module.moduleNo === moduleNo.toString())
+        ?.videos.find(
+          (video) => video.videoNo === videoNo.toString()
+        )?.currentPosition;
+      console.log("position @@@@ #", position);
+
+      return { position: position as string };
+    } catch (error) {
+      throw error;
+    }
+  }
 }
