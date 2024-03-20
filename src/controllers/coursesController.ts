@@ -122,7 +122,6 @@ export class CoursesController {
 
   async getVideoForUser(req: Req, res: Res, next: Next) {
     try {
-      console.log("controller +>>>getVideoForUser");
       await inputValidation(req, "getVideoForUser", next);
       const result = await this.courseUseCase.getVideoForUser(req, next);
       if (result) res.status(200).json(result);
@@ -133,8 +132,6 @@ export class CoursesController {
 
   async getVideoForVisitors(req: Req, res: Res, next: Next) {
     try {
-      console.log("controller +>>>getVideoForVisitors");
-
       await inputValidation(req, "getVideoForVisitors", next);
       const result = await this.courseUseCase.getVideoForVisitors(req, next);
       if (result) res.status(200).json(result);
@@ -231,6 +228,17 @@ export class CoursesController {
     try {
       await inputValidation(req, "getInstructorTutorials", next);
       const result = await this.courseUseCase.getInstructorTutorials(req, next);
+      if (result) res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  async setVideoTrack(req: Req, res: Res, next: Next) {
+    try {
+      await inputValidation(req, "setVideoTrack", next);
+
+      const result = await this.courseUseCase.setVideoTrack(req, next);
       if (result) res.status(200).json(result);
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));

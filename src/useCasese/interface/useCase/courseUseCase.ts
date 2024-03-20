@@ -2,6 +2,7 @@ import { ICategory } from "../../../entities/category";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICloudStorageResponse } from "../request_And_Response/cloudStorageResponse";
 import { ICourseCategoryBaseResponse, ICourseResponse } from "../request_And_Response/course";
+import { ICourseTrackResponse } from "../request_And_Response/courseTrack";
 import { IPaymentRespose } from "../request_And_Response/payment";
 import { IReviewAndRatingResponse } from "../request_And_Response/reviewAndRatingResponse";
 import { IUserResponse } from "../request_And_Response/user";
@@ -50,4 +51,5 @@ export interface ICourseUseCase {
     next: Next
   ): Promise<ICourseCategoryBaseResponse | void>;
   getInstructorTutorials(req: Req, next: Next): Promise<ICourseResponse | void>;
+  setVideoTrack(req: Req, next: Next): Promise<ICourseTrackResponse | void>;
 }

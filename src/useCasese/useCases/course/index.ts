@@ -20,6 +20,7 @@ import { getUserEnrolledCourses } from "./getUserEnrolledCourses";
 import { getCourseByCategory } from "./getCourseByCategory"; 
 import { getCourseForSearch } from "./getCourseForSearch"; 
 import { getInstructorTutorials } from "./getInstructorTutorials"; 
+import { setVideoTrack } from "./setVideoTrack"; 
 export {
   addFileToCloud,
   addCourseData,
@@ -43,4 +44,5 @@ export {
   getCourseByCategory,
   getCourseForSearch,
   getInstructorTutorials,
+  setVideoTrack,
 };

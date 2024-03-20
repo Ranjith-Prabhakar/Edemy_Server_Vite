@@ -173,15 +173,21 @@ export function courseRoute(router: Route) {
       courseController.getCourseForSearch(req, res, next);
     })
   );
-    router.post(
-      "/get_instructor_tutorials",
-      isAuthenticated,
-      catchAsyncErrors((req: Req, res: Res, next: Next) => {
-        courseController.getInstructorTutorials(req, res, next);
-      })
-    );
-  
+  router.post(
+    "/get_instructor_tutorials",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      courseController.getInstructorTutorials(req, res, next);
+    })
+  );
+   router.post(
+     "/set_video_track",
+     isAuthenticated,
+     catchAsyncErrors((req: Req, res: Res, next: Next) => {
+       courseController.setVideoTrack(req, res, next);
+     })
+   );
 
-  ;
+  
   return router;
 }

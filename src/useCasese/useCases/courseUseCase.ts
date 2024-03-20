@@ -30,6 +30,7 @@ import {
   getCourseByCategory,
   getCourseForSearch,
   getInstructorTutorials,
+  setVideoTrack,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
 import { ICloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
@@ -45,6 +46,8 @@ import { IUserRepository } from "../interface/repository/userRepository";
 import { ICloudSession } from "../interface/services/cloudSession";
 import { IReviewAndRatingResponse } from "../interface/request_And_Response/reviewAndRatingResponse";
 import { IReviewAndRatingRepository } from "../interface/repository/reviewAndRatingRepository";
+import { ICourseTrackResponse } from "../interface/request_And_Response/courseTrack";
+import { ICourseTrackingRepository } from "../interface/repository/courseTrackingRepository";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
@@ -55,6 +58,7 @@ export class CourseUseCase implements ICourseUseCase {
   private readonly userRepository: IUserRepository;
   private readonly cloudSesssion: ICloudSession;
   private readonly reviewAndRatingRepository: IReviewAndRatingRepository;
+  private readonly courseTrackingRepository: ICourseTrackingRepository;
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
@@ -63,7 +67,8 @@ export class CourseUseCase implements ICourseUseCase {
     paymentRepository: IPaymentRepository,
     userRepository: IUserRepository,
     cloudSesssion: ICloudSession,
-    reviewAndRatingRepository: IReviewAndRatingRepository
+    reviewAndRatingRepository: IReviewAndRatingRepository,
+    courseTrackingRepository: ICourseTrackingRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
@@ -73,6 +78,7 @@ export class CourseUseCase implements ICourseUseCase {
     this.userRepository = userRepository;
     this.cloudSesssion = cloudSesssion;
     this.reviewAndRatingRepository = reviewAndRatingRepository;
+    this.courseTrackingRepository = courseTrackingRepository;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -349,6 +355,17 @@ export class CourseUseCase implements ICourseUseCase {
   ): Promise<void | ICourseResponse> {
     try {
       return await getInstructorTutorials(this.courseRepository, req, next);
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+  // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888;
+  async setVideoTrack(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | ICourseTrackResponse> {
+    try {
+      return await setVideoTrack(this.courseTrackingRepository,req, next);
     } catch (error) {
       catchError(error, next);
     }
