@@ -4,6 +4,7 @@ import { findAndUpdate } from "./findAndUpdate";
 import { findByIdAndUpdate } from "./findByIdAndUpdate";
 import { addEnrolledCourse } from "./addEnrolledCourse";
 import { updateCourses } from "./updateCourses";
+import { getAdmin } from "./getAdmin";
 
 
 export {
@@ -13,4 +14,5 @@ export {
   findByIdAndUpdate,
   addEnrolledCourse,
   updateCourses,
+  getAdmin,
 };
