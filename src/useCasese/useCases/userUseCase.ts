@@ -169,7 +169,7 @@ export class UserUsecase implements IUserUseCase {
   // **************************************************************************************
   async beInstructor(req: Req, next: Next): Promise<IJsonResponse | void> {
     try {
-      return await beInstructor(this.instructorAgreementRepository, req, next);
+      return await beInstructor(this.instructorAgreementRepository,this.userRepository, req, next);
     } catch (error: unknown) {
       catchError(error, next);
     }

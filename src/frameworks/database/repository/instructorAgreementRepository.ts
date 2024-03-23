@@ -17,11 +17,12 @@ export class InstrctorAgreementRepository
       });
 
       if (!isExist) {
-        await instructorAgreementModel.create(agreement);
+        const result = await instructorAgreementModel.create(agreement);
         return {
           status: 200,
           success: true,
           message: "request has been recorded",
+          agreement: result ,
         };
       } else {
         return {
