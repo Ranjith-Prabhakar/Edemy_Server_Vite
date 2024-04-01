@@ -24,9 +24,7 @@ import { PaymentService } from "../../../services/paymentService";
 import { PaymentRepository } from "../../../database/repository/paymentRepository";
 import { ReviewAndRatingRepository } from "../../../database/repository/reviewAndRatingRepository";
 import { CourseTrackRepository } from "../../../database/repository/coursTrackRepository";
-//
-import { Io } from "../../config/socket";
-import { SocketClass } from "../../../../useCasese/staticClassProperty/StaticClassProperty";
+import { NotificationRepository } from "../../../database/repository/notificationRepository";
 
 const userRepository = new UserRepository(userModel);
 const bcryptService = new Encrypt();
@@ -44,10 +42,8 @@ const paymentService = new PaymentService();
 const paymentRepository = new PaymentRepository();
 const reviewAndRatingRepository = new ReviewAndRatingRepository();
 const courseTrackRepository = new CourseTrackRepository();
+const notificationRepository = new NotificationRepository();
 
-//
-const socketClass = new SocketClass();
-console.log("socketUserData from Io", Io);
 
 const userUseCase = new UserUsecase(
   userRepository,
@@ -59,8 +55,7 @@ const userUseCase = new UserUsecase(
   cloudSession,
   requestManagement,
   instrctorAgreementRepository,
-  //
-  socketClass
+  notificationRepository
 );
 
 const adminUseCase = new AdminUseCase(

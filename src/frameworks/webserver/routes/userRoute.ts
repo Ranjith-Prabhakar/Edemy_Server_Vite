@@ -1,6 +1,6 @@
 import { Route, Req, Res, Next } from "../../types/serverPackageTypes";
 import { userController } from "./injections/injuctions";
-import { isAuthenticated} from "../middlewares/auth";
+import { isAuthenticated } from "../middlewares/auth";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 
 export function userRoute(router: Route) {
@@ -55,7 +55,7 @@ export function userRoute(router: Route) {
     "/forgot_password_email_submission",
     (req: Req, res: Res, next: Next) => {
       console.log("reaching==. forgot_password_email_submission");
-      next()
+      next();
     },
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.forgotPassword(req, res, next);
@@ -81,6 +81,14 @@ export function userRoute(router: Route) {
     isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.userSession(req, res, next);
+    })
+  );
+  //
+  router.get(
+    "/get_notifications",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      userController.getNotifications(req, res, next);
     })
   );
 

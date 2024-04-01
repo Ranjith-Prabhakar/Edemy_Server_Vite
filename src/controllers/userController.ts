@@ -133,7 +133,7 @@ export class UserController {
     try {
       await inputValidation(req, "forgotPasswordOtpVerification", next);
       const token = req.cookies.verificationToken as string;
-      console.log("token",token)
+      console.log("token", token);
       let result = await this.userUseCase.forgotPasswordOtpVerification(
         req,
         next,
@@ -176,4 +176,19 @@ export class UserController {
       return next(new ErrorHandler(500, error.message));
     }
   }
+
+  // *****************************************************************************************************************************
+
+  async getNotifications(req: Req, res: Res, next: Next) {
+    try {
+      console.log("getNotifications result");
+      const result = await this.userUseCase.getNotifications(req, next);
+      console.log("getNotifications result", result);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
+
+  ;
 }

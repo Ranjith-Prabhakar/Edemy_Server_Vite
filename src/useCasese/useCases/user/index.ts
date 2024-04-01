@@ -8,6 +8,7 @@ import { forgotPassword } from "./forgotPassword";
 import { resetForgotPassword } from "./resetForgotPassword";
 import {userSession} from "./userSession"
 import { forgotPasswordOtpVerification } from "./forgotPasswordOtpVerification";
+import { getNotifications } from "./getNotifications";
 
 export {
   createUser,
@@ -20,4 +21,5 @@ export {
   resetForgotPassword,
   userSession,
   forgotPasswordOtpVerification,
+  getNotifications,
 };

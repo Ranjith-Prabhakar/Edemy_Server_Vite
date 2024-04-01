@@ -20,6 +20,7 @@ export const approveOrRejectInstructor = async (
         return result;
       } else {
        await userRepository.findAndUpdate(req.body);
+       console.log("userData",req.body)
         return result;
       }
     } else {

@@ -21,6 +21,7 @@ import {
   resetForgotPassword,
   userSession,
   forgotPasswordOtpVerification,
+  getNotifications,
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserUseCase } from "../interface/useCase/userUseCase";
@@ -28,6 +29,9 @@ import { IUser } from "../../entities/user";
 import { IJsonResponse } from "../interface/services/jsonResponse";
 import { IGeneralResponse } from "../interface/request_And_Response/generalResponse";
 import { catchError } from "../middlewares/catchError";
+import { INotificationRepository } from "../interface/repository/notificationRepository";
+import { NextFunction } from "express";
+import { INotificationResponse } from "../interface/request_And_Response/notification";
 
 export class UserUsecase implements IUserUseCase {
   private readonly userRepository: IUserRepository;
@@ -39,8 +43,9 @@ export class UserUsecase implements IUserUseCase {
   private readonly cloudSession: ICloudSession;
   private readonly requestManagement: IRequestManagement;
   private readonly instructorAgreementRepository: IInstructorAgreementRepository;
+  private readonly notificationRepository: INotificationRepository;
+
   //
-  private readonly socketClass: SocketClass;
   constructor(
     userRepository: IUserRepository,
     bcrypt: IHashpassword,
@@ -51,8 +56,7 @@ export class UserUsecase implements IUserUseCase {
     cloudSession: ICloudSession,
     requestManagement: IRequestManagement,
     instructorAgreementRepository: IInstructorAgreementRepository,
-    //
-    socketClass: SocketClass
+    notificationRepository: INotificationRepository
   ) {
     this.userRepository = userRepository;
     this.bcrypt = bcrypt;
@@ -63,8 +67,7 @@ export class UserUsecase implements IUserUseCase {
     this.cloudSession = cloudSession;
     this.requestManagement = requestManagement;
     this.instructorAgreementRepository = instructorAgreementRepository;
-    //
-    this.socketClass = socketClass;
+    this.notificationRepository = notificationRepository;
   }
   // **************************************************************************************
   async registerUser(
@@ -169,7 +172,13 @@ export class UserUsecase implements IUserUseCase {
   // **************************************************************************************
   async beInstructor(req: Req, next: Next): Promise<IJsonResponse | void> {
     try {
-      return await beInstructor(this.instructorAgreementRepository,this.userRepository, req, next);
+      return await beInstructor(
+        this.instructorAgreementRepository,
+        this.userRepository,
+        this.notificationRepository,
+        req,
+        next
+      );
     } catch (error: unknown) {
       catchError(error, next);
     }
@@ -234,6 +243,17 @@ export class UserUsecase implements IUserUseCase {
     try {
       return await userSession(req, next);
     } catch (error: unknown) {
+      catchError(error, next);
+    }
+  }
+  // **************************************************************************************
+  async getNotifications(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | INotificationResponse> {
+    try {
+      return await getNotifications(this.notificationRepository, req, next);
+    } catch (error) {
       catchError(error, next);
     }
   }

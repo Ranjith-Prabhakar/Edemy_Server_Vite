@@ -1,6 +1,7 @@
 import { IUser } from "../../../entities/user";
 import { Next, Req, Res } from "../../../frameworks/types/serverPackageTypes";
 import { IGeneralResponse } from "../request_And_Response/generalResponse";
+import { INotificationResponse } from "../request_And_Response/notification";
 import { IJsonResponse } from "../services/jsonResponse";
 import { IToken } from "../services/jwt.types";
 
@@ -45,4 +46,5 @@ export interface IUserUseCase {
     next: Next
   ): Promise<IGeneralResponse | void>;
   userSession(req: Req, next: Next): Promise<IUser | void>;
+  getNotifications(req: Req, next: Next): Promise<INotificationResponse | void>;
 }
