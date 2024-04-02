@@ -91,6 +91,14 @@ export function userRoute(router: Route) {
       userController.getNotifications(req, res, next);
     })
   );
-
+  //
+  router.post(
+    "/update_notification",
+    isAuthenticated,
+    catchAsyncErrors((req: Req, res: Res, next: Next) => {
+      userController.updateNotifications(req, res, next);
+    })
+  );
+  
   return router;
 }

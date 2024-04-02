@@ -47,4 +47,8 @@ export interface IUserUseCase {
   ): Promise<IGeneralResponse | void>;
   userSession(req: Req, next: Next): Promise<IUser | void>;
   getNotifications(req: Req, next: Next): Promise<INotificationResponse | void>;
+  updateNotifications(
+    req: Req,
+    next: Next
+  ): Promise<{ success: boolean; message: string } | void>;
 }

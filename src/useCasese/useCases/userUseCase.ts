@@ -22,6 +22,7 @@ import {
   userSession,
   forgotPasswordOtpVerification,
   getNotifications,
+  updateNotifications,
 } from "./user/index";
 import { IInstructorAgreementRepository } from "../interface/repository/instructorAgreementRepository";
 import { IUserUseCase } from "../interface/useCase/userUseCase";
@@ -253,6 +254,17 @@ export class UserUsecase implements IUserUseCase {
   ): Promise<void | INotificationResponse> {
     try {
       return await getNotifications(this.notificationRepository, req, next);
+    } catch (error) {
+      catchError(error, next);
+    }
+  }
+  // **************************************************************************************
+  async updateNotifications(
+    req: Req,
+    next: NextFunction
+  ): Promise<void | { success: boolean; message: string }> {
+    try {
+      return await updateNotifications(this.notificationRepository,req,next);
     } catch (error) {
       catchError(error, next);
     }

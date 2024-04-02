@@ -9,6 +9,7 @@ import { resetForgotPassword } from "./resetForgotPassword";
 import {userSession} from "./userSession"
 import { forgotPasswordOtpVerification } from "./forgotPasswordOtpVerification";
 import { getNotifications } from "./getNotifications";
+import { updateNotifications } from "./updateNotifications";
 
 export {
   createUser,
@@ -22,4 +23,5 @@ export {
   userSession,
   forgotPasswordOtpVerification,
   getNotifications,
+  updateNotifications,
 };

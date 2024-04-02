@@ -8,4 +8,8 @@ export interface INotificationRepository {
     value?: ICourse
   ): Promise<boolean | void>;
   getNotifications(userId: string): Promise<INotificationResponse | void>;
+  updateNotifications(
+    notificationHead: string,
+    userId: string
+  ): Promise<void | { success: boolean; message: string }>;
 }

@@ -42,7 +42,7 @@ export class NotificationRepository implements INotificationRepository {
     userId: string
   ): Promise<void | INotificationResponse> {
     try {
-      const result = await notificationModel.findOne({userId});
+      const result = await notificationModel.findOne({ userId });
       if (result) {
         return {
           success: true,
@@ -59,4 +59,24 @@ export class NotificationRepository implements INotificationRepository {
       throw error;
     }
   }
+  //
+  async updateNotifications(
+    notificationHead: string,
+    userId: string
+  ): Promise<void | { success: boolean; message: string }> {
+    try {
+      const result = await notificationModel.updateOne(
+        { userId: userId },
+        { $set: { [notificationHead]: false } }
+      );
+      if (result) {
+        return { success: true, message: "notification has been updated" };
+      }else{
+        return {success:false,message:"notification hasn`t been updated"}
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+  //
 }

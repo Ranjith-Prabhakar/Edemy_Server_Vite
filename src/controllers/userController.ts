@@ -190,5 +190,16 @@ export class UserController {
     }
   }
 
-  ;
+  // *****************************************************************************************************************************
+
+  async updateNotifications(req: Req, res: Res, next: Next) {
+    try {
+      console.log("updateNotifications result", req.body);
+      const result = await this.userUseCase.updateNotifications(req, next);
+      console.log("getNotifications result", result);
+      res.status(200).json(result);
+    } catch (error: any) {
+      return next(new ErrorHandler(500, error.message));
+    }
+  }
 }
