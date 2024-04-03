@@ -27,6 +27,7 @@ Io.on("connect", (client) => {
 
   client.on("disconnect", () => {
     console.log("the client ", client.id, " has been disconected");
+    delete SocketClass.SocketUsers[client.handshake.query.userId as string];
   });
 });
 

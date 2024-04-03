@@ -11,6 +11,7 @@ export interface ServerToClientEvents {
   fromServerInstructorRequestSubmitted:(agreement:IInstructorAgreement)=>void
   fromServerInstrctorRequestApproval:(message:string)=>void
   fromServerCourseApproved:(message:string)=>void
+  fromServerCourseApprovedNotificationForAllUsers:(message:string)=>void
 }
 export interface ClientToServerEvents {
   clientSideLogin: (message: string) => void;

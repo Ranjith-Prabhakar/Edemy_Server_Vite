@@ -201,7 +201,13 @@ export class CourseUseCase implements ICourseUseCase {
           "fromServerCourseApproved",
           `The ${req.body.courseName} has been approved `
         );
+
+        // sendin notification to all online users
+        const activeUsers = Object.values(SocketClass.SocketUsers)
+        console.log("activeUsers", activeUsers);
+        activeUsers.forEach(user=>user.emit("fromServerCourseApprovedNotificationForAllUsers",`a new course has been added`)) 
       }
+      
       return result;
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
