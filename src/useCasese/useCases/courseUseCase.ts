@@ -33,7 +33,10 @@ import {
   setVideoTrack,
 } from "./course/index";
 import { ICourseRepository } from "../interface/repository/courseRepository";
-import { ICloudStorageResponse, IExtendedCloudStorageResponse } from "../interface/request_And_Response/cloudStorageResponse";
+import {
+  ICloudStorageResponse,
+  IExtendedCloudStorageResponse,
+} from "../interface/request_And_Response/cloudStorageResponse";
 import { NextFunction } from "express";
 import { ICategoryRepository } from "../interface/repository/categoryRepository";
 import { ICategory } from "../../entities/category";
@@ -48,6 +51,9 @@ import { IReviewAndRatingResponse } from "../interface/request_And_Response/revi
 import { IReviewAndRatingRepository } from "../interface/repository/reviewAndRatingRepository";
 import { ICourseTrackResponse } from "../interface/request_And_Response/courseTrack";
 import { ICourseTrackingRepository } from "../interface/repository/courseTrackingRepository";
+import { SocketClass } from "../staticClassProperty/StaticClassProperty";
+import { INotificationRepository } from "../interface/repository/notificationRepository";
+import { ENotification } from "../../entities/notification";
 
 export class CourseUseCase implements ICourseUseCase {
   private readonly cloudStorage: ICloudStorage;
@@ -59,6 +65,7 @@ export class CourseUseCase implements ICourseUseCase {
   private readonly cloudSesssion: ICloudSession;
   private readonly reviewAndRatingRepository: IReviewAndRatingRepository;
   private readonly courseTrackingRepository: ICourseTrackingRepository;
+  private readonly notificationRepository: INotificationRepository;
   constructor(
     cloudStorage: ICloudStorage,
     courseRepository: ICourseRepository,
@@ -68,7 +75,8 @@ export class CourseUseCase implements ICourseUseCase {
     userRepository: IUserRepository,
     cloudSesssion: ICloudSession,
     reviewAndRatingRepository: IReviewAndRatingRepository,
-    courseTrackingRepository: ICourseTrackingRepository
+    courseTrackingRepository: ICourseTrackingRepository,
+    notificationRepository: INotificationRepository
   ) {
     this.cloudStorage = cloudStorage;
     this.courseRepository = courseRepository;
@@ -79,6 +87,7 @@ export class CourseUseCase implements ICourseUseCase {
     this.cloudSesssion = cloudSesssion;
     this.reviewAndRatingRepository = reviewAndRatingRepository;
     this.courseTrackingRepository = courseTrackingRepository;
+    this.notificationRepository = notificationRepository;
   }
   // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCourseInProgress(
@@ -176,7 +185,24 @@ export class CourseUseCase implements ICourseUseCase {
     next: Next
   ): Promise<void | ICourseResponse> {
     try {
-      return await approveOrRejectVideo(this.courseRepository, req, next);
+      console.log("req.body ====>>>>", req.body);
+      const result = await approveOrRejectVideo(
+        this.courseRepository,
+        req,
+        next
+      );
+      const notificationRepoUpdate =
+        await this.notificationRepository.addNotification(
+          req.body.instructorId as string,
+          ENotification.courseApprovalApprovance
+        );
+      if (notificationRepoUpdate) {
+        SocketClass.SocketUsers[req.body.instructorId].emit(
+          "fromServerCourseApproved",
+          `The ${req.body.courseName} has been approved `
+        );
+      }
+      return result;
     } catch (error: any) {
       return next(new ErrorHandler(500, error.message));
     }

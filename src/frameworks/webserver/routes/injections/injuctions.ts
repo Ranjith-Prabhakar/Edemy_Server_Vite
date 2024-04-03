@@ -74,7 +74,8 @@ const courseUseCase = new CourseUseCase(
   userRepository,
   cloudSession,
   reviewAndRatingRepository,
-  courseTrackRepository
+  courseTrackRepository,
+  notificationRepository
 );
 
 const userController = new UserController(userUseCase);
