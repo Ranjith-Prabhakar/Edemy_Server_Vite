@@ -8,7 +8,7 @@ export const getCategories = async (
   next: Next
 ): Promise<ICategory[] | void> => {
   try {
-      return await categoryRepository.getCategories()
+      return await categoryRepository.getCategories(true)
   } catch (error:any) {
     return next(new ErrorHandler(500,error.message))
   }

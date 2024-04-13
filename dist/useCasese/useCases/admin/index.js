@@ -1,0 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.instructorRequests = exports.unFreezUser = exports.unFreezCategory = exports.freezCategory = exports.getCategories = exports.addCategory = exports.getInstructors = exports.freezUser = exports.getUser = exports.getUsers = exports.approveOrRejectInstructor = void 0;
+const approveOrRejectInstructor_1 = require("./approveOrRejectInstructor");
+Object.defineProperty(exports, "approveOrRejectInstructor", { enumerable: true, get: function () { return approveOrRejectInstructor_1.approveOrRejectInstructor; } });
+const getUsers_1 = require("./getUsers");
+Object.defineProperty(exports, "getUsers", { enumerable: true, get: function () { return getUsers_1.getUsers; } });
+const getUser_1 = require("./getUser");
+Object.defineProperty(exports, "getUser", { enumerable: true, get: function () { return getUser_1.getUser; } });
+const freezUser_1 = require("./freezUser");
+Object.defineProperty(exports, "freezUser", { enumerable: true, get: function () { return freezUser_1.freezUser; } });
+const getInstructors_1 = require("./getInstructors");
+Object.defineProperty(exports, "getInstructors", { enumerable: true, get: function () { return getInstructors_1.getInstructors; } });
+const addCategory_1 = require("./addCategory");
+Object.defineProperty(exports, "addCategory", { enumerable: true, get: function () { return addCategory_1.addCategory; } });
+const getCategories_1 = require("./getCategories");
+Object.defineProperty(exports, "getCategories", { enumerable: true, get: function () { return getCategories_1.getCategories; } });
+const freezCategory_1 = require("./freezCategory");
+Object.defineProperty(exports, "freezCategory", { enumerable: true, get: function () { return freezCategory_1.freezCategory; } });
+const unFreezCategory_1 = require("./unFreezCategory");
+Object.defineProperty(exports, "unFreezCategory", { enumerable: true, get: function () { return unFreezCategory_1.unFreezCategory; } });
+const unFreezUser_1 = require("./unFreezUser");
+Object.defineProperty(exports, "unFreezUser", { enumerable: true, get: function () { return unFreezUser_1.unFreezUser; } });
+const instructorRequests_1 = require("./instructorRequests");
+Object.defineProperty(exports, "instructorRequests", { enumerable: true, get: function () { return instructorRequests_1.instructorRequests; } });
+//# sourceMappingURL=index.js.map
