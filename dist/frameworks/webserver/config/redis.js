@@ -12,8 +12,16 @@ function redisDb() {
         }
         throw new Error("Redis connection failed");
     };
-    const redis = new ioredis_1.Redis(redisClient());
-    return redis;
+    //  const redis = new Redis(redisClient());
+    //  return redis
+    try {
+        const redis = new ioredis_1.Redis(redisClient());
+        return redis;
+    }
+    catch (error) {
+        console.error("Failed to connect to Redis:", error.message);
+        throw error;
+    }
 }
 exports.redisDb = redisDb;
 //# sourceMappingURL=redis.js.map

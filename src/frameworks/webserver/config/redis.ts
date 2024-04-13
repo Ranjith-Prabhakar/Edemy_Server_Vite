@@ -11,8 +11,15 @@ const redisClient = () => {
   throw new Error("Redis connection failed");
 };
 
- const redis = new Redis(redisClient());
- return redis
+//  const redis = new Redis(redisClient());
+//  return redis
+  try {
+    const redis = new Redis(redisClient());
+    return redis;
+  } catch (error :any) {
+    console.error("Failed to connect to Redis:", error.message);
+    throw error;
+  }
 }
 
 
