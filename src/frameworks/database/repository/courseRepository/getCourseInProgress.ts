@@ -14,7 +14,6 @@ export const getCourseInProgress = async (
       submissionStatus: "work-in-progress",
     });
     if (result === null) throw new ErrorHandler(404, "no courses in progress");
-    console.log("result ----->>>", result);
     return {
       status: 200,
       message: "course has been found successfully",
