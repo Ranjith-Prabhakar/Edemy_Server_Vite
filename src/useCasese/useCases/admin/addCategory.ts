@@ -8,12 +8,10 @@ export const addCategory = async (
   next: Next
 ) => {
   try {
-    console.log("reached=>>addCategory", req.body);
     const isExist = await categoryRepository.existCategory(
       req.body.category as string
     );
     if (isExist === "exist") {
-      console.log("reached=>>addCategory === exist");
       return { success: false, message: "category already exist" };
     } else {
       const result = await categoryRepository.addCategory(
