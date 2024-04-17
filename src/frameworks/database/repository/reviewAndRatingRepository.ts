@@ -16,11 +16,6 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
       const isExist = await reviewAndRatingModel.findOne({
         courseId: reviewAndRating.courseId,
       });
-      console.log(
-        "updateReviewAndRating repo isExist",
-        isExist,
-        reviewAndRating.courseId
-      );
       if (isExist) {
         //check whether the user alrady made any rating or review then we will update it
         const isUserAlreadyAddedReview = await reviewAndRatingModel.findOne({
@@ -29,11 +24,6 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
             $elemMatch: { userId: reviewAndRating.reviewAndRating.userId },
           },
         });
-        console.log(
-          "isUserAlreadyAddedReview ====>>>>>>",
-          isUserAlreadyAddedReview
-        );
-
         if (isUserAlreadyAddedReview) {
           // check whether he has to update the review
           if (reviewAndRating.reviewAndRating.review) {
@@ -82,10 +72,6 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
             };
           }
         } else {
-          console.log(
-            "inside else_________+++++++",
-            reviewAndRating.reviewAndRating
-          );
           // if the user made neither rating or review
           const updatedReviewAndRating =
             await reviewAndRatingModel.findOneAndUpdate(
@@ -123,11 +109,8 @@ export class ReviewAndRatingRepository implements IReviewAndRatingRepository {
     courseId: string
   ): Promise<void | IReviewAndRatingResponse> {
     try {
-      console.log("courseId from getSingleCourseReviewAndRating", courseId);
       const objectId = mongoose.Types.ObjectId.createFromHexString(courseId); // Using mongoose.Types.ObjectId.createFromHexString()
-
       const result = await reviewAndRatingModel.findOne({ courseId: objectId });
-
       if (result) {
         return {
           success: true,
