@@ -1,6 +1,7 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import ErrorHandler from "../../middlewares/errorHandler";
 import { ICategoryRepository } from "../../interface/repository/categoryRepository";
+import { catchError } from "../../middlewares/catchError";
 
 export const addCategory = async (
   categoryRepository: ICategoryRepository,
@@ -23,7 +24,8 @@ export const addCategory = async (
         message: "category added successfully",
       };
     }
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
+    // return next(new ErrorHandler(500, error.message));
   }
 };
