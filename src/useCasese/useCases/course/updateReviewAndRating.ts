@@ -22,14 +22,10 @@ export const updateReviewAndRating = async (
         [req.body.fieldToUpdate]: req.body[req.body.fieldToUpdate],
       },
     };
-    console.log(
-      "reviewAndRatingRepository engine reviewAndRating",
-      reviewAndRating
-    );
+   
     const result = await reviewAndRatingRepository.updateReviewAndRating(
       reviewAndRating
     );
-    console.log("reviewAndRatingRepository engine result", result);
     return result;
   } catch (error) {
     catchError(error, next);
