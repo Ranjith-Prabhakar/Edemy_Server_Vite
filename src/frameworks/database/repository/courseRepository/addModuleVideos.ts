@@ -8,7 +8,6 @@ export const addModuleVideos = async (
   instructor: string
 ): Promise<ICourseResponse> => {
   try {
-    console.log("data from course repository data", data);
     let dbResult = await courseModel.findOne({
       instructor,
       submissionStatus: "work-in-progress",
