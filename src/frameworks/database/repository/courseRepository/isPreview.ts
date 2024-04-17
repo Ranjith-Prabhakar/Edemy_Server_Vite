@@ -6,10 +6,7 @@ export const isPreview = async (
   videoNo: string
 ): Promise<boolean> => {
   try {
-    console.log(
-      "get_video_for_users repo engine",
-      `modules.${moduleNo}.videos.${videoNo}`
-    );
+   
 
     const result = await courseModel.findOne({
       _id: courseId,
@@ -24,16 +21,13 @@ export const isPreview = async (
           },
         },
       },
-      // [`modules.${moduleNo}.videos.${videoNo}`]:true,
     });
-    console.log("get_video_for_users repo engine", result);
     if (result) {
       return true;
     } else {
       return false;
     }
   } catch (error) {
-    console.log("get_video_for_users repo engine errro", error);
     throw error;
   }
 };
