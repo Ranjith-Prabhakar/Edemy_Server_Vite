@@ -1,7 +1,7 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICourseRepository } from "../../interface/repository/courseRepository";
 import { ICloudStorage } from "../../interface/services/cloudStorage";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const addFileToCloud = async (
   cloudStorage: ICloudStorage,
@@ -24,6 +24,6 @@ export const addFileToCloud = async (
       req.body.folderName
     );
   } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+    catchError(error,next)
   }
 };
