@@ -3,13 +3,14 @@ import ErrorHandler from "../../middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { IInstructorAgreementResponse } from "../../interface/request_And_Response/instructorAgreement";
+import { catchError } from "../../middlewares/catchError";
 
 export const approveOrRejectInstructor = async (
   userRepository: IUserRepository,
   instrctorAgreementRepository: IInstructorAgreementRepository,
   req: Req,
   next: Next
-): Promise<IInstructorAgreementResponse> => {
+): Promise<IInstructorAgreementResponse | void> => {
   try {
     if (req.body.action === "approved") {
       const result = await instrctorAgreementRepository.updateStatus(
@@ -30,6 +31,7 @@ export const approveOrRejectInstructor = async (
       return result;
     }
   } catch (error: any) {
-    throw next(new ErrorHandler(500, error.message));
+    catchError(error,next)
+    // throw next(new ErrorHandler(500, error.message));
   }
 };
