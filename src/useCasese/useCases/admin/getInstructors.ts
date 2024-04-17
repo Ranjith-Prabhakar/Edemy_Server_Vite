@@ -1,12 +1,15 @@
 import { Next } from "../../../frameworks/types/serverPackageTypes";
 import { IUserRepository } from "../../interface/repository/userRepository";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
-export const getInstructors = async (userRepository: IUserRepository, next: Next) => {
+export const getInstructors = async (
+  userRepository: IUserRepository,
+  next: Next
+) => {
   try {
-    console.log("inside getInstructors uuc-module");
     return await userRepository.getUsers("instructor");
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error, next);
+    // return next(new ErrorHandler(500, error.message));
   }
 };
