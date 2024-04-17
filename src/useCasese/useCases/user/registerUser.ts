@@ -59,7 +59,7 @@ export const registerUser = async (
       });
       return jwtToken;
     }
-  } catch (error: unknown) {
+  } catch (error) {
     catchError(error, next);
   }
 };
