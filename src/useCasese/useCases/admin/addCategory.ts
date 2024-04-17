@@ -1,5 +1,4 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../../middlewares/errorHandler";
 import { ICategoryRepository } from "../../interface/repository/categoryRepository";
 import { catchError } from "../../middlewares/catchError";
 

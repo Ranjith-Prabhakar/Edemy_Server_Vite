@@ -1,5 +1,4 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../../middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../interface/repository/instructorAgreementRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { IInstructorAgreementResponse } from "../../interface/request_And_Response/instructorAgreement";
