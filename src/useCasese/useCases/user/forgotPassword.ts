@@ -5,6 +5,7 @@ import { IUserRepository } from "../../interface/repository/userRepository";
 import { ICreateOtp } from "../../interface/services/createOtp";
 import { IJwt } from "../../interface/services/jwt.types";
 import { ISendMail } from "../../interface/services/sendMail";
+import { catchError } from "../../middlewares/catchError";
 
 export const forgotPassword = async (
   otpRepository: IOtpRepository,
@@ -47,7 +48,7 @@ export const forgotPassword = async (
       });
       return verificationToken;
     }
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
   }
 };
