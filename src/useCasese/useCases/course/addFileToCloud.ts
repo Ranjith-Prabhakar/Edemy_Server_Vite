@@ -23,7 +23,7 @@ export const addFileToCloud = async (
       req.body.userId,
       req.body.folderName
     );
-  } catch (error: any) {
+  } catch (error) {
     catchError(error,next)
   }
 };
