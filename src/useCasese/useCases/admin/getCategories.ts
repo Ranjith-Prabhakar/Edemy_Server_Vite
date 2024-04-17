@@ -1,7 +1,7 @@
 import { ICategory } from "../../../entities/category";
 import { Next } from "../../../frameworks/types/serverPackageTypes";
 import { ICategoryRepository } from "../../interface/repository/categoryRepository";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const getCategories = async (
   categoryRepository: ICategoryRepository,
@@ -9,7 +9,8 @@ export const getCategories = async (
 ): Promise<ICategory[] | void> => {
   try {
       return await categoryRepository.getCategories(true)
-  } catch (error:any) {
-    return next(new ErrorHandler(500,error.message))
+  } catch (error) {
+    catchError(error,next)
+    // return next(new ErrorHandler(500,error.message))
   }
 };
