@@ -16,7 +16,6 @@ export const updateCourse = async (
       { new: true }
     );
 
-    console.log("result from updateCourse", datum);
     if (result) {
       return {
         status: 200,
