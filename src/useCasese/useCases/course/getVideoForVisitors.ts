@@ -1,6 +1,5 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICourseRepository } from "../../interface/repository/courseRepository";
-import { IUserRepository } from "../../interface/repository/userRepository";
 import { ICloudStorageResponse } from "../../interface/request_And_Response/cloudStorageResponse";
 import { ICloudStorage } from "../../interface/services/cloudStorage";
 import { catchError } from "../../middlewares/catchError";
