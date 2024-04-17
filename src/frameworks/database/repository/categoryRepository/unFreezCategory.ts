@@ -11,7 +11,6 @@ export const unFreezCategory = async (
       { status: "active" },
       { new: true }
     );
-    console.log("unFreezCategory", result);
     return {
       status: 200,
       message: "category has been un-blocked",
