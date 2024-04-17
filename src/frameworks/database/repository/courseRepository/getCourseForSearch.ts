@@ -10,7 +10,6 @@ export const getCourseForSearch = async (
 ): Promise<void | ICourseCategoryBaseResponse> => {
   try {
     const sortValue = sort === "A-Z" ? -1 : 1;
-    console.log("sortValue ######", sortValue);
 
     const length = (
       await courseModel.find({ courseName: { $regex: new RegExp(key, "i") } })
@@ -23,7 +22,6 @@ export const getCourseForSearch = async (
         .sort({ [filter]: sortValue })
         .skip(start)
         .limit(end);
-      console.log("result ######", result);
       
       return {
         status: 200,
