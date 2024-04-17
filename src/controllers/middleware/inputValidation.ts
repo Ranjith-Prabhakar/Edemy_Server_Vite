@@ -25,7 +25,6 @@ export const inputValidation: TInputValidation = async (
   for (let prop in req.body) {
     if (req.body.hasOwnProperty(prop)) {
       //by this it will avoid the trim application on any prototype chained props
-      // trim and update the value
       if (typeof req.body[prop] === "string") {
         req.body[prop] = req.body[prop].trim();
 
@@ -80,7 +79,7 @@ export const inputValidation: TInputValidation = async (
         );
       }
       break;
-    
+
     //----------------------------------------------------------------------
     case "forgotPasswordOtpVerification":
       if (req.body.verificationCode.length !== 4) {
