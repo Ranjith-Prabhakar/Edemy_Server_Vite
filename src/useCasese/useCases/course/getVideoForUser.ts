@@ -19,8 +19,6 @@ export const getVideoForUser = async (
 ): Promise<IExtendedCloudStorageResponse | void> => {
   try {
     const { courseId, moduleNo, videoNo, videoName } = req.body;
-    console.log("req.user?.courses", req.user?.courses);
-    console.log("courseId", courseId);
     if (req.user?.role === "admin") {
       ///
       const position = await courseTrackingRepository.getVideoTracking(
