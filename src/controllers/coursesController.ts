@@ -1,5 +1,6 @@
 import { Next, Req, Res } from "../frameworks/types/serverPackageTypes";
 import { ICourseUseCase } from "../useCasese/interface/useCase/courseUseCase";
+import { catchError } from "../useCasese/middlewares/catchError";
 import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { inputValidation } from "./middleware/inputValidation";
 
@@ -14,8 +15,9 @@ export class CoursesController {
       await inputValidation(req, "getCourseInProgress", next);
       const result = await this.courseUseCase.getCourseInProgress(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -24,8 +26,9 @@ export class CoursesController {
       await inputValidation(req, "addCourseData", next);
       const result = await this.courseUseCase.addCourseData(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -34,8 +37,9 @@ export class CoursesController {
       await inputValidation(req, "addFileToCloud", next);
       const result = await this.courseUseCase.addFileToCloud(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -44,8 +48,9 @@ export class CoursesController {
       await inputValidation(req, "updateCourse", next);
       const result = await this.courseUseCase.updateCourse(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -54,8 +59,9 @@ export class CoursesController {
       await inputValidation(req, "addModuleVideos", next);
       const result = await this.courseUseCase.addModuleVideos(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -63,8 +69,9 @@ export class CoursesController {
     try {
       const result = await this.courseUseCase.getCourses(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -72,8 +79,9 @@ export class CoursesController {
     try {
       const result = await this.courseUseCase.getCoursesInRequest(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -82,8 +90,9 @@ export class CoursesController {
       await inputValidation(req, "getVideoPresignedUrl", next);
       const result = await this.courseUseCase.getVideoPresignedUrl(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -92,8 +101,9 @@ export class CoursesController {
       await inputValidation(req, "approveOrRejectVideo", next);
       const result = await this.courseUseCase.approveOrRejectVideo(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -102,8 +112,9 @@ export class CoursesController {
       await inputValidation(req, "getCoursesForUser", next);
       const result = await this.courseUseCase.getCoursesForUser(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -115,8 +126,9 @@ export class CoursesController {
         message: "categories fectched successfully",
         data: result,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -125,8 +137,9 @@ export class CoursesController {
       await inputValidation(req, "getVideoForUser", next);
       const result = await this.courseUseCase.getVideoForUser(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -135,8 +148,9 @@ export class CoursesController {
       await inputValidation(req, "getVideoForVisitors", next);
       const result = await this.courseUseCase.getVideoForVisitors(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -145,8 +159,9 @@ export class CoursesController {
       await inputValidation(req, "enrollCourse", next);
       const result = await this.courseUseCase.enrollCourse(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   async paymentStatus(req: Req, res: Res, next: Next) {
@@ -154,8 +169,9 @@ export class CoursesController {
       await inputValidation(req, "paymentStatus", next);
       const result = await this.courseUseCase.paymentStatus(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -164,8 +180,9 @@ export class CoursesController {
       await inputValidation(req, "updateReviewAndRating", next);
       const result = await this.courseUseCase.updateReviewAndRating(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -176,8 +193,9 @@ export class CoursesController {
         next
       );
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -188,8 +206,9 @@ export class CoursesController {
         next
       );
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -198,8 +217,9 @@ export class CoursesController {
       await inputValidation(req, "getUserEnrolledCourses", next);
       const result = await this.courseUseCase.getUserEnrolledCourses(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -208,8 +228,9 @@ export class CoursesController {
       await inputValidation(req, "getCourseByCategory", next);
       const result = await this.courseUseCase.getCourseByCategory(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -219,8 +240,9 @@ export class CoursesController {
       const result = await this.courseUseCase.getCourseForSearch(req, next);
 
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -229,8 +251,9 @@ export class CoursesController {
       await inputValidation(req, "getInstructorTutorials", next);
       const result = await this.courseUseCase.getInstructorTutorials(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -240,8 +263,9 @@ export class CoursesController {
 
       const result = await this.courseUseCase.setVideoTrack(req, next);
       if (result) res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 }
