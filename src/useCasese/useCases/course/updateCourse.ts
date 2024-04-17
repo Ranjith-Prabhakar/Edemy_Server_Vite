@@ -3,7 +3,7 @@ import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICourseRepository } from "../../interface/repository/courseRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { ICourseResponse } from "../../interface/request_And_Response/course";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 import { SocketClass } from "../../staticClassProperty/StaticClassProperty";
 
 export const updateCourse = async (
@@ -18,7 +18,6 @@ export const updateCourse = async (
       req.body
     );
     if (courseResutl) {
-      console.log("courseResutl ===>", courseResutl);
       const admin = await userRepository.getAdmin();
       if (admin) {
         const adminSocket = SocketClass.SocketUsers[admin._id as string];
@@ -32,7 +31,7 @@ export const updateCourse = async (
       }
     }
     return courseResutl;
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
   }
 };
