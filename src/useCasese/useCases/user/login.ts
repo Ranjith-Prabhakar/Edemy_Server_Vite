@@ -6,6 +6,7 @@ import { IUser } from "../../../entities/user";
 import { IJwt } from "../../interface/services/jwt.types";
 import { Next } from "../../../frameworks/types/serverPackageTypes";
 import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const login = async (
   userRepository: IUserRepository,
@@ -35,6 +36,6 @@ export const login = async (
       tokens,
     };
   } catch (error) {
-    throw error;
+    catchError(error, next);
   }
 };
