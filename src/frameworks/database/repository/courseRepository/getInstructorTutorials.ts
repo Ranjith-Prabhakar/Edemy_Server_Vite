@@ -5,7 +5,6 @@ export const getInstructorTutorials = async (
   courses: string[]
 ): Promise<void | ICourseResponse> => {
   try {
-    console.log("courses repo engine", courses);
     const result = await courseModel.find({ _id: { $in: courses } });
     return {
       status: 200,
