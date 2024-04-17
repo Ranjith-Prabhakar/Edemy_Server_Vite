@@ -85,7 +85,6 @@ export function courseRoute(router: Route) {
   );
   router.get(
     "/get_courses_for_user",
-    // isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getCoursesForUser(req, res, next);
     })
@@ -94,7 +93,6 @@ export function courseRoute(router: Route) {
   router.get(
     "/get_categories",
     isAuthenticated,
-    // autheriseRoles("instructor"),
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getCategories(req, res, next);
     })
@@ -162,7 +160,6 @@ export function courseRoute(router: Route) {
 
   router.post(
     "/get_courses_by_category",
-    // isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getCourseByCategory(req, res, next);
     })

@@ -33,7 +33,6 @@ export const isAuthenticated = async (
   }
 
   req.user = JSON.parse(user);
-  console.log("success from isAuth")
   next();
 };
 
