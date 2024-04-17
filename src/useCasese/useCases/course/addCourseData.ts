@@ -4,7 +4,7 @@ import { ICourseRepository } from "../../interface/repository/courseRepository";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { ICourseResponse } from "../../interface/request_And_Response/course";
 import { ICloudSession } from "../../interface/services/cloudSession";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const addCourseData = async (
   courseRepository: ICourseRepository,
@@ -14,7 +14,6 @@ export const addCourseData = async (
   next: Next
 ): Promise<ICourseResponse | void> => {
   try {
-    console.log("req.user 4 5 4 5 4", req.user);
     const courseResult = await courseRepository.addCourseData({
       ...req.body,
       instructor: req.user,
@@ -31,9 +30,8 @@ export const addCourseData = async (
         userResult
       );
     }
-    console.log("userResult === >>>>", userResult);
     return courseResult;
-  } catch (error: any) {
-    next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
   }
 };
