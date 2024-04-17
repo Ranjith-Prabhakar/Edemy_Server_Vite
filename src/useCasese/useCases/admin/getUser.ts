@@ -1,7 +1,7 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../../middlewares/errorHandler";
 import { IUserRepository } from "../../interface/repository/userRepository";
 import { IUser } from "../../../entities/user";
+import { catchError } from "../../middlewares/catchError";
 
 export const getUser = async (
   userRepository: IUserRepository,
@@ -11,7 +11,8 @@ export const getUser = async (
   try {
     const id = req.params.id;
     return await userRepository.getUser(id);
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
+    // return next(new ErrorHandler(500, error.message));
   }
 };
