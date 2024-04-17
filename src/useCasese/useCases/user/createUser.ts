@@ -4,6 +4,7 @@ import { IJwt } from "../../interface/services/jwt.types";
 import { IUser } from "../../../entities/user";
 import { Next } from "../../../frameworks/types/serverPackageTypes";
 import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const createUser = async (
   userRepository: IUserRepository,
@@ -33,6 +34,6 @@ export const createUser = async (
     newUser.password = "";
     return newUser;
   } catch (error) {
-    throw error;
+    catchError(error, next);
   }
 };
