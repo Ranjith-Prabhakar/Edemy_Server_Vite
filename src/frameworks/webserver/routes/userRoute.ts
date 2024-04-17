@@ -15,7 +15,6 @@ export function userRoute(router: Route) {
   router.post(
     "/create_user",
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
-      console.log(req.cookies.verificationToken, "route");
       userController.createUser(req, res, next);
     })
   );
@@ -53,10 +52,6 @@ export function userRoute(router: Route) {
   /////////
   router.post(
     "/forgot_password_email_submission",
-    (req: Req, res: Res, next: Next) => {
-      console.log("reaching==. forgot_password_email_submission");
-      next();
-    },
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       userController.forgotPassword(req, res, next);
     })
