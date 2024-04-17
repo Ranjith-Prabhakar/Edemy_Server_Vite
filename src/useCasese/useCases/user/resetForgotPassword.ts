@@ -4,6 +4,7 @@ import { IUserRepository } from "../../interface/repository/userRepository";
 import { IGeneralResponse } from "../../interface/request_And_Response/generalResponse";
 import { IHashpassword } from "../../interface/services/hashPassword";
 import { IJwt } from "../../interface/services/jwt.types";
+import { catchError } from "../../middlewares/catchError";
 import ErrorHandler from "../../middlewares/errorHandler";
 
 export const resetForgotPassword = async (
@@ -22,7 +23,6 @@ export const resetForgotPassword = async (
       iat: number;
       exp: number;
     };
-    console.log("resetForgotPassword decode", decode);
     let otpRepAction = await otpRepository.findByMailAndDelete(
       decode.email as string
     );
@@ -46,6 +46,6 @@ export const resetForgotPassword = async (
       };
     }
   } catch (error) {
-    throw error;
+    catchError(error, next);
   }
 };
