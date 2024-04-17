@@ -3,6 +3,7 @@ import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { inputValidation } from "./middleware/inputValidation";
 import { IAdminUseCase } from "../useCasese/interface/useCase/adminUseCase";
 import { catchError } from "../useCasese/middlewares/catchError";
+import { IInstructorAgreementResponse } from "../useCasese/interface/request_And_Response/instructorAgreement";
 
 export class AdminController {
   private readonly adminUseCase: IAdminUseCase;
@@ -14,10 +15,10 @@ export class AdminController {
   async approveOrRejectInstructor(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "approveInstructor", next);
-      const result = await this.adminUseCase.approveOrRejectInstructor(
+      const result = (await this.adminUseCase.approveOrRejectInstructor(
         req,
         next
-      );
+      )) as IInstructorAgreementResponse;
       res.status(result.status as number).json(result);
     } catch (error) {
       catchError(error, next);

@@ -9,7 +9,7 @@ export interface IAdminUseCase {
   approveOrRejectInstructor(
     req: Req,
     next: Next
-  ): Promise<IInstructorAgreementResponse>;
+  ): Promise<IInstructorAgreementResponse | void>;
   instructorRequests(next: Next): Promise<void | object>;
   getUsers(next: Next): Promise<IUser[] | void>;
   getUser(req: Req, next: Next): Promise<void | IUser>;

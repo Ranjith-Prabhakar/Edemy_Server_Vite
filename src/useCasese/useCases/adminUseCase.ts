@@ -26,6 +26,7 @@ import { IInstructorAgreementResponse } from "../interface/request_And_Response/
 import { SocketClass } from "../staticClassProperty/StaticClassProperty";
 import { INotificationRepository } from "../interface/repository/notificationRepository";
 import { ENotification } from "../../entities/notification";
+import { catchError } from "../middlewares/catchError";
 
 export class AdminUseCase implements IAdminUseCase {
   private readonly userRepository: IUserRepository;
@@ -47,21 +48,16 @@ export class AdminUseCase implements IAdminUseCase {
   async approveOrRejectInstructor(
     req: Req,
     next: Next
-  ): Promise<IInstructorAgreementResponse> {
+  ): Promise<IInstructorAgreementResponse | void> {
     try {
       const { userId } = req.body;
-      const result = await approveOrRejectInstructor(
+      const result = (await approveOrRejectInstructor(
         this.userRepository,
         this.instrctorAgreementRepository,
         req,
         next
-      );
+      )) as IInstructorAgreementResponse;
       // have to check whethere approve or not (but not done it now )
-      console.log(
-        "######",
-        req.user?._id as string,
-        ENotification.instructorRequestApproval
-      );
       const notificationRepoUpdate =
         await this.notificationRepository.addNotification(
           userId as string,
@@ -75,16 +71,16 @@ export class AdminUseCase implements IAdminUseCase {
       }
 
       return result;
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message)) as any;
+    } catch (error) {
+      catchError(error,next)
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async instructorRequests(next: NextFunction): Promise<void | object> {
     try {
       return await instructorRequests(this.instrctorAgreementRepository, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+        catchError(error, next);
     }
   }
 
@@ -92,40 +88,40 @@ export class AdminUseCase implements IAdminUseCase {
   async getUsers(next: Next): Promise<IUser[] | void> {
     try {
       return await getUsers(this.userRepository, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getUser(req: Req, next: Next): Promise<void | IUser> {
     try {
       return await getUser(this.userRepository, req, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async freezUser(req: Req, next: Next): Promise<IUserResponse | void> {
     try {
       return freezUser(this.userRepository, req, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async unFreezUser(req: Req, next: Next): Promise<IUserResponse | void> {
     try {
       return unFreezUser(this.userRepository, req, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getInstructors(next: Next): Promise<IUser[] | void> {
     try {
       return await getInstructors(this.userRepository, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -138,16 +134,16 @@ export class AdminUseCase implements IAdminUseCase {
   }> {
     try {
       return await addCategory(this.categoryRepository, req, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
   async getCategories(next: NextFunction): Promise<void | ICategory[]> {
     try {
       return await getCategories(this.categoryRepository, next);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -157,8 +153,8 @@ export class AdminUseCase implements IAdminUseCase {
   ): Promise<ICategoryResponse | void> {
     try {
       return await freezCategory(req, next, this.categoryRepository);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
   // 888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -168,8 +164,8 @@ export class AdminUseCase implements IAdminUseCase {
   ): Promise<ICategoryResponse | void> {
     try {
       return await unFreezCategory(req, next, this.categoryRepository);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
     }
   }
 }
