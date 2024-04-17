@@ -1,6 +1,11 @@
-const accessTokenExpire = parseInt(process.env.ACCESS_TOKEN_EXPIRE || "300", 10);
-const refreshTokenExpire = parseInt(process.env.REFRESH_TOKEN_EXPIRE || "1200", 10);
-
+const accessTokenExpire = parseInt(
+  process.env.ACCESS_TOKEN_EXPIRE || "300",
+  10
+);
+const refreshTokenExpire = parseInt(
+  process.env.REFRESH_TOKEN_EXPIRE || "1200",
+  10
+);
 
 interface ITokenOptions {
   expires: Date;
@@ -10,7 +15,8 @@ interface ITokenOptions {
   secure?: boolean;
 }
 
-let accessTokenProductionMode = process.env.NODE_ENV === "production" ? true : false;
+let accessTokenProductionMode =
+  process.env.NODE_ENV === "production" ? true : false;
 
 // options for cookies
 export const accessTokenOptions: ITokenOptions = {
@@ -18,6 +24,7 @@ export const accessTokenOptions: ITokenOptions = {
   maxAge: accessTokenExpire * 60 * 60 * 1000,
   httpOnly: true,
   sameSite: "strict",
+  // add domain and path
   secure: accessTokenProductionMode,
 };
 export const refreshTokenOptions: ITokenOptions = {
@@ -25,5 +32,5 @@ export const refreshTokenOptions: ITokenOptions = {
   maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
   httpOnly: true,
   sameSite: "strict",
+  secure: accessTokenProductionMode,
 };
-
