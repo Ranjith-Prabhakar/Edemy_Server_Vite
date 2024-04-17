@@ -19,9 +19,7 @@ export class PaymentRepository implements IPaymentRepository {
 
   async findAndDelete(userId: string): Promise<void | IPayment> {
     try {
-      console.log("findAndDelete payment repo engine userId", userId);
       const result = (await paymentModel.findOneAndDelete({ userId })) as IPayment;
-      console.log("result", result);
       return result;
     } catch (error) {
       throw error;
