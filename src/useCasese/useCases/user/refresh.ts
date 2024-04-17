@@ -3,6 +3,7 @@ import { Req, Next } from "../../../frameworks/types/serverPackageTypes";
 import ErrorHandler from "../../middlewares/errorHandler";
 import { ICloudSession } from "../../interface/services/cloudSession";
 import { IJwt, IToken } from "../../interface/services/jwt.types";
+import { catchError } from "../../middlewares/catchError";
 
 export const refresh = async (
   cloudSession: ICloudSession,
@@ -11,7 +12,6 @@ export const refresh = async (
   next: Next
 ) => {
   try {
-    console.log("refresh module", req.user);
     const token = await jwtToken.createAccessAndRefreshToken(
       req.user?._id as string
     );
@@ -20,7 +20,7 @@ export const refresh = async (
       req.user as IUser
     );
     return token as IToken;
-  } catch (error: any) {
-    return next(new ErrorHandler(500, "internal server error"));
+  } catch (error) {
+    catchError(error, next);
   }
 };
