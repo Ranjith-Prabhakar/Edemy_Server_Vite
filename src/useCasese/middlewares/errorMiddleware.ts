@@ -27,13 +27,6 @@ export const errorMiddleware = (err: any, req: Req, res: Res, next: Next) => {
     const message = `json web token has expired`;
     err = new ErrorResponse(400, message);
   }
-  // if (err instanceof ErrorResponse) {
-  //   res.status(err.statusCode).json({
-  //     success: false,
-  //     status: err.statusCode,
-  //     message: err.message,
-  //   });
-  // }
   res.status(err.statusCode).json({
     status: err.statusCode,
     success: false,
