@@ -1,7 +1,6 @@
 import { Next } from "../../../frameworks/types/serverPackageTypes";
 import { IInstructorAgreementRepository } from "../../interface/repository/instructorAgreementRepository";
-import { IInstructorAgreementResponse } from "../../interface/request_And_Response/instructorAgreement";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const instructorRequests = async (
   instructorAgreementRepository: IInstructorAgreementRepository,
@@ -9,7 +8,8 @@ export const instructorRequests = async (
 ): Promise<void | object> => {
   try {
     return await instructorAgreementRepository.getAgreements();
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
+    // return next(new ErrorHandler(500, error.message));
   }
 };
