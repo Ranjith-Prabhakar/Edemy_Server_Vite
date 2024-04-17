@@ -27,22 +27,19 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
       });
 
       if (isCourseExist) {
-        console.log("isCourseExist");
         //if course for this user already added into the tracking
         const isModuleExist = isCourseExist.modules?.find(
           (module) => module.moduleNo === moduleNo.toString()
         );
         if (isModuleExist) {
-          console.log("isModuleExist");
           // if the module exist already
           const isVideoExist = isModuleExist.videos.some(
             (video) => video.videoNo === videoNo.toString()
           );
 
           if (isVideoExist) {
-            console.log("isVideoExist");
             // if the video also exist already in the list then update
-            const updateResult = await courseTrackingModel.findOneAndUpdate(
+            await courseTrackingModel.findOneAndUpdate(
               {
                 courseId,
                 userId,
@@ -53,8 +50,6 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
               },
               {
                 $set: {
-                  // "modules.$.moduleNo.$.videos.currentPosition": position,
-                  // "modules.$.moduleNo.$.videos.completed": complete,
                   "modules.$.videos.$[video].currentPosition": position,
                   "modules.$.videos.$[video].completed": complete,
                 },
@@ -64,11 +59,9 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
                 new: true,
               }
             );
-            console.log("updateResult", updateResult);
           } else {
             // if the video not exist in the list add it
-            console.log("isVideoExist false");
-            const updateVideo = await courseTrackingModel.updateOne(
+            await courseTrackingModel.updateOne(
               {
                 courseId,
                 "modules.moduleNo": moduleNo,
@@ -87,12 +80,10 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
                 },
               }
             );
-            console.log("isVideoExist false updateVideo", updateVideo);
           }
         } else {
           // if the module not added to the video list
-          console.log("isModuleExist false");
-          const updateModule = await courseTrackingModel.updateOne(
+          await courseTrackingModel.updateOne(
             { courseId },
             {
               $addToSet: {
@@ -114,8 +105,7 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
         }
       } else {
         //if course for this user not added into the tracking already
-        console.log("isCourseExist false");
-        const createResult = await courseTrackingModel.create({
+        await courseTrackingModel.create({
           courseId,
           userId,
           modules: [
@@ -131,12 +121,7 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
             },
           ],
         });
-        console.log("createResult 2222222222", createResult);
       }
-      //       "modules.moduleNo": moduleNo,
-      //       "modules.moduleTittle": moduleTittle,
-      //       "modules.videos.videoNo": videoNo,
-      //       "modules.videos.videoTittle": videoTittle,
     } catch (error) {
       throw error;
     }
@@ -155,14 +140,11 @@ export class CourseTrackRepository implements ICourseTrackingRepository {
         "modules.moduleNo": moduleNo,
         "modules.videos.videoNo": videoNo,
       });
-      console.log("document", document);
       const position = document?.modules
         ?.find((module) => module.moduleNo === moduleNo.toString())
         ?.videos.find(
           (video) => video.videoNo === videoNo.toString()
         )?.currentPosition;
-      console.log("position @@@@ #", position);
-
       return { position: position as string };
     } catch (error) {
       throw error;
