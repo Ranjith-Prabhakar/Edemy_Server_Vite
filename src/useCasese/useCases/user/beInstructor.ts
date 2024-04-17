@@ -1,5 +1,4 @@
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
-import ErrorHandler from "../../middlewares/errorHandler";
 import { IInstructorAgreementRepository } from "../../interface/repository/instructorAgreementRepository";
 import { IJsonResponse } from "../../interface/services/jsonResponse";
 import { SocketClass } from "../../staticClassProperty/StaticClassProperty";
@@ -7,6 +6,7 @@ import { IUserRepository } from "../../interface/repository/userRepository";
 import { IInstructorAgreement } from "../../../entities/instructorAgreement";
 import { ENotification } from "../../../entities/notification";
 import { INotificationRepository } from "../../interface/repository/notificationRepository";
+import { catchError } from "../../middlewares/catchError";
 
 export const beInstructor = async (
   instructorAgreementRepository: IInstructorAgreementRepository,
@@ -21,7 +21,6 @@ export const beInstructor = async (
       userName: req.user?.name as string,
       ...req.body,
     });
-    console.log("result instructorAgreementRepository", result);
     if (result.agreement) {
       const admin = await userRepository.getAdmin();
 
@@ -30,7 +29,6 @@ export const beInstructor = async (
           admin?._id as string,
           ENotification.instructorRequests
         );
-      console.log("notificationRepoResult", notificationRepoResult);
       if (notificationRepoResult) {
         if (admin) {
           const adminSocket = SocketClass.SocketUsers[admin._id as string];
@@ -42,7 +40,7 @@ export const beInstructor = async (
       }
     }
     return result;
-  } catch (error: any) {
-    return next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
   }
 };
