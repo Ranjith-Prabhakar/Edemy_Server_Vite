@@ -10,7 +10,7 @@ export const getCourseInProgress = async (
 ): Promise<ICourseResponse | void> => {
   try {
     return await courseRepository.getCourseInProgress(req.user?._id as string);
-  } catch (error: any) {
+  } catch (error) {
     catchError(error,next)
   }
 };
