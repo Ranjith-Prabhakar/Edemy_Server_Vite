@@ -2,6 +2,7 @@ import { Req, Res, Next } from "../frameworks/types/serverPackageTypes";
 import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { inputValidation } from "./middleware/inputValidation";
 import { IAdminUseCase } from "../useCasese/interface/useCase/adminUseCase";
+import { catchError } from "../useCasese/middlewares/catchError";
 
 export class AdminController {
   private readonly adminUseCase: IAdminUseCase;
@@ -13,10 +14,14 @@ export class AdminController {
   async approveOrRejectInstructor(req: Req, res: Res, next: Next) {
     try {
       await inputValidation(req, "approveInstructor", next);
-      const result = await this.adminUseCase.approveOrRejectInstructor(req, next);
+      const result = await this.adminUseCase.approveOrRejectInstructor(
+        req,
+        next
+      );
       res.status(result.status as number).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -24,8 +29,9 @@ export class AdminController {
     try {
       const result = await this.adminUseCase.instructorRequests(next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -39,8 +45,9 @@ export class AdminController {
         message: "users have been fetched successfully ",
         data: result,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -53,8 +60,9 @@ export class AdminController {
         message: "user have been fetched successfully",
         user: result,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -62,8 +70,9 @@ export class AdminController {
     try {
       const result = await this.adminUseCase.freezUser(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -71,8 +80,9 @@ export class AdminController {
     try {
       const result = await this.adminUseCase.unFreezUser(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -85,8 +95,9 @@ export class AdminController {
         message: "instructors have been fetched successfully",
         data: result,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -96,8 +107,9 @@ export class AdminController {
       const result = await this.adminUseCase.addCategory(req, next);
       console.log("addCategory controller", result);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -110,8 +122,9 @@ export class AdminController {
         data: result,
       });
       console.log("reachig here inside of controller", result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -119,8 +132,9 @@ export class AdminController {
     try {
       const result = await this.adminUseCase.freezCategory(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -128,8 +142,9 @@ export class AdminController {
     try {
       const result = await this.adminUseCase.unFreezCategory(req, next);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 }
