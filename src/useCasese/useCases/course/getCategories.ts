@@ -1,7 +1,7 @@
 import { ICategory } from "../../../entities/category";
 import { Next, Req } from "../../../frameworks/types/serverPackageTypes";
 import { ICategoryRepository } from "../../interface/repository/categoryRepository";
-import ErrorHandler from "../../middlewares/errorHandler";
+import { catchError } from "../../middlewares/catchError";
 
 export const getCategories = async (
   categoryRepository: ICategoryRepository,
@@ -9,13 +9,12 @@ export const getCategories = async (
   next: Next
 ): Promise<ICategory[] | void> => {
   try {
-    if(req.user?.role === "admin"){
-return await categoryRepository.getCategories(true);
-    }else{
+    if (req.user?.role === "admin") {
+      return await categoryRepository.getCategories(true);
+    } else {
       return await categoryRepository.getCategories(false);
     }
-    
-  } catch (error: any) {
-    next(new ErrorHandler(500, error.message));
+  } catch (error) {
+    catchError(error,next)
   }
 };
