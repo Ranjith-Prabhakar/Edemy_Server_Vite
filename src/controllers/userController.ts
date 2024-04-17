@@ -6,10 +6,10 @@ import {
   refreshTokenOptions,
 } from "./middleware/tokenOptions";
 
-import ErrorHandler from "../useCasese/middlewares/errorHandler";
 import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
 import { IToken } from "../useCasese/interface/services/jwt.types";
 import { IUserUseCase } from "../useCasese/interface/useCase/userUseCase";
+import { catchError } from "../useCasese/middlewares/catchError";
 
 export class UserController {
   private userUseCase: IUserUseCase;
@@ -34,8 +34,9 @@ export class UserController {
         success: true,
         message: "verification otp has been sent the mail",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.status, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(error.status, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -49,8 +50,9 @@ export class UserController {
         next
       );
       res.clearCookie("verificationToken").send(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -67,8 +69,9 @@ export class UserController {
       res
         .status(200)
         .json({ user: result?.user, message: "user loggedIn successfully" });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -79,8 +82,9 @@ export class UserController {
         success: true,
         message: "user has been loged out successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -90,8 +94,9 @@ export class UserController {
       res.cookie("accessToken", result.accessToken, accessTokenOptions);
       res.cookie("refreshToken", result.refreshToken, refreshTokenOptions);
       res.status(200).json({ success: true, message: "tokens are updated" });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -102,16 +107,15 @@ export class UserController {
         req,
         next
       )) as IJsonResponse;
-      console.log("after fetch controll", result);
       res.status(result.status).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async forgotPassword(req: Req, res: Res, next: Next) {
     try {
-      console.log("forgotPassword controller time===>", req.body, Date.now());
       await inputValidation(req, "forgotPassword", next);
       const result = await this.userUseCase.forgotPassword(req, next);
 
@@ -124,8 +128,9 @@ export class UserController {
         succuss: true,
         message: "verification code has been sent to your account",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
@@ -133,24 +138,21 @@ export class UserController {
     try {
       await inputValidation(req, "forgotPasswordOtpVerification", next);
       const token = req.cookies.verificationToken as string;
-      console.log("token", token);
       let result = await this.userUseCase.forgotPasswordOtpVerification(
         req,
         next,
         token
       );
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
   async resetForgotPassword(req: Req, res: Res, next: Next) {
     try {
-      console.log("req.body", req.body);
       await inputValidation(req, "resetForgotPassword", next);
-      console.log("req.body after validation");
-
       let token = req.cookies.verificationToken;
       const result = await this.userUseCase.resetForgotPassword(
         req,
@@ -160,20 +162,20 @@ export class UserController {
 
       res.clearCookie("verificationToken");
       res.status(200).send(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
   // *****************************************************************************************************************************
 
   async userSession(req: Req, res: Res, next: Next) {
     try {
-      console.log("userSession result");
       const result = await this.userUseCase.userSession(req, next);
-      console.log("userSession result", result);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -181,12 +183,11 @@ export class UserController {
 
   async getNotifications(req: Req, res: Res, next: Next) {
     try {
-      console.log("getNotifications result");
       const result = await this.userUseCase.getNotifications(req, next);
-      console.log("getNotifications result", result);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 
@@ -194,12 +195,11 @@ export class UserController {
 
   async updateNotifications(req: Req, res: Res, next: Next) {
     try {
-      console.log("updateNotifications result", req.body);
       const result = await this.userUseCase.updateNotifications(req, next);
-      console.log("getNotifications result", result);
       res.status(200).json(result);
-    } catch (error: any) {
-      return next(new ErrorHandler(500, error.message));
+    } catch (error) {
+      catchError(error, next);
+      // return next(new ErrorHandler(500, error.message));
     }
   }
 }
