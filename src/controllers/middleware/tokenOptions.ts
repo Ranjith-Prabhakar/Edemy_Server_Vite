@@ -42,7 +42,7 @@ export const accessTokenOptions: ITokenOptions = {
   expires: new Date(Date.now() + accessTokenExpire * 60 * 60 * 1000), //5 hour
   maxAge: accessTokenExpire * 60 * 60 * 1000,
   httpOnly: true,
-  sameSite: "none",
+  sameSite: "strict",
   domain: '.digi-world.online',
   path: '/',
   secure: accessTokenProductionMode,
@@ -51,7 +51,7 @@ export const refreshTokenOptions: ITokenOptions = {
   expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000), // 3 days
   maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
   httpOnly: true,
-  sameSite: "none",
+  sameSite: "strict",
   domain: '.digi-world.online',
   path: '/',
   secure: accessTokenProductionMode,
