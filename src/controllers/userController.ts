@@ -4,6 +4,7 @@ import { inputValidation } from "./middleware/inputValidation";
 import {
   accessTokenOptions,
   refreshTokenOptions,
+  verificationTokenOptions,
 } from "./middleware/tokenOptions";
 
 import { IJsonResponse } from "../useCasese/interface/services/jsonResponse";
@@ -24,11 +25,7 @@ export class UserController {
       await inputValidation(req, "registerUser", next);
       const token = await this.userUseCase.registerUser(req.body, next);
 
-      res.cookie("verificationToken", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        expires: new Date(Date.now() + 30 * 60 * 1000),
-      });
+      res.cookie("verificationToken", token, verificationTokenOptions);
 
       res.status(200).json({
         success: true,
@@ -119,11 +116,7 @@ export class UserController {
       await inputValidation(req, "forgotPassword", next);
       const result = await this.userUseCase.forgotPassword(req, next);
 
-      res.cookie("verificationToken", result, {
-        sameSite: "strict",
-        httpOnly: true,
-        maxAge: 5 * 60 * 1000,
-      });
+      res.cookie("verificationToken", result, verificationTokenOptions);
       res.status(200).json({
         succuss: true,
         message: "verification code has been sent to your account",

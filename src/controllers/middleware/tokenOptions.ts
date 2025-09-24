@@ -1,58 +1,60 @@
-const accessTokenExpire = parseInt(
-  process.env.ACCESS_TOKEN_EXPIRE || "300",
-  10
-);
+const accessTokenExpire = parseInt(process.env.ACCESS_TOKEN_EXPIRE || "30", 10); // minutes
 const refreshTokenExpire = parseInt(
-  process.env.REFRESH_TOKEN_EXPIRE || "1200",
+  process.env.REFRESH_TOKEN_EXPIRE || "10080",
   10
-);
+); // minutes (7 days)
+const verificationTokenExpire = parseInt(
+  process.env.VERIFICATION_TOKEN_EXPIRE || "30",
+  10
+); // minutes
+
+// convert minutes -> milliseconds
+const accessTokenMs = accessTokenExpire * 60 * 1000;
+const refreshTokenMs = refreshTokenExpire * 60 * 1000;
+const verificationTokenMs = verificationTokenExpire * 60 * 1000;
 
 interface ITokenOptions {
   expires: Date;
-  maxAge: number;
+  maxAge: number; // milliseconds
   httpOnly: boolean;
   sameSite: "lax" | "strict" | "none" | undefined;
-  domain:string;
-  path:string;
+  domain: string;
+  path: string;
   secure?: boolean;
 }
 
-let accessTokenProductionMode =
-  process.env.NODE_ENV === "production" ? true : false;
+const nodeModeFlag = process.env.NODE_ENV === "production";
+const tokenDomain = process.env.TOKEN_DOMAIN as string;
 
-// options for cookies
-// export const accessTokenOptions: ITokenOptions = {
-//   expires: new Date(Date.now() + accessTokenExpire * 60 * 60 * 1000), //5 hour
-//   maxAge: accessTokenExpire * 60 * 60 * 1000,
-//   httpOnly: true,
-//   sameSite: "strict",
-//   // add domain and path
-//   secure: accessTokenProductionMode,
-// };
-// export const refreshTokenOptions: ITokenOptions = {
-//   expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000), // 3 days
-//   maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
-//   httpOnly: true,
-//   sameSite: "strict",
-//   secure: accessTokenProductionMode,
-// };
+const cookieSameSite = nodeModeFlag ? "none" : "lax";
 
 // options for cookies
 export const accessTokenOptions: ITokenOptions = {
-  expires: new Date(Date.now() + accessTokenExpire * 60 * 60 * 1000), //5 hour
-  maxAge: accessTokenExpire * 60 * 60 * 1000,
+  expires: new Date(Date.now() + accessTokenMs),
+  maxAge: accessTokenMs,
   httpOnly: true,
-  sameSite: "strict",
-  domain: '.digi-world.online',
-  path: '/',
-  secure: accessTokenProductionMode,
+  sameSite: cookieSameSite,
+  domain: tokenDomain,
+  path: "/",
+  secure: nodeModeFlag,
 };
+
 export const refreshTokenOptions: ITokenOptions = {
-  expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000), // 3 days
-  maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
+  expires: new Date(Date.now() + refreshTokenMs),
+  maxAge: refreshTokenMs,
   httpOnly: true,
-  sameSite: "strict",
-  domain: '.digi-world.online',
-  path: '/',
-  secure: accessTokenProductionMode,
+  sameSite: cookieSameSite,
+  domain: tokenDomain,
+  path: "/",
+  secure: nodeModeFlag,
+};
+
+export const verificationTokenOptions: ITokenOptions = {
+  expires: new Date(Date.now() + verificationTokenMs),
+  maxAge: verificationTokenMs,
+  httpOnly: true,
+  sameSite: cookieSameSite,
+  domain: tokenDomain,
+  path: "/",
+  secure: nodeModeFlag,
 };
