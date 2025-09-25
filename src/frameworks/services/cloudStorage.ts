@@ -42,7 +42,8 @@ export class CloudStorage implements ICloudStorage {
     courseName: string
   ): Promise<void | ICloudStorageResponse> {
     try {
-          const command = new GetObjectCommand({
+      console.log("courseName", courseName);
+      const command = new GetObjectCommand({
         Bucket: process.env.S3_BOCKET_NAME,
         Key: `${process.env.S3_COURSE_CONTENT_LOCATION}${courseName}`,
       });
