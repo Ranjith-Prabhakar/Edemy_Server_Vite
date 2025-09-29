@@ -92,7 +92,7 @@ export function courseRoute(router: Route) {
 
   router.get(
     "/get_categories",
-    isAuthenticated,
+    // isAuthenticated,
     catchAsyncErrors((req: Req, res: Res, next: Next) => {
       courseController.getCategories(req, res, next);
     })
