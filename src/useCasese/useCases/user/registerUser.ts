@@ -1,4 +1,3 @@
-import { Response } from "../../interface/services/response";
 import { IHashpassword } from "../../interface/services/hashPassword";
 import { IOtpRepository } from "../../interface/repository/otpRepository";
 import { ISendMail } from "../../interface/services/sendMail";
@@ -26,7 +25,7 @@ export const registerUser = async (
     const isUserExistOnUserRepo = await userRepository.findUserByEmail(email);
     if (isUserExistOnUserRepo)
       return next(
-        new ErrorHandler(400, "user!!! already exist in the same mail id")
+        new ErrorHandler(400, "user already exist in the same mail id!")
       );
 
     // checking wheter user already present in the otp repo

@@ -33,7 +33,6 @@ export class UserController {
       });
     } catch (error) {
       catchError(error, next);
-      // return next(new ErrorHandler(error.status, error.message));
     }
   }
   // *****************************************************************************************************************************
